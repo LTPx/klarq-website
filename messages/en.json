@@ -1,5 +1,11 @@
 {
   "HomePage": {
     "title": "Hello world!"
+  },
+  "header": {
+    "architecture": "Architecture",
+    "decor": "Decor",
+    "development": "Development",
+    "shop": "Shop"
   }
 }

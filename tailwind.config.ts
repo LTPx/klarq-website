@@ -32,15 +32,15 @@ const config: Config = {
         },
         black: {
           DEFAULT: '#000000',
-          light: '#e3e4eb',
-          footer: '#262626',
-          'dark-light': 'rgba(14,23,38,.15)',
         },
         white: {
           DEFAULT: '#ffffff',
-          beige: '#F4F4F2',
-          light: '#b9bdc4',
-          dark: '#888ea8',
+        },
+        gray: {
+          DEFAULT: '#E5E5E5',
+        },
+        green: {
+          DEFAULT: '#928E73',
         },
         body: {
           DEFAULT: '#F4F4F2'

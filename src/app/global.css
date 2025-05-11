@@ -9,3 +9,9 @@
 .aspect-1-1 {
   aspect-ratio: 1 / 1;
 }
+
+.container {
+  padding-left: 0px;
+  padding-right: 0px;
+  max-width: 100%;
+}

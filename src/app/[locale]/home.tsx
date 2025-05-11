@@ -1,4 +1,6 @@
 import React from "react";
+import CategoryCard from "../components/category-card";
+import HomeAnimation from "../components/home-animation";
 
 interface Props {
   data: any;
@@ -7,8 +9,8 @@ interface Props {
 function Home(props: Props) {
   const { data } = props;
   return (
-    <div className="container mx-auto flex flex-col gap-0 lg:gap-20">
-      pending...
+    <div className="container">
+      <HomeAnimation title={""} imageCategory={""}/>
     </div>
   );
 }

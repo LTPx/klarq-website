@@ -9,7 +9,5 @@ export default async function Page(nextParams: {
     params: { locale },
   } = nextParams;
 
-  return (
-    <div>pending</div>
-  );
+    return <Home data={undefined} />;
 }
