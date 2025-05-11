@@ -7,5 +7,15 @@
     "decor": "Decor",
     "development": "Development",
     "shop": "Shop"
+  },
+  "footer": {
+    "title": "Contacta con nosotros:",
+    "follow": "Síguenos en Instagram:",
+    "architecture": "Architecture",
+    "decor": "Decor",
+    "development": "Development",
+    "cookies-policy": "Cookies policy",
+    "privacy-policy": "Privacy policy",
+    "legal-notice": "Legal notice"
   }
 }

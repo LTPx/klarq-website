@@ -1,5 +1,6 @@
 import { getWordPressPage } from "../_services/api";
 import AppHeader from "../components/app-header";
+import Footer from "../components/footer";
 
 interface Props {
   children: any;
@@ -17,6 +18,7 @@ async function App(props: Props) {
         }}
       />
       <div>{children}</div>
+      <Footer/>
     </>
   );
 }

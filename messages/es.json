@@ -3,9 +3,19 @@
     "title": "Hello world!"
   },
   "header": {
-    "architecture": "Architecture",
-    "decor": "Decor",
-    "development": "Development",
-    "hop": "Shop"
+    "architecture": "Arquitectura",
+    "decor": "Decoración",
+    "development": "Desarrollo",
+    "shop": "Comercio"
+  },
+  "footer": {
+    "title": "Contacta con nosotros:",
+    "follow": "Síguenos en Instagram:",
+    "architecture": "Arquitectura",
+    "decor": "Decoración",
+    "development": "Desarrollo",
+    "cookies-policy": "Política de cookies",
+    "privacy-policy": "Política de privacidad",
+    "legal-notice": "Aviso legal"
   }
 }

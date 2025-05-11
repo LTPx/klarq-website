@@ -19,7 +19,7 @@ function HomeAnimation(props: HomeAnimationProps) {
             <img src="/images/KLARQ.svg" className="h-[30dvh] w-full" />
         </div>
       </div>
-      <div className="grid gap-[5px] grid-cols-3 h-[20vh]">
+      <div className="grid gap-[5px] grid-cols-3">
         <CategoryCard
           title={"Klarp"}
           imageCategory={

@@ -20,14 +20,14 @@ function CategoryCard(props: CategoryCardProps) {
       <h1 className="absolute left-[30px] top-[20px] text-white text-[16px] leading-[16px] font-regular tracking-[-0.04em] z-[100]">
         {title}
       </h1>
-      <div
+      {/* <div
         className={`hidden lg:absolute lg:h-full inset-0 h-full ${className}`}
         style={{
           backgroundImage:
             "linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.25))",
           zIndex: 1,
         }}
-      />
+      /> */}
     </div>
   );
 }
