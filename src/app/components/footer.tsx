@@ -74,7 +74,7 @@ export function Footer() {
           </div>
         </div>
       </footer>
-      <div className="h-[51px] border-t border-black border-[1px]"></div>
+      <div className="h-[51px] border-t border-t-black border-t-[1px]"></div>
     </div>
   );
 }

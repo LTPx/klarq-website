@@ -8,6 +8,16 @@
     "development": "Desarrollo",
     "shop": "Comercio"
   },
+  "menu": {
+    "publications": "Publicaciones",
+    "contact": "Contacto",
+    "spanish": "Español",
+    "english": "English",
+    "follow": "Síguenos en Instagram:",
+    "architecture": "Arquitectura",
+    "decor": "Decoración",
+    "development": "Desarrollo"
+  },
   "footer": {
     "title": "Contacta con nosotros:",
     "follow": "Síguenos en Instagram:",

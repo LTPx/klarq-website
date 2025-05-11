@@ -8,9 +8,19 @@
     "development": "Development",
     "shop": "Shop"
   },
+  "menu": {
+    "publications": "Publications",
+    "contact": "Contact",
+    "spanish": "Spanish",
+    "english": "English",
+    "follow": "Follow us on Instagram:",
+    "architecture": "Architecture",
+    "decor": "Decor",
+    "development": "Development"
+  },
   "footer": {
-    "title": "Contacta con nosotros:",
-    "follow": "Síguenos en Instagram:",
+    "title": "Contact us:",
+    "follow": "Follow us on Instagram:",
     "architecture": "Architecture",
     "decor": "Decor",
     "development": "Development",
