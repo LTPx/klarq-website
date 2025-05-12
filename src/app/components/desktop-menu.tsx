@@ -28,7 +28,7 @@ export function DesktopMenu(props: Props) {
         <div className="flex flex-col items-center gap-[35px]">
             <div className="flex flex-col">
               <Link href={''} className="text-center text-[40px] leading-[60px]">{`${t("menu.publications")}`}</Link>
-              <Link href={''} className="text-center text-[40px] leading-[60px]">{`${t("menu.contact")}`}</Link>
+              <Link href={'/contact'} className="text-center text-[40px] leading-[60px]">{`${t("menu.contact")}`}</Link>
               <Link href={''} className="text-center text-[40px] leading-[60px]">{`${t("menu.spanish")}`}</Link>
             </div>
             <div className="flex flex-col items-center gap-[15px]">
