@@ -1,45 +1,57 @@
 "use client";
 
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import CategoryCard from "./category-card";
 
-interface HomeAnimationProps {
-  title: string;
-  description?: string;
-  imageCategory: string;
-  className?: string;
-}
+function HomeAnimation() {
+  const containerRef = useRef(null);
+  const [windowHeight, setWindowHeight] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(0);
 
-function HomeAnimation(props: HomeAnimationProps) {
-  const { title, description, imageCategory, className } = props;
+  const { scrollY } = useScroll();
+
+  useEffect(() => {
+    const updateWindowDimensions = () => {
+      setWindowHeight(window.innerHeight);
+      setWindowWidth(window.innerWidth);
+    };
+
+    updateWindowDimensions();
+
+    window.addEventListener("resize", updateWindowDimensions);
+
+    return () => window.removeEventListener("resize", updateWindowDimensions);
+  }, []);
+
+  const height = useTransform(scrollY, [0, 300], [windowHeight * 0.4, 58]);
+
+  const width = useTransform(scrollY, [0, 300], [windowWidth, 322]);
 
   return (
     <div className="container">
-      <div className="h-[40dvh]">
-        <div className=" px-[50px] pt-[50px] pb-[30px]">
-          <img
-            src="/images/KLARQ.svg"
-            className="mix-blend-difference h-full w-full"
-          />
-        </div>
-      </div>
-      <div className="grid gap-[5px] grid-cols-3">
+      <motion.img
+        src="/images/KLARQ.svg"
+        alt="KLARQ"
+        className="px-[40px] object-contain fixed top-[10px] left-0 z-[1000]"
+        style={{
+          height,
+          width,
+        }}
+      />
+      <div className="h-[40dvh]" />
+      <div className="grid gap-[5px] grid-cols-3 mt-[30px]">
         <CategoryCard
-          title={"Klarp"}
-          imageCategory={
-            "https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
+          title="Klarp"
+          imageCategory="https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c"
         />
         <CategoryCard
-          title={"Klarp"}
-          imageCategory={
-            "https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
+          title="Klarp"
+          imageCategory="https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c"
         />
         <CategoryCard
-          title={"Klarp"}
-          imageCategory={
-            "https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
+          title="Klarp"
+          imageCategory="https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c"
         />
       </div>
     </div>

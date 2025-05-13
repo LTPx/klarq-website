@@ -11,7 +11,7 @@ function Home(props: Props) {
   const { data } = props;
   return (
     <div className="container">
-      <HomeAnimation title={""} imageCategory={""}/>
+      <HomeAnimation/>
       <HomeInformation/>
     </div>
   );
