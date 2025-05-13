@@ -4,10 +4,28 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import CategoryCard from "./category-card";
 
+const CARDS = [
+  {
+    title: "Klarp",
+    image:
+      "https://plus.unsplash.com/premium_photo-1746731481770-08b2f71661d0?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    title: "Klarp",
+    image: "https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c",
+  },
+  {
+    title: "Klarp",
+    image:
+      "https://images.unsplash.com/photo-1744132813623-5ce3c521eef4?q=80&w=3436&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
+
 function HomeAnimation() {
   const containerRef = useRef(null);
   const [windowHeight, setWindowHeight] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const { scrollY } = useScroll();
 
@@ -40,19 +58,33 @@ function HomeAnimation() {
         }}
       />
       <div className="h-[40dvh]" />
-      <div className="grid gap-[5px] grid-cols-3 mt-[30px]">
-        <CategoryCard
-          title="Klarp"
-          imageCategory="https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c"
-        />
-        <CategoryCard
-          title="Klarp"
-          imageCategory="https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c"
-        />
-        <CategoryCard
-          title="Klarp"
-          imageCategory="https://plus.unsplash.com/premium_photo-1694540892449-5c3170caf81c"
-        />
+      <div className="flex gap-[5px] mt-[30px] transition-all duration-300">
+        {CARDS.map((card, index) => {
+          let grow = "flex-[1]";
+          if (hoveredIndex !== null) {
+            if (hoveredIndex === index) {
+              grow = "flex-[3]";
+            } else if (
+              (hoveredIndex === 0 && index === 1) ||
+              (hoveredIndex === 1 && index === 0) ||
+              (hoveredIndex === 2 && index === 1)
+            ) {
+              grow = "flex-[2]";
+            } else {
+              grow = "flex-[1]";
+            }
+          }
+          return (
+            <div
+              key={index}
+              className={`${grow} transition-all duration-500 ease-in-out`}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <CategoryCard title={card.title} imageCategory={card.image} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
