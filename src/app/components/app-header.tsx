@@ -14,8 +14,8 @@ function AppHeader(nextParams: { params: { locale: "en" | "es" | "de" } }) {
 
   const linksHeader = [
     // { title: `${t('header.projects')}`, url: "/projects" },
-    { title: `${t("header.architecture")}`, url: "/news" },
-    { title: `${t("header.decor")}`, url: "/news" },
+    { title: `${t("header.architecture")}`, url: "/architecture" },
+    { title: `${t("header.decor")}`, url: "/decor" },
     { title: `${t("header.development")}`, url: `/about-us` },
     { title: `${t("header.shop")}`, url: "/news" },
   ];

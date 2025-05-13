@@ -1,17 +1,16 @@
-"use client";
 
 import { Link } from "@/navigation";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
+async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
   const {
     params: { locale },
   } = nextParams;
-  const t = useTranslations();
+  const t = await getTranslations();
 
   return (
     <div className="lg:h-screen lg:flex">
-      <div className="absolute top-[35px] left-[35px]">
+      <div className="fixed top-[35px] left-[35px]">
         <img src="/images/KLARQ.svg" className="h-[49px] w-full" />
       </div>
       <div className="absolute top-[35px] right-[35px]">

@@ -14,9 +14,12 @@ function HomeAnimation(props: HomeAnimationProps) {
 
   return (
     <div className="container">
-      <div className="">
-        <div className="px-[50px] pt-[50px] pb-[30px]">
-            <img src="/images/KLARQ.svg" className="h-[30dvh] w-full" />
+      <div className="h-[40dvh]">
+        <div className=" px-[50px] pt-[50px] pb-[30px]">
+          <img
+            src="/images/KLARQ.svg"
+            className="mix-blend-difference h-full w-full"
+          />
         </div>
       </div>
       <div className="grid gap-[5px] grid-cols-3">

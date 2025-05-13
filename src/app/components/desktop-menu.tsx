@@ -22,12 +22,20 @@ export function DesktopMenu(props: Props) {
       }`}
     >
       <div className="container flex flex-col gap-[110px]">
-        <div className="px-[50px] pt-[50px] pb-[30px]">
-          <img src="/images/KLARQ.svg" className="h-[30dvh] w-full" />
+        <div className="h-[40dvh]">
+        <div className=" px-[50px] pt-[50px] pb-[30px]">
+          <img
+            src="/images/KLARQ.svg"
+            className="h-full w-full"
+          />
         </div>
+      </div>
+        {/* <div className="px-[50px] pt-[50px] pb-[30px]">
+          <img src="/images/KLARQ.svg" className="h-[30dvh] w-full" />
+        </div> */}
         <div className="flex flex-col items-center gap-[35px]">
             <div className="flex flex-col">
-              <Link href={''} className="text-center text-[40px] leading-[60px]">{`${t("menu.publications")}`}</Link>
+              <Link href={'/publications'} className="text-center text-[40px] leading-[60px]">{`${t("menu.publications")}`}</Link>
               <Link href={'/contact'} className="text-center text-[40px] leading-[60px]">{`${t("menu.contact")}`}</Link>
               <Link href={''} className="text-center text-[40px] leading-[60px]">{`${t("menu.spanish")}`}</Link>
             </div>

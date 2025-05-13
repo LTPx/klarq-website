@@ -16,6 +16,10 @@
   max-width: 100%;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
 .designer-description {
   p {
     font-size: 18px;
