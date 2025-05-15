@@ -20,25 +20,7 @@ function AppHeader(nextParams: { params: { locale: "en" | "es" | "de" } }) {
     { title: `${t("header.shop")}`, url: "/news" },
   ];
 
-  const menuLinks = [
-    // { title: `${t("header.projects")}`, url: "/projects" },
-    { title: `${t("header.about-us")}`, url: `/about-us` },
-    { title: `${t("header.blog")}`, url: "/news" },
-    { title: `${t("header.gallery")}`, url: "/gallery" },
-    // { title: `${t('header.contact')}`, url: "/" },
-  ];
-
-  const allLanguages = ["/es", "/en", "/de"];
-
-  const filteredLinksHeader = allLanguages.includes(pathname)
-    ? linksHeader.filter((link) => link.title !== "Fonaments")
-    : linksHeader;
-
-  const languages = [
-    { name: "ESP", url: "/es" },
-    { name: "ENG", url: "/en" },
-    { name: "DEU", url: "/de" },
-  ];
+  const allLanguages = ["/es", "/en"];
 
   return (
     <>

@@ -8,6 +8,13 @@ export function Footer() {
   const t = useTranslations();
   const pathname = usePathname();
 
+  const noShowFooter =
+    pathname?.includes("/publications") || pathname?.includes("/contact");
+
+  if (noShowFooter) {
+    return null;
+  }
+
   return (
     <div className="bg-gray">
       <footer className={`bg-gray pt-[30px] px-[40px] pb-[60px]`}>
@@ -41,13 +48,13 @@ export function Footer() {
               {`${t("footer.follow")}`}
             </span>
             <div className="flex gap-[15px]">
-              <span className="rounded-[50px] border border-black border-[0.75px] py-[10px] px-[15px]">{`${t(
+              <span className="flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
                 "footer.architecture"
               )}`}</span>
-              <span className="rounded-[50px] border border-black border-[0.75px] py-[10px] px-[15px]">{`${t(
+              <span className="flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
                 "footer.decor"
               )}`}</span>
-              <span className="rounded-[50px] border border-black border-[0.75px] py-[10px] px-[15px]">{`${t(
+              <span className="flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
                 "footer.development"
               )}`}</span>
             </div>

@@ -65,7 +65,7 @@ export function HomeInformation() {
         </section>
       </div>
       <SliderBrand brands={brands}/>
-      <GalleryImagesScroll images={images}/>
+      <GalleryImagesScroll imageClassName="lg:h-[575px]" images={images}/>
     </section>
   );
 }

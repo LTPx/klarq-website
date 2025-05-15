@@ -28,8 +28,12 @@ export function Header({
 
   return (
     <>
-      <header className="bg-gray container fixed bottom-0 z-[1000]">
-        <div className="h-[50px] px-[40px] flex justify-between items-center">
+      <header className="bg-gray container fixed bottom-0 z-[1002]">
+        <div
+          className={`h-[50px] px-[40px] flex justify-between items-center transition-all duration-300 ${
+            showMenu ? "border-t-[0.8px] border-black" : ""
+          }`}
+        >
           <img
             className="cursor-pointer"
             onClick={handleContactClick}
@@ -37,16 +41,30 @@ export function Header({
             alt={showMenu ? "Cerrar menú" : "Abrir menú"}
           />
           <div className="flex gap-[150px]">
-            {links.map((link, index) => (
-              <Link
-                key={index}
-                href={link.url}
-                className="flex items-center gap-[6px]"
-              >
-                <img src="/images/circle.svg" className="h-[10px] w-[10px]" />
-                <span className="text-[18px] leading-[18px]">{link.title}</span>
-              </Link>
-            ))}
+            {links.map((link, index) => {
+              const isActive = currentPath === link.url;
+              return (
+                <Link
+                  key={index}
+                  href={link.url}
+                  className="flex items-center gap-[6px]"
+                  onClick={() => setShowMenu(false)}
+                >
+                  <img
+                    src={
+                      isActive
+                        ? "/images/circle-black.svg"
+                        : "/images/circle.svg"
+                    }
+                    className="h-[10px] w-[10px]"
+                    alt=""
+                  />
+                  <span className="text-[18px] leading-[18px]">
+                    {link.title}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </header>

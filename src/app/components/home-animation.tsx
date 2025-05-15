@@ -69,13 +69,13 @@ function HomeAnimation() {
       <motion.img
         src="/images/KLARQ.svg"
         alt="KLARQ"
-        className="px-[40px] object-contain fixed top-[10px] left-0 z-[1000]"
+        className="px-[40px] object-contain fixed top-[0px] left-0 z-[1000]"
         style={{ height, width }}
       />
 
       <div className="h-[40dvh]" />
 
-      <div className="flex gap-[5px] mt-[30px] transition-all duration-300">
+      <div className="flex gap-[5px] mt-[20px] transition-all duration-300">
         {CARDS.map((card, index) => {
           let grow = "flex-[1]";
 

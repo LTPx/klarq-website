@@ -1,14 +1,15 @@
 interface Props {
   images: string[];
+  imageClassName?: string;
 }
 
 function GalleryImagesScroll(props: Props) {
-  const { images } = props;
+  const { images, imageClassName = "lg:h-[630px]" } = props;
 
   return (
     <div className="w-full">
       <div
-        className="flex overflow-x-auto scrollbar-hide gap-[8px] pb-[25px] no-scrollbar"
+        className="flex overflow-x-auto scrollbar-hide gap-[8px] no-scrollbar"
         style={{ cursor: "grab" }}
       >
         {images.map((src, index) => (
@@ -16,7 +17,7 @@ function GalleryImagesScroll(props: Props) {
             key={index}
             src={src}
             alt={`image-${index}`}
-            className="h-[630px] object-contain shrink-0"
+            className={`object-contain shrink-0 ${imageClassName}`}
           />
         ))}
       </div>

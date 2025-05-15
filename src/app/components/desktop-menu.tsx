@@ -17,42 +17,54 @@ export function DesktopMenu(props: Props) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-screen bg-gray transform transition-transform duration-500 ease-in-out z-[999] ${
+      className={`fixed top-0 left-0 w-full h-screen bg-gray transform transition-transform duration-500 ease-in-out z-[1001] ${
         showContact ? "translate-y-0" : "translate-y-full"
       }`}
     >
       <div className="container flex flex-col gap-[110px]">
         <div className="h-[40dvh]">
-        <div className=" px-[50px] pt-[50px] pb-[30px]">
-          <img
-            src="/images/KLARQ.svg"
-            className="h-full w-full"
-          />
+          <Link href={"/"} onClick={() => setShowContact(false)}>
+            <div className=" px-[40px] pt-[40px] pb-[30px]">
+              <img src="/images/KLARQ.svg" className="h-full w-full" />
+            </div>
+          </Link>
         </div>
-      </div>
         {/* <div className="px-[50px] pt-[50px] pb-[30px]">
           <img src="/images/KLARQ.svg" className="h-[30dvh] w-full" />
         </div> */}
         <div className="flex flex-col items-center gap-[35px]">
-            <div className="flex flex-col">
-              <Link href={'/publications'} className="text-center text-[40px] leading-[60px]">{`${t("menu.publications")}`}</Link>
-              <Link href={'/contact'} className="text-center text-[40px] leading-[60px]">{`${t("menu.contact")}`}</Link>
-              <Link href={''} className="text-center text-[40px] leading-[60px]">{`${t("menu.spanish")}`}</Link>
-            </div>
-            <div className="flex flex-col items-center gap-[15px]">
-              <span className="text-center text-[16px] leading-[22px]">{`${t("menu.follow")}`}</span>
-              <div className="flex gap-[15px]">
-              <span className="text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] py-[10px] px-[15px]">{`${t(
+          <div className="flex flex-col">
+            <Link
+              href={"/publications"}
+              className="text-center text-[40px] leading-[60px]"
+              onClick={() => setShowContact(false)}
+            >{`${t("menu.publications")}`}</Link>
+            <Link
+              href={"/contact"}
+              className="text-center text-[40px] leading-[60px]"
+              onClick={() => setShowContact(false)}
+            >{`${t("menu.contact")}`}</Link>
+            <Link
+              href={""}
+              className="text-center text-[40px] leading-[60px]"
+            >{`${t("menu.spanish")}`}</Link>
+          </div>
+          <div className="flex flex-col items-center gap-[15px]">
+            <span className="text-center text-[16px] leading-[22px]">{`${t(
+              "menu.follow"
+            )}`}</span>
+            <div className="flex gap-[15px]">
+              <span className="cursor-pointer flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
                 "footer.architecture"
               )}`}</span>
-              <span className="text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] py-[10px] px-[15px]">{`${t(
+              <span className="cursor-pointer flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
                 "footer.decor"
               )}`}</span>
-              <span className="text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] py-[10px] px-[15px]">{`${t(
+              <span className="cursor-pointer flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
                 "footer.development"
               )}`}</span>
             </div>
-            </div>
+          </div>
         </div>
       </div>
     </div>

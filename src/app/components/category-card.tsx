@@ -11,7 +11,7 @@ function CategoryCard({ title, imageCategory, className }: CategoryCardProps) {
       <img
         src={imageCategory}
         alt={title}
-        className="w-full h-[calc(60dvh-80px)] object-cover"
+        className="w-full h-[calc(60dvh-70px)] object-cover"
       />
       <h1 className="absolute left-[30px] top-[20px] text-white text-[16px] leading-[16px] font-regular tracking-[-0.04em] z-[100]">
         {title}

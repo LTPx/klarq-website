@@ -21,7 +21,7 @@ async function Publications(nextParams: {
   ];
 
   return (
-    <div className="h-[100dvh] flex justify-center items-center">
+    <div className="h-[calc(100dvh-50px)] flex justify-center items-center">
       <div className="fixed top-[35px] left-[35px]">
         <label className="dark:mix-blend-difference text-black text-[66px] leading-[46px] mix-blend-difference">
           KLARQ
