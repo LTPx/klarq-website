@@ -7,6 +7,7 @@ import {
   OgImage,
   TargetClass,
 } from './wordpress';
+import { HomePageWp } from './wordpress-components';
 
 
 export interface WordPressFrontendPage {
@@ -28,8 +29,17 @@ export interface WordPressFrontendPage {
   yoast_head: string;
   yoast_head_json: YoastHeadJSON;
   _links: Links;
-  // acf?: AcfBuilderPage
+  acf: AcfComponents
 }
+
+export interface AcfComponents {
+  home_information: HomePageWp;
+  // contact_information: ContactPageWp;
+  // brands_information: BrandsPageWp;
+  // projects_information: ProjectsPageWp;
+  // aboutUs_information: AboutUsPageWp;
+}
+
 
 export interface Links {
   self: About[];

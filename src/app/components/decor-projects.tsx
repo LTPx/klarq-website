@@ -1,3 +1,5 @@
+import GalleryImagesScroll from "./gallery-images-scroll";
+
 interface Props {
   title: string;
   date?: string;
@@ -10,19 +12,7 @@ function DecorProjects(props: Props) {
 
   return (
     <div className="DecorProjects w-full">
-      <div
-        className="flex overflow-x-auto scrollbar-hide gap-[8px] pb-[25px] no-scrollbar"
-        style={{ cursor: "grab" }}
-      >
-        {images.map((src, index) => (
-          <img
-            key={index}
-            src={src}
-            alt={`image-${index}`}
-            className="h-[630px] object-contain shrink-0"
-          />
-        ))}
-      </div>
+      <GalleryImagesScroll images={images}/>
       <div className="grid grid-cols-2">
         <div>
           <h2 className="text-[35px] leading-[46px]">Can Duarte</h2>

@@ -1,14 +1,14 @@
 import React from "react";
-import CategoryCard from "../components/category-card";
 import HomeAnimation from "../components/home-animation";
 import HomeInformation from "../components/home-information";
+import { HomePageWp } from "../_interfaces/wordpress-components";
 
 interface Props {
-  data: any;
+  homeInformation?: HomePageWp;
 }
 
 function Home(props: Props) {
-  const { data } = props;
+  const { homeInformation } = props;
   return (
     <div className="container">
       <HomeAnimation/>
