@@ -2,6 +2,7 @@
 
 import DesignersSection from "./designers-section";
 import GalleryImagesScroll from "./gallery-images-scroll";
+import { SliderBrand } from "./slider";
 
 const images = [
   "https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=3544&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -12,6 +13,15 @@ const images = [
   "https://plus.unsplash.com/premium_photo-1674217930032-825b6e1d8511?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "https://images.unsplash.com/photo-1746730251085-34132b6dcec5?q=80&w=3544&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=3607&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+];
+
+const brands = [
+  "Arquitectura passivhaus",
+  "Rehabilitación y reformas integrales",
+  "Interiorismo",
+  "Elección y suministro de materiales y mobiliar",
+  "Rehabilitación y reformas integrales",
+  "Arquitectura passivhaus",
 ];
 
 // interface Props {
@@ -54,6 +64,7 @@ export function HomeInformation() {
           </div>
         </section>
       </div>
+      <SliderBrand brands={brands}/>
       <GalleryImagesScroll images={images}/>
     </section>
   );
