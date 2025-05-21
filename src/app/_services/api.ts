@@ -4,7 +4,7 @@ import { WORDPRESS_API_URL } from "../constants";
 export async function getWordPressPage(
   page: string
 ): Promise<WordPressFrontendPage> {
-  const url = `${WORDPRESS_API_URL}/wp/v2/pages/${page}`;
+  const url = `${WORDPRESS_API_URL}/wp/v2/pages?slug=${page}`;
   console.log("url: ", url);
   const response = await fetch(url, {
     next: {
@@ -26,7 +26,6 @@ export async function getWordPressCustomPage(
     en: "english-pages",
   };
   const parentPage = parentPages[locale];
-  const WORDPRESS_API_URL = "https://klarq-staging.kesug.com/wp-json";
   const url = `${WORDPRESS_API_URL}/custom/v1/page_by_slug?slug=${slug}&parent_slug=${parentPage}&lang=${locale}`;
   console.log("url custom page: ", url);
   const response = await fetch(url, {

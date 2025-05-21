@@ -17,12 +17,13 @@ export function Footer() {
 
   return (
     <div className="bg-gray">
-      <footer className={`bg-gray pt-[30px] px-[40px] pb-[60px]`}>
-        <div className="grid grid-cols-3">
-          <div className="flex flex-col gap-[35px]">
-            <label className="text-[26px] leading-[45px]">
+      <footer className={`flex flex-col gap-[35px] bg-gray pt-[30px] px-[40px] pb-[60px]`}>
+       <label className="text-[26px] leading-[45px]">
               {`${t("footer.title")}`}
             </label>
+        <div className="grid grid-cols-3">
+          <div className="">
+
             <div className="flex flex-col">
               <p className="text-[16px] leading-[22px] ">
                 C/ Vicent Serra i Orvay, 49

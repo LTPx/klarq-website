@@ -1,5 +1,7 @@
+import { ImageAcf } from "../_interfaces/wordpress-page";
+
 interface Props {
-  images: string[];
+  images: ImageAcf[];
   imageClassName?: string;
 }
 
@@ -15,7 +17,7 @@ function GalleryImagesScroll(props: Props) {
         {images.map((src, index) => (
           <img
             key={index}
-            src={src}
+            src={src.url}
             alt={`image-${index}`}
             className={`object-contain shrink-0 ${imageClassName}`}
           />

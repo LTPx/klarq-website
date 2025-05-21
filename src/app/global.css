@@ -26,3 +26,36 @@
     line-height: 26px;
   }
 }
+
+.description-home {
+  p {
+    font-size: 45px;
+    line-height: 52px;
+  }
+  div {
+    font-size: 45px;
+    line-height: 52px;
+  }
+}
+
+.information-home-title {
+  p {
+    font-size: 26px;
+    line-height: 35px;
+  }
+  div {
+    font-size: 26px;
+    line-height: 35px;
+  }
+}
+
+.information-home-description {
+  p {
+    font-size: 35px;
+    line-height: 45px;
+  }
+  div {
+    font-size: 35px;
+    line-height: 45px;
+  }
+}

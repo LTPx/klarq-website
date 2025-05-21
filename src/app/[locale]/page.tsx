@@ -9,10 +9,9 @@ export default async function Page(nextParams: {
     params: { locale },
   } = nextParams;
 
-  // const data = await getWordPressPage( "home");
-  // const { acf } = data;
-  // const { home_information } = acf;
-  
-  // console.log('home',home_information)
-    return <Home />;
+  const data = await getWordPressCustomPage(locale, "home");
+  const { acf } = data;
+  const { home_information } = acf;
+
+  return <Home homeInformation={home_information} />;
 }

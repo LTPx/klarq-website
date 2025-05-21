@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import CategoryCard from "./category-card";
+import { servicesHome } from "../_interfaces/wordpress-components";
 
 const CARDS = [
   {
@@ -21,7 +22,12 @@ const CARDS = [
   },
 ];
 
-function HomeAnimation() {
+interface Props {
+  services: servicesHome[];
+}
+
+function HomeAnimation(props: Props) {
+  const { services } = props;
   const [windowHeight, setWindowHeight] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -72,25 +78,23 @@ function HomeAnimation() {
         className="px-[40px] object-contain fixed top-[0px] left-0 z-[1000]"
         style={{ height, width }}
       />
-
       <div className="h-[40dvh]" />
-
       <div className="flex gap-[5px] mt-[20px] transition-all duration-300">
-        {CARDS.map((card, index) => {
+        {services.map((card, index) => {
           let grow = "flex-[1]";
 
           if (hoveredIndex !== null) {
             if (hoveredIndex === index) {
-              grow = "flex-[6]"; 
+              grow = "flex-[6]";
             } else if (hoveredIndex === 0) {
-              if (index === 1) grow = "flex-[4]"; 
-              if (index === 2) grow = "flex-[2]"; 
+              if (index === 1) grow = "flex-[4]";
+              if (index === 2) grow = "flex-[2]";
             } else if (hoveredIndex === 1) {
-              if (index === 0) grow = "flex-[3]"; 
-              if (index === 2) grow = "flex-[3]"; 
+              if (index === 0) grow = "flex-[3]";
+              if (index === 2) grow = "flex-[3]";
             } else if (hoveredIndex === 2) {
-              if (index === 0) grow = "flex-[2]"; 
-              if (index === 1) grow = "flex-[4]"; 
+              if (index === 0) grow = "flex-[2]";
+              if (index === 1) grow = "flex-[4]";
             }
           }
 
@@ -103,7 +107,7 @@ function HomeAnimation() {
               }}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <CategoryCard title={card.title} imageCategory={card.image} />
+              <CategoryCard title={card.title} imageCategory={card.image.url} />
             </div>
           );
         })}

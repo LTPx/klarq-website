@@ -8,7 +8,14 @@ export interface MediaFileWp {
 export interface HomePageWp {
   services: servicesHome[];
   description_home: string;
-  team_section: teamHome;
+  team: teamHome;
+  information_home: InformationHome;
+  slider: sliderHome[];
+  carousel_images: ImageAcf[];
+}
+
+export interface sliderHome {
+  title: string;
 }
 
 export interface servicesHome {
@@ -18,9 +25,19 @@ export interface servicesHome {
 }
 
 export interface teamHome {
+  first_team_member: teamInformation;
+  second_team_member: teamInformation;
+}
+
+export interface teamInformation {
   image: ImageAcf;
   name: string;
   profession: string;
+  description: string;
+}
+
+export interface InformationHome {
+  title: string;
   description: string;
 }
 

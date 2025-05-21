@@ -1,9 +1,10 @@
 "use client";
 
 import Marquee from "react-fast-marquee";
+import { sliderHome } from "../_interfaces/wordpress-components";
 
 type Props = {
-  brands: string[];
+  brands: sliderHome[];
   className?: string;
   speed?: number;
 };
@@ -17,7 +18,7 @@ export function SliderBrand(props: Props) {
       <div className="relative h-[90px] flex justify-center items-center">
         <div className="flex flex-col gap-[10px] justify-center items-center h-full">
           <p className="text-[26px] leading-[52px]">
-            {brands[0]}
+            {brands[0].title}
           </p>
         </div>
       </div>
@@ -29,7 +30,7 @@ export function SliderBrand(props: Props) {
       <Marquee gradient={false} speed={speed} pauseOnHover={true}>
         {brands.map((brand, index) => (
           <span key={index} className="text-[26px] leading-[52px] whitespace-nowrap">
-            {brand}<span className="px-4">|</span>
+            {brand.title}<span className="px-4">|</span>
           </span>
         ))}
       </Marquee>
