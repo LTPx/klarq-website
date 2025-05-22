@@ -14,6 +14,28 @@ export interface HomePageWp {
   carousel_images: ImageAcf[];
 }
 
+export interface ArchitecturePageWp {
+  projects: FeatureProjectWp[];
+}
+
+export interface ArchitectureSlugWp {
+  cover_project: ImageAcf;
+  date: string;
+  description_project: string;
+  images_project: ImageAcf[];
+}
+
+export interface FeatureProjectWp {
+  project: ProjectPostWp;
+}
+
+export interface ProjectPostWp {
+  ID: number;
+  post_title: string;
+  imageUrl: string;
+}
+
+
 export interface sliderHome {
   title: string;
 }

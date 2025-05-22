@@ -1,5 +1,5 @@
-import Cover from "@/app/components/cover-pages";
-import { useTranslations } from "next-intl";
+import { getChildPages, getWordPressCustomPage } from "@/app/_services/api";
+import ArchitecturePage from "@/app/components/architecture-information-page";
 
 async function Architecture(nextParams: {
   params: { locale: "en" | "es" | "de" };
@@ -7,15 +7,37 @@ async function Architecture(nextParams: {
   const {
     params: { locale },
   } = nextParams;
+  const page = "architecture";
+  const parentSlug =
+    locale === "es"
+      ? "spanish-pages"
+      : locale === "de"
+      ? "german-pages"
+      : "english-pages";
+
+  const data = await getWordPressCustomPage(locale, page);
+  const allProjects = await getChildPages(page, locale, parentSlug);
+
+  const { acf } = data;
+  const { architecture_information } = acf;
+
+  const projectsIdsSelected = architecture_information.projects.map(
+    (item) => item.project.ID
+  );
+
+  const projects = projectsIdsSelected
+    .map((id) => allProjects.find((project) => project.id === id))
+    .filter(isDefined);
 
   return (
     <div className="architecture">
-      <div className="fixed top-[35px] left-[35px]">
-        <img src="/images/KLARQ.svg" className="h-[49px] w-full" />
-      </div>
-      <Cover img="https://images.unsplash.com/photo-1746730251085-34132b6dcec5?q=80&w=3544&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <ArchitecturePage projects={projects} />
     </div>
   );
 }
 
 export default Architecture;
+
+function isDefined<T>(value: T | undefined): value is T {
+  return value !== undefined;
+}

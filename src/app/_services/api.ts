@@ -37,3 +37,54 @@ export async function getWordPressCustomPage(
   if (!response.ok) throw new Error(page.message);
   return page;
 }
+
+export async function getChildPages(
+  slug: string,
+  locale: "en" | "es" | "de",
+  parentSlug: string
+): Promise<WordPressFrontendPage[]> {
+  const url = `${WORDPRESS_API_URL}/custom/v1/projects_children?slug=${slug}&parent_slug=${parentSlug}&lang=${locale}`;
+  console.log("url child page: ", url);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Error al obtener las páginas hijas.");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al obtener páginas hijas:", error);
+    throw new Error("No se pudieron obtener las páginas hijas.");
+  }
+}
+
+export async function getProjectChildBySlug(
+  slug: string,
+  locale: "en" | "es" | "de"
+): Promise<WordPressFrontendPage> {
+  const parentPages = {
+    es: "spanish-pages",
+    de: "german-pages",
+    en: "english-pages",
+  };
+  const parentPage = parentPages[locale];
+  const url = `${WORDPRESS_API_URL}/custom/v1/project_child?slug=${slug}&parent_slug=${parentPage}&lang=${locale}`;
+
+  console.log("url project child: ", url);
+
+  try {
+    const response = await fetch(url, {
+      next: {
+        revalidate: 0,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Error al obtener la página hija.");
+    }
+    const page = await response.json();
+    return page;
+  } catch (error) {
+    console.error("Error al obtener la página hija:", error);
+    throw new Error("No se pudo obtener la página hija.");
+  }
+}

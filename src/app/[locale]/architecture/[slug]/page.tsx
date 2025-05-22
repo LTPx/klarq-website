@@ -1,3 +1,4 @@
+import { getProjectChildBySlug } from "@/app/_services/api";
 import ArchitectureInformation from "@/app/components/architecture-information";
 import Cover from "@/app/components/cover-pages";
 
@@ -7,6 +8,10 @@ async function ArchitectureSlugPage(nextParams: {
   const {
     params: { locale, slug },
   } = nextParams;
+
+  const data = await getProjectChildBySlug(slug, locale);
+  const { acf } = data;
+  const { architecture_projects } = acf;
 
   return (
     <div className="architecture-slug-page relative bg-white overflow-hidden">
@@ -20,7 +25,7 @@ async function ArchitectureSlugPage(nextParams: {
           ARCHITECTURE
         </label>
       </div>
-      <Cover img="https://images.unsplash.com/photo-1746730251085-34132b6dcec5?q=80&w=3544&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <Cover img={architecture_projects.cover_project.url} />
       <section className="pt-[60px]">
         <ArchitectureInformation
           title={""}

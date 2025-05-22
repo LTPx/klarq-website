@@ -9,7 +9,7 @@ export function Footer() {
   const pathname = usePathname();
 
   const noShowFooter =
-    pathname?.includes("/publications") || pathname?.includes("/contact");
+    pathname?.includes("/publications") || pathname?.includes("/contact") || pathname?.includes("/architecture");
 
   if (noShowFooter) {
     return null;
