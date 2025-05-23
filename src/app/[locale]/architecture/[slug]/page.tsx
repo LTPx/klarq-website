@@ -1,6 +1,9 @@
-import { getProjectChildBySlug } from "@/app/_services/api";
+import { getChildPages, getProjectChildBySlug } from "@/app/_services/api";
 import ArchitectureInformation from "@/app/components/architecture-information";
+import CarouselProjects from "@/app/components/carosuel-projects";
 import Cover from "@/app/components/cover-pages";
+import ProjectCard from "@/app/components/project-card";
+import { Link } from "@/navigation";
 
 async function ArchitectureSlugPage(nextParams: {
   params: { locale: "es" | "de" | "en"; slug: string };
@@ -10,6 +13,15 @@ async function ArchitectureSlugPage(nextParams: {
   } = nextParams;
 
   const data = await getProjectChildBySlug(slug, locale);
+  const page = "architecture";
+  const parentSlug =
+    locale === "es"
+      ? "spanish-pages"
+      : locale === "de"
+      ? "german-pages"
+      : "english-pages";
+  const allProjects = await getChildPages(page, locale, parentSlug);
+
   const { acf } = data;
   const { architecture_projects } = acf;
 
@@ -28,11 +40,32 @@ async function ArchitectureSlugPage(nextParams: {
       <Cover img={architecture_projects.cover_project.url} />
       <section className="pt-[60px]">
         <ArchitectureInformation
-          title={""}
-          description={
-            "Ibiza evoca esa sensación de eternas vacaciones que todos deseamos disfrutar todo el año. Su atmósfera relajada, el ambiente familiar y su maravilloso clima contribuyen al privilegio de vivir al aire libre gran parte del tiempo, independientemente de la estación."
-          }
+          title={architecture_projects.title}
+          date={architecture_projects.date}
+          images_project={architecture_projects.images_project}
+          description={architecture_projects.description_project}
         />
+      </section>
+      <section className="flex flex-col gap-[40px] pt-[150px] px-[40px] pb-[40px]">
+        <div className="flex flex-col gap-[8px]">
+          <div className="border-[1px] border-t-black "></div>
+          <span className="text-[18px] leading-[28px]">More projects</span>
+        </div>
+        <CarouselProjects slidesNumber={3}>
+          {allProjects
+            .filter((project) => project.slug !== slug)
+            .map((project, index) => (
+              <Link
+                className="cursor-pointer"
+                href={`/architecture/${project.slug}`}
+              >
+                <ProjectCard
+                  title={project.acf.architecture_projects.title}
+                  image={project.acf.architecture_projects.cover_project.url}
+                />
+              </Link>
+            ))}
+        </CarouselProjects>
       </section>
     </div>
   );

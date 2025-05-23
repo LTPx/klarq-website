@@ -51,9 +51,9 @@ export function Cover(props: Props) {
           zIndex: 1,
         }}
       />
-      <div className="absolute inset-0 flex items-center justify-center z-10">
+      {/* <div className="absolute inset-0 flex items-center justify-center z-10">
         {children}
-      </div>
+      </div> */}
     </div>
   );
 }

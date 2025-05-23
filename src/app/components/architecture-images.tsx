@@ -1,5 +1,7 @@
+import { ImageAcf } from "../_interfaces/wordpress-page";
+
 interface Props {
-    images?: string[];
+    images?: ImageAcf[];
   }
   
   function ArchitectureImages({ images = [] }: Props) {
@@ -30,7 +32,7 @@ interface Props {
           return (
             <div key={index} className={wrapperClass}>
               <img
-                src={src}
+                src={src.url}
                 alt={`Architecture ${index + 1}`}
                 style={imageStyle}
                 className="object-cover"

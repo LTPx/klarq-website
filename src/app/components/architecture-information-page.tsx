@@ -8,13 +8,16 @@ interface Props {
 
 function ArchitecturePage(props: Props) {
   const { projects } = props;
-
+  console.log("this", projects);
   return (
     <div className="ArchitecturePage pb-[50px]">
       {projects &&
-        projects.map((project, index) => (
-          <Link href={`/architecture/${project.slug}`}>
-            <Cover img={project.acf.architecture_projects.cover_project.url} />
+        projects.map((project) => (
+          <Link key={project.id} href={`/architecture/${project.slug}`}>
+            <img
+              className="object-cover w-full h-[calc(100dvh-50px)]"
+              src={project.acf.architecture_projects.cover_project.url}
+            />
           </Link>
         ))}
     </div>

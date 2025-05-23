@@ -16,10 +16,11 @@ export interface HomePageWp {
 
 export interface ArchitecturePageWp {
   projects: FeatureProjectWp[];
-}
+} 
 
 export interface ArchitectureSlugWp {
   cover_project: ImageAcf;
+  title: string;
   date: string;
   description_project: string;
   images_project: ImageAcf[];

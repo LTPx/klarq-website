@@ -9,21 +9,25 @@ export function Footer() {
   const pathname = usePathname();
 
   const noShowFooter =
-    pathname?.includes("/publications") || pathname?.includes("/contact") || pathname?.includes("/architecture");
-
+    pathname?.includes("/publications") ||
+    pathname?.includes("/contact") ||
+    pathname === "/es/architecture" ||
+    pathname === "/en/architecture";
+    
   if (noShowFooter) {
     return null;
   }
 
   return (
     <div className="bg-gray">
-      <footer className={`flex flex-col gap-[35px] bg-gray pt-[30px] px-[40px] pb-[60px]`}>
-       <label className="text-[26px] leading-[45px]">
-              {`${t("footer.title")}`}
-            </label>
+      <footer
+        className={`flex flex-col gap-[35px] bg-gray pt-[30px] px-[40px] pb-[60px]`}
+      >
+        <label className="text-[26px] leading-[45px]">
+          {`${t("footer.title")}`}
+        </label>
         <div className="grid grid-cols-3">
           <div className="">
-
             <div className="flex flex-col">
               <p className="text-[16px] leading-[22px] ">
                 C/ Vicent Serra i Orvay, 49
