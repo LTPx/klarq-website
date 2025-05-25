@@ -1,3 +1,4 @@
+import { getWordPressCustomPage } from "@/app/_services/api";
 import Cover from "@/app/components/cover-pages";
 import GalleryProjects from "@/app/components/gallery";
 import { useTranslations } from "next-intl";
@@ -20,6 +21,11 @@ async function Publications(nextParams: {
     "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=3607&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   ];
 
+    const data = await getWordPressCustomPage(locale, "publications");
+    const { acf } = data;
+    const { publications_information } = acf;
+  
+
   return (
     <div className="h-[calc(100dvh-50px)] flex justify-center items-center">
       <div className="fixed top-[35px] left-[35px]">
@@ -33,7 +39,7 @@ async function Publications(nextParams: {
         </label>
       </div>
       <section>
-        <GalleryProjects gallery={images} />
+        <GalleryProjects publication={publications_information.publications} />
       </section>
     </div>
   );

@@ -31,6 +31,17 @@ export interface ContactPageWp {
   description: string;
 }
 
+export interface PublicationsPageWp {
+  publications: PublicationsWp[];
+}
+
+export interface PublicationsWp {
+  image: ImageAcf;
+  title: string;
+  sub_title: string;
+  url: string;
+}
+
 export interface FeatureProjectWp {
   project: ProjectPostWp;
 }

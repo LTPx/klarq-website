@@ -7,7 +7,7 @@ import {
   OgImage,
   TargetClass,
 } from './wordpress';
-import { ArchitecturePageWp, ArchitectureSlugWp, ContactPageWp, HomePageWp } from './wordpress-components';
+import { ArchitecturePageWp, ArchitectureSlugWp, ContactPageWp, HomePageWp, PublicationsPageWp } from './wordpress-components';
 
 
 export interface WordPressFrontendPage {
@@ -37,6 +37,7 @@ export interface AcfComponents {
   architecture_information: ArchitecturePageWp;
   architecture_projects: ArchitectureSlugWp;
   contact_information: ContactPageWp;
+  publications_information: PublicationsPageWp;
   // brands_information: BrandsPageWp;
   // projects_information: ProjectsPageWp;
   // aboutUs_information: AboutUsPageWp;
