@@ -20,10 +20,15 @@ export interface ArchitecturePageWp {
 
 export interface ArchitectureSlugWp {
   cover_project: ImageAcf;
-  title: string;
+  title_project: string;
   date: string;
   description_project: string;
   images_project: ImageAcf[];
+}
+
+export interface ContactPageWp {
+  cover: ImageAcf;
+  description: string;
 }
 
 export interface FeatureProjectWp {

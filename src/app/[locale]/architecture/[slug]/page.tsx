@@ -40,7 +40,7 @@ async function ArchitectureSlugPage(nextParams: {
       <Cover img={architecture_projects.cover_project.url} />
       <section className="pt-[60px]">
         <ArchitectureInformation
-          title={architecture_projects.title}
+          title={architecture_projects.title_project}
           date={architecture_projects.date}
           images_project={architecture_projects.images_project}
           description={architecture_projects.description_project}
@@ -60,7 +60,7 @@ async function ArchitectureSlugPage(nextParams: {
                 href={`/architecture/${project.slug}`}
               >
                 <ProjectCard
-                  title={project.acf.architecture_projects.title}
+                  title={project.acf.architecture_projects.title_project}
                   image={project.acf.architecture_projects.cover_project.url}
                 />
               </Link>
