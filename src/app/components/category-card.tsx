@@ -3,9 +3,16 @@ interface CategoryCardProps {
   description?: string;
   imageCategory: string;
   className?: string;
+  showDescription?: boolean;
 }
 
-function CategoryCard({ title, imageCategory, className }: CategoryCardProps) {
+function CategoryCard({
+  title,
+  imageCategory,
+  className,
+  description,
+  showDescription,
+}: CategoryCardProps) {
   return (
     <div className={`relative w-full h-full ${className}`}>
       <img
@@ -13,9 +20,22 @@ function CategoryCard({ title, imageCategory, className }: CategoryCardProps) {
         alt={title}
         className="w-full h-[calc(60dvh-70px)] object-cover"
       />
-      <h1 className="absolute left-[30px] top-[20px] text-white text-[16px] leading-[16px] font-regular tracking-[-0.04em] z-[100]">
+      <div className="absolute inset-0 bg-black/20 z-[50]" />
+      <h1 className="absolute left-[50px] top-[45px] text-white text-[18px] leading-[22px] tracking-[-0.02em] z-[100]">
         {title}
       </h1>
+      {description && (
+        <div
+          className={`absolute left-[50px] bottom-[45px] text-white z-[100] w-[428px] transition-opacity duration-500 ease-in-out ${
+            showDescription ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <div
+            className="description-cards-home"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        </div>
+      )}
     </div>
   );
 }

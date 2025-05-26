@@ -99,3 +99,14 @@ body {
     text-align: center;
   }
 }
+
+.description-cards-home {
+  p {
+    font-size: 18px;
+    line-height: 23px;
+  }
+  /* div {
+    font-size: 18px;
+    line-height: 23px;
+  } */
+}

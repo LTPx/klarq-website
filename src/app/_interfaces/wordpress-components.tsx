@@ -60,7 +60,7 @@ export interface sliderHome {
 export interface servicesHome {
   image: ImageAcf;
   title: string;
-  description: string;
+  description_service: string;
 }
 
 export interface teamHome {
