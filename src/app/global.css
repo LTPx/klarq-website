@@ -1,3 +1,26 @@
+@font-face {
+  font-family: 'PP Fragment Light';
+  src: url('/fonts/PPFragment-GlareLight.ttf') format('truetype');
+  font-weight: 300 !important;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PP Fragment Variable';
+  src: url('/fonts/PPFragment-GlareVariable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "PP Fragment Light";
+  font-weight: 300 !important;
+  background-color: #e5e5e5;
+}
+
+
 .aspect-16-9 {
   aspect-ratio: 16 / 9;
 }
@@ -16,10 +39,6 @@
   max-width: 100%;
 }
 
-body {
-  background-color: #e5e5e5;
-}
-
 .no-scrollbar::-webkit-scrollbar {
   display: none !important;
 }
@@ -33,12 +52,16 @@ body {
 
 .description-home {
   p {
+    font-family: "PP Fragment Light";
     font-size: 45px;
     line-height: 52px;
+    font-weight: 300;
   }
   div {
+    font-family: "PP Fragment Light";
     font-size: 45px;
     line-height: 52px;
+    font-weight: 300;
   }
 }
 

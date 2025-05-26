@@ -16,12 +16,12 @@ export function DesignersSection(props: Props) {
       </div>
       <div className="flex flex-col gap-[100px]">
         <div className="">
-          <h3 className="text-[26px] leading-[26px]">{name}</h3>
-          <p className="text-[18px] leading-[30px]">{profession}</p>
+          <h3 className="text-[26px] leading-[26px] font-pp_light">{name}</h3>
+          <p className="text-[18px] leading-[30px] font-pp_light">{profession}</p>
         </div>
         <div
           data-aos="fade-up"
-          className="designer-description"
+          className="designer-description font-pp_light"
           dangerouslySetInnerHTML={{ __html: description }}
         />
       </div>

@@ -78,10 +78,10 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
       </div>
 
       <div className="mt-[16px] text-center">
-        <h2 className="text-[16px] leading-[22px]">
+        <h2 className="uppercase text-[16px] leading-[22px]">
           {publication[selectedIndex]?.title}
         </h2>
-        <p className="text-[16px] leading-[22px]">
+        <p className="uppercase text-[16px] leading-[22px]">
           {publication[selectedIndex]?.sub_title}
         </p>
       </div>

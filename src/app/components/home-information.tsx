@@ -42,14 +42,14 @@ export function HomeInformation(props: Props) {
             <div className="grid grid-cols-3">
               <div
                 data-aos="fade-up"
-                className="information-home-title"
+                className="information-home-title font-pp_light"
                 dangerouslySetInnerHTML={{
                   __html: information_home.title,
                 }}
               />
               <div
                 data-aos="fade-up"
-                className="col-span-2 information-home-description"
+                className="col-span-2 information-home-description font-pp_light"
                 dangerouslySetInnerHTML={{
                   __html: information_home.description,
                 }}
