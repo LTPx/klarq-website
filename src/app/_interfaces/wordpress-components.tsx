@@ -64,6 +64,7 @@ export interface servicesHome {
 }
 
 export interface teamHome {
+  image_team: ImageAcf;
   first_team_member: teamInformation;
   second_team_member: teamInformation;
 }

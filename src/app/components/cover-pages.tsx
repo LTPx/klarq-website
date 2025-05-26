@@ -43,14 +43,14 @@ export function Cover(props: Props) {
           className={`${className} w-full h-[calc(100dvh-50px)] object-cover`}
         />
       )}
-      <div
+      {/* <div
         className={`absolute h-[calc(100dvh-50px)] inset-0 ${className}`}
         style={{
           backgroundImage:
             'linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.25))',
           zIndex: 1,
         }}
-      />
+      /> */}
       {/* <div className="absolute inset-0 flex items-center justify-center z-10">
         {children}
       </div> */}

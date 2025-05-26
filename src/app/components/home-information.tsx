@@ -1,6 +1,10 @@
 "use client";
 
-import { InformationHome, sliderHome, teamHome } from "../_interfaces/wordpress-components";
+import {
+  InformationHome,
+  sliderHome,
+  teamHome,
+} from "../_interfaces/wordpress-components";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 import DesignersSection from "./designers-section";
 import GalleryImagesScroll from "./gallery-images-scroll";
@@ -15,7 +19,13 @@ interface Props {
 }
 
 export function HomeInformation(props: Props) {
-  const { description, team_section, information_home, slider, carousel_images } = props;
+  const {
+    description,
+    team_section,
+    information_home,
+    slider,
+    carousel_images,
+  } = props;
   return (
     <section className="container">
       <div className="px-[40px] bg-green pt-[45px]">
@@ -30,11 +40,7 @@ export function HomeInformation(props: Props) {
         )}
         {team_section && (
           <section className="pt-[140px]">
-            <DesignersSection
-              name={team_section.first_team_member.name}
-              profession={team_section.first_team_member.profession}
-              description={team_section.first_team_member.description}
-            />
+            <DesignersSection team={team_section} />
           </section>
         )}
         {information_home && (
@@ -58,11 +64,12 @@ export function HomeInformation(props: Props) {
           </section>
         )}
       </div>
-      {slider &&
-        <SliderBrand brands={slider} />
-      }
+      {slider && <SliderBrand brands={slider} />}
       {carousel_images && (
-        <GalleryImagesScroll imageClassName="lg:h-[575px]" images={carousel_images} />
+        <GalleryImagesScroll
+          imageClassName="lg:h-[575px]"
+          images={carousel_images}
+        />
       )}
     </section>
   );
