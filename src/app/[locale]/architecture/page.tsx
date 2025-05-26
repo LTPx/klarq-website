@@ -21,17 +21,21 @@ async function Architecture(nextParams: {
   const { acf } = data;
   const { architecture_information } = acf;
 
-  const projectsIdsSelected = architecture_information.projects.map(
-    (item) => item.project.ID
-  );
+  const selectedProjects = architecture_information.projects
+    .map((item) => {
+      const matched = allProjects.find((p) => p.id === item.project.ID);
+      if (!matched) return undefined;
 
-  const projects = projectsIdsSelected
-    .map((id) => allProjects.find((project) => project.id === id))
+      return {
+        project: matched,
+        title: item.project.post_title,
+      };
+    })
     .filter(isDefined);
 
   return (
     <div className="architecture">
-      <ArchitecturePage projects={projects} />
+      <ArchitecturePage projects={selectedProjects} />
     </div>
   );
 }
