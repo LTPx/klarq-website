@@ -60,9 +60,17 @@ function HomeAnimation(props: Props) {
         alt="KLARQ"
         className="px-[40px] object-contain fixed top-[0px] left-0 z-[1000]"
         style={{ height, width }}
+        initial={{ y: -30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
       />
       <div className="h-[40dvh]" />
-      <div className="flex gap-[5px] mt-[20px] transition-all duration-300">
+      <motion.div
+        className="flex gap-[5px] mt-[20px] transition-all duration-300"
+        initial={{ y: 1, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+      >
         {services.map((card, index) => {
           let grow = "flex-[1]";
 
@@ -82,13 +90,18 @@ function HomeAnimation(props: Props) {
           }
 
           return (
-            <div
+            <motion.div
               key={index}
-              className={`${grow} transition-all duration-500 ease-in-out`}
+              animate={{
+                flex: parseFloat(grow.match(/\d+(\.\d+)?/)?.[0] || "1"),
+              }}
+              initial={{ flex: 1 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
               onMouseEnter={() => {
                 if (!isScrolling) setHoveredIndex(index);
               }}
               onMouseLeave={() => setHoveredIndex(null)}
+              style={{ display: "flex" }}
             >
               <CategoryCard
                 description={card.description_service}
@@ -96,10 +109,10 @@ function HomeAnimation(props: Props) {
                 imageCategory={card.image.url}
                 showDescription={hoveredIndex === index}
               />
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   );
 }
