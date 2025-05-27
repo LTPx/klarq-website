@@ -16,7 +16,7 @@ interface Props {
 
 function ArchitecturePage({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
-  const [hasExpanded, setHasExpanded] = useState(false); // Para mostrar el título del primer proyecto
+  const [hasExpanded, setHasExpanded] = useState(false);
 
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -43,15 +43,21 @@ function ArchitecturePage({ projects, information }: Props) {
     return () => observer.disconnect();
   }, [projects]);
 
+  const handleExpandEnd = () => {
+    setTimeout(() => {
+      setHasExpanded(true);
+    }, 1100);
+  };
+
   return (
     <div className="ArchitecturePage relative h-[calc(100dvh-50px)] overflow-y-scroll snap-y snap-mandatory">
       <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
-        <div className="text-white transition-opacity duration-700 ease-in-out">
-          <h1
-            className={`text-[18px] leading-[22px] tracking-[-0.02em] ${
-              hasExpanded ? "opacity-100" : "opacity-0"
-            }`}
-          >
+        <div
+          className={`text-white transition-opacity duration-700 ease-in-out ${
+            hasExpanded ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <h1 className="text-[18px] leading-[22px] tracking-[-0.02em]">
             {currentTitle || firstProject.title}
           </h1>
         </div>
@@ -63,7 +69,7 @@ function ArchitecturePage({ projects, information }: Props) {
         }}
         img={firstProject.project.acf.architecture_projects.cover_project.url}
         information={information}
-        onExpandEnd={() => setHasExpanded(true)}
+        onExpandEnd={handleExpandEnd}
         slug={firstProject.project.slug}
       />
 
