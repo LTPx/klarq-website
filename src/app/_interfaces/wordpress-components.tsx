@@ -19,6 +19,11 @@ export interface ArchitecturePageWp {
   projects: FeatureProjectWp[];
 } 
 
+export interface DevelopmentPageWp {
+  information: InformationWp;
+  projects: FeatureProjectWp[];
+} 
+
 export interface DecorPageWp {
   cover: ImageAcf;
   information: InformationWp;
@@ -32,6 +37,15 @@ export interface ArchitectureSlugWp {
   description_project: string;
   images_project: ImageAcf[];
 }
+
+export interface DevelopmentSlugWp {
+  cover_project: ImageAcf;
+  title_project: string;
+  date: string;
+  description_project: string;
+  images_project: ImageAcf[];
+}
+
 
 export interface DecorSlugWp {
   cover_project: ImageAcf;

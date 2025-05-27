@@ -41,17 +41,18 @@ async function DecorSlugPage(nextParams: {
         <CallToAction title={decor_projects.banner.title} />
       </section>
       <section className="px-[40px] flex flex-col gap-[180px] pb-[130px]">
-        {decor_projects.projects && decor_projects.projects.map((decor, index) => (
-          <div key={index}>
-            <DecorProjects
-              title={decor.title}
-              description={decor.description}
-              images={decor.gallery}
-              date={decor.date}
-              url="/"
-            />
-          </div>
-        ))}
+        {decor_projects.projects &&
+          decor_projects.projects.map((decor, index) => (
+            <div key={index}>
+              <DecorProjects
+                title={decor.title}
+                description={decor.description}
+                images={decor.gallery}
+                date={decor.date}
+                url="/"
+              />
+            </div>
+          ))}
       </section>
     </div>
   );

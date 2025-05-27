@@ -13,6 +13,8 @@ import {
   ContactPageWp,
   DecorPageWp,
   DecorSlugWp,
+  DevelopmentPageWp,
+  DevelopmentSlugWp,
   HomePageWp,
   PublicationsPageWp,
 } from "./wordpress-components";
@@ -42,9 +44,11 @@ export interface WordPressFrontendPage {
 export interface AcfComponents {
   home_information: HomePageWp;
   architecture_information: ArchitecturePageWp;
+  development_information: DevelopmentPageWp;
   decor_information: DecorPageWp;
   decor_projects: DecorSlugWp;
   architecture_projects: ArchitectureSlugWp;
+  development_projects: DevelopmentSlugWp;
   contact_information: ContactPageWp;
   publications_information: PublicationsPageWp;
   // brands_information: BrandsPageWp;
