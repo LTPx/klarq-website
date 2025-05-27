@@ -82,26 +82,29 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
               </>
             )}
           </motion.div>
-
           <motion.div
             initial={{ x: 0 }}
             animate={{ x: expanded ? "100%" : "0%" }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute top-0 right-0 w-1/2 h-full pl-[40px] pr-[90px] flex flex-col gap-[115px] justify-center items-center bg-white"
           >
-            <motion.img
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: expanded ? 0 : 1 }}
-              transition={{ duration: 1.2, delay: 0.3 }}
-              className="h-[372px] w-[260px]"
-              src={information.image.url}
-              alt="team-image"
-            />
+            {information.image.url && (
+              <motion.img
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: expanded ? 0 : 1 }}
+                transition={{ duration: 1.2, delay: 0.3 }}
+                className="h-[372px] w-[260px]"
+                src={information.image.url}
+                alt="team-image"
+              />
+            )}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: expanded ? 0 : 1 }}
               transition={{ duration: 1.2, delay: 0.6 }}
-              className="designer-description"
+              className={`designer-description ${
+                !information?.image?.url ? "pt-[400px]" : ""
+              }`}
               dangerouslySetInnerHTML={{ __html: information.description }}
             />
           </motion.div>

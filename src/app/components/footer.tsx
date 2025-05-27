@@ -12,6 +12,7 @@ export function Footer() {
     pathname?.includes("/publications") ||
     pathname?.includes("/contact") ||
     pathname === "/es/architecture" ||
+    pathname === "/es/development" ||
     pathname === "/en/architecture";
 
   if (noShowFooter) {

@@ -22,7 +22,7 @@ export function DesktopMenu(props: Props) {
       }`}
     >
       <div className="container flex flex-col gap-[110px]">
-        <div className="h-[40dvh]">
+        <div className="h-[35dvh]">
           <Link href={"/"} onClick={() => setShowContact(false)}>
             <div className=" px-[40px] pt-[40px] pb-[30px]">
               <img src="/images/KLARQ.svg" className="h-full w-full" />
