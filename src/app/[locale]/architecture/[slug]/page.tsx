@@ -1,6 +1,7 @@
 import { getChildPages, getProjectChildBySlug } from "@/app/_services/api";
 import ArchitectureInformation from "@/app/components/architecture-information";
 import CarouselProjects from "@/app/components/carosuel-projects";
+import CoverDynamic from "@/app/components/cover-dynamic";
 import Cover from "@/app/components/cover-pages";
 import ProjectCard from "@/app/components/project-card";
 import { Link } from "@/navigation";

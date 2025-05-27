@@ -35,7 +35,10 @@ async function Architecture(nextParams: {
 
   return (
     <div className="architecture">
-      <ArchitecturePage projects={selectedProjects} />
+      <ArchitecturePage
+        information={architecture_information.information}
+        projects={selectedProjects}
+      />
     </div>
   );
 }

@@ -15,6 +15,7 @@ export interface HomePageWp {
 }
 
 export interface ArchitecturePageWp {
+  information: InformationWp;
   projects: FeatureProjectWp[];
 } 
 
@@ -44,6 +45,11 @@ export interface PublicationsWp {
 
 export interface FeatureProjectWp {
   project: ProjectPostWp;
+}
+
+export interface InformationWp {
+  image: ImageAcf;
+  description: string;
 }
 
 export interface ProjectPostWp {
