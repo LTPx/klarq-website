@@ -7,10 +7,11 @@ function CallToAction(props: Props) {
 
   return (
     <div className="flex flex-col gap-[45px] justify-center items-center ">
-      <h3 className="text-center text-[35px] leading-[45px] lg:w-[55%]">
-        We design & deliver bespoke interiors, kitchens & more. Visit our
-        exclusive Ibiza boutique for curated materials, furniture & décor.
-      </h3>
+        <div
+          data-aos="fade-up"
+          className="call-title"
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
       <div className="flex gap-[15px]">
         <span className="flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[25px]">
           cocinas

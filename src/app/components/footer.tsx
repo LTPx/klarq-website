@@ -13,7 +13,7 @@ export function Footer() {
     pathname?.includes("/contact") ||
     pathname === "/es/architecture" ||
     pathname === "/en/architecture";
-    
+
   if (noShowFooter) {
     return null;
   }

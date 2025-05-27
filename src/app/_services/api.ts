@@ -58,6 +58,29 @@ export async function getChildPages(
   }
 }
 
+export async function getChildDecorPage(
+  slug: string,
+  locale: "en" | "es" | "de",
+  parentSlug: string
+): Promise<WordPressFrontendPage> {
+  const url = `${WORDPRESS_API_URL}/custom/v1/project_child_decor/?slug=${slug}&parent_slug=${parentSlug}&lang=${locale}`;
+  console.log("URL decor child page:", url);
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Error al obtener la página hija de decor.");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al obtener página hija de decor:", error);
+    throw new Error("No se pudo obtener la página hija de decor.");
+  }
+}
+
+
 export async function getProjectChildBySlug(
   slug: string,
   locale: "en" | "es" | "de"

@@ -6,9 +6,16 @@ import {
   ItemListElement,
   OgImage,
   TargetClass,
-} from './wordpress';
-import { ArchitecturePageWp, ArchitectureSlugWp, ContactPageWp, HomePageWp, PublicationsPageWp } from './wordpress-components';
-
+} from "./wordpress";
+import {
+  ArchitecturePageWp,
+  ArchitectureSlugWp,
+  ContactPageWp,
+  DecorPageWp,
+  DecorSlugWp,
+  HomePageWp,
+  PublicationsPageWp,
+} from "./wordpress-components";
 
 export interface WordPressFrontendPage {
   id: number;
@@ -29,12 +36,14 @@ export interface WordPressFrontendPage {
   yoast_head: string;
   yoast_head_json: YoastHeadJSON;
   _links: Links;
-  acf: AcfComponents
+  acf: AcfComponents;
 }
 
 export interface AcfComponents {
   home_information: HomePageWp;
   architecture_information: ArchitecturePageWp;
+  decor_information: DecorPageWp;
+  decor_projects: DecorSlugWp;
   architecture_projects: ArchitectureSlugWp;
   contact_information: ContactPageWp;
   publications_information: PublicationsPageWp;
@@ -43,12 +52,11 @@ export interface AcfComponents {
   // aboutUs_information: AboutUsPageWp;
 }
 
-
 export interface Links {
   self: About[];
   collection: About[];
   about: About[];
-  'wp:attachment': About[];
+  "wp:attachment": About[];
   curies: Cury[];
 }
 
@@ -93,23 +101,23 @@ export interface ImageAcf {
 
 export interface SizesAcf {
   thumbnail: string;
-  'thumbnail-width': number;
-  'thumbnail-height': number;
+  "thumbnail-width": number;
+  "thumbnail-height": number;
   medium: string;
-  'medium-width': number;
-  'medium-height': number;
+  "medium-width": number;
+  "medium-height": number;
   medium_large: string;
-  'medium_large-width': number;
-  'medium_large-height': number;
+  "medium_large-width": number;
+  "medium_large-height": number;
   large: string;
-  'large-width': number;
-  'large-height': number;
-  '1536x1536': string;
-  '1536x1536-width': number;
-  '1536x1536-height': number;
-  '2048x2048': string;
-  '2048x2048-width': number;
-  '2048x2048-height': number;
+  "large-width": number;
+  "large-height": number;
+  "1536x1536": string;
+  "1536x1536-width": number;
+  "1536x1536-height": number;
+  "2048x2048": string;
+  "2048x2048-width": number;
+  "2048x2048-height": number;
 }
 
 export interface YoastHeadJSON {
@@ -132,19 +140,19 @@ export interface YoastHeadJSON {
 export interface Robots {
   index: string;
   follow: string;
-  'max-snippet': string;
-  'max-image-preview': string;
-  'max-video-preview': string;
+  "max-snippet": string;
+  "max-image-preview": string;
+  "max-video-preview": string;
 }
 
 export interface Schema {
-  '@context': string;
-  '@graph': Graph[];
+  "@context": string;
+  "@graph": Graph[];
 }
 
 export interface Graph {
-  '@type': string;
-  '@id': string;
+  "@type": string;
+  "@id": string;
   url?: string;
   name?: string;
   isPartOf?: Breadcrumb;
@@ -158,13 +166,11 @@ export interface Graph {
 }
 
 export interface Breadcrumb {
-  '@id': string;
+  "@id": string;
 }
-
 
 export interface PotentialAction {
-  '@type': string;
+  "@type": string;
   target: string[] | TargetClass;
-  'query-input'?: string;
+  "query-input"?: string;
 }
-

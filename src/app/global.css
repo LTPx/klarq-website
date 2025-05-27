@@ -105,8 +105,21 @@ body {
     font-size: 18px;
     line-height: 23px;
   }
-  /* div {
+  div {
     font-size: 18px;
     line-height: 23px;
-  } */
+  }
+}
+
+.call-title {
+  p {
+    font-size: 35px;
+    line-height: 45px;
+    text-align: center;
+  }
+  div {
+    font-size: 35px;
+    line-height: 45px;
+    text-align: center;
+  }
 }

@@ -1,6 +1,7 @@
 import { getWordPressPage } from "../_services/api";
 import AppHeader from "../components/app-header";
 import Footer from "../components/footer";
+import LogoAnimate from "../components/logo-animate";
 
 interface Props {
   children: any;
@@ -12,6 +13,7 @@ async function App(props: Props) {
 
   return (
     <>
+      <LogoAnimate/>
       <AppHeader
         params={{
           locale: locale,

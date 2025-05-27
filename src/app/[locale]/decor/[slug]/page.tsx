@@ -1,8 +1,10 @@
+import { getChildDecorPage, getProjectChildBySlug } from "@/app/_services/api";
 import ArchitectureInformation from "@/app/components/architecture-information";
 import CallToAction from "@/app/components/call-to-action";
 import Cover from "@/app/components/cover-pages";
 import DecorProjects from "@/app/components/decor-projects";
 import GalleryProjects from "@/app/components/gallery";
+import { Link } from "@/navigation";
 
 async function DecorSlugPage(nextParams: {
   params: { locale: "es" | "de" | "en"; slug: string };
@@ -11,16 +13,16 @@ async function DecorSlugPage(nextParams: {
     params: { locale, slug },
   } = nextParams;
 
-  const images = [
-    "https://images.unsplash.com/photo-1745563115146-aec349b7cadf?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://plus.unsplash.com/premium_photo-1674217930032-825b6e1d8511?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1746730251085-34132b6dcec5?q=80&w=3544&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=3607&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=3544&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://plus.unsplash.com/premium_photo-1674217930032-825b6e1d8511?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1746730251085-34132b6dcec5?q=80&w=3544&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=3607&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  ];
+  const parentSlug =
+    locale === "es"
+      ? "spanish-pages"
+      : locale === "de"
+      ? "german-pages"
+      : "english-pages";
+
+  const data = await getChildDecorPage(slug, locale, parentSlug);
+  const { acf } = data;
+  const { decor_projects } = acf;
 
   return (
     <div className="architecture-slug-page">
@@ -34,18 +36,22 @@ async function DecorSlugPage(nextParams: {
           DECOR
         </label>
       </div>
-      <Cover img="https://images.unsplash.com/photo-1746730251085-34132b6dcec5?q=80&w=3544&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <Cover img={decor_projects.cover_project.url} />
       <section className="py-[200px]">
-        <CallToAction title={""} />
+        <CallToAction title={decor_projects.banner.title} />
       </section>
-      <section className="px-[40px]">
-        <DecorProjects
-          title={""}
-          description={
-            "Un lugar donde la luz se encuentra con la sombra, donde el agua se encuentra con el aire y la naturaleza. Un espacio peculiar, una luz natural mágica, un lugar rodeado de vegetación, de tranquilidad y relajación, cálido y con bellos materiales naturales. Espacios armónicos y curvos, naturales, sinuosos."
-          }
-          images={images}
-        />
+      <section className="px-[40px] flex flex-col gap-[180px] pb-[130px]">
+        {decor_projects.projects && decor_projects.projects.map((decor, index) => (
+          <div key={index}>
+            <DecorProjects
+              title={decor.title}
+              description={decor.description}
+              images={decor.gallery}
+              date={decor.date}
+              url="/"
+            />
+          </div>
+        ))}
       </section>
     </div>
   );
