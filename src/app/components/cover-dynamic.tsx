@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, forwardRef } from "react";
+import { useEffect, useState, useRef, forwardRef } from "react";
 import { motion } from "framer-motion";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { Link } from "@/navigation";
@@ -17,6 +17,14 @@ interface Props {
 const CoverDynamic = forwardRef<HTMLDivElement, Props>(
   ({ className, img, information, linkSlug, onExpandEnd, labelTitle }, ref) => {
     const [expanded, setExpanded] = useState(false);
+    const [labelWidth, setLabelWidth] = useState(0);
+    const labelRef = useRef<HTMLLabelElement>(null);
+
+    useEffect(() => {
+      if (labelRef.current) {
+        setLabelWidth(labelRef.current.offsetWidth);
+      }
+    }, [labelTitle]);
 
     useEffect(() => {
       const timer = setTimeout(() => {
@@ -32,20 +40,25 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
         <motion.div
           className="fixed z-[1000]"
           style={{
-            top: 53,
-            left: expanded ? "calc(100% - 530px)" : `calc(50% + 40px)`,
-            right: expanded ? "40px" : `auto`,
-            transform: "translateX(-50%)",
-            transition: "left 1.5s ease-in-out",
+            top: 20,
+            left: expanded
+              ? `calc(100% - ${labelWidth + 40}px)`
+              : `calc(50% + 40px)`,
+            transform: expanded ? "none" : "translateX(-50%)",
+            transition: "left 1.5s ease-in-out, transform 1.5s ease-in-out",
           }}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: expanded ? 1 : 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut", delay: 0.3 }}
         >
-          <label className="uppercase text-[66px] leading-[46px] tracking-[-0.03em] mix-blend-difference">
+          <label
+            ref={labelRef}
+            className="uppercase text-[66px] tracking-[-0.03em] mix-blend-difference"
+          >
             {labelTitle}
           </label>
         </motion.div>
+
         <div
           ref={ref}
           data-index={0}
@@ -58,7 +71,6 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
               x: 0,
               opacity: 1,
             }}
-            // animate={{ width: expanded ? "100%" : "50%" }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="relative h-full overflow-hidden"
           >
@@ -82,6 +94,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
               </>
             )}
           </motion.div>
+
           <motion.div
             initial={{ x: 0 }}
             animate={{ x: expanded ? "100%" : "0%" }}

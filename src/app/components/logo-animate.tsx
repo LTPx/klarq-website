@@ -43,7 +43,7 @@ function LogoAnimate() {
           alt="KLARQ"
           className="px-[40px] object-contain fixed top-[25px] left-0 z-[1000]"
           initial={{
-            y: -30,
+            y: 0,
             opacity: 1,
             height: initialHeight,
             width: initialWidth,

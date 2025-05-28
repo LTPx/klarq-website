@@ -72,7 +72,7 @@ function DevelopmentPage({ projects, information }: Props) {
           information={information}
           onExpandEnd={handleExpandEnd}
           linkSlug={`/development/${firstProject.project.slug}`}
-          labelTitle="Architecture"
+          labelTitle="Development"
         />
 
         {restProjects.map((item, index) => (
