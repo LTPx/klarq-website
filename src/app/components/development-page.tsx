@@ -10,6 +10,7 @@ interface Props {
   projects: {
     project: WordPressFrontendPage;
     title: string;
+    date: string;
   }[];
   information: InformationWp;
 }
@@ -17,6 +18,7 @@ interface Props {
 function DevelopmentPage({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
   const [hasExpanded, setHasExpanded] = useState(false);
+  const [currentDate, setCurrentDate] = useState("");
 
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -29,7 +31,9 @@ function DevelopmentPage({ projects, information }: Props) {
           if (entry.isIntersecting) {
             const index = Number(entry.target.getAttribute("data-index"));
             const title = projects[index]?.title;
+            const date = projects[index]?.date;
             setCurrentTitle(title);
+            setCurrentDate(date);
           }
         });
       },
@@ -51,7 +55,10 @@ function DevelopmentPage({ projects, information }: Props) {
 
   return (
     <>
-      <div className="DevelopmentPage relative h-[calc(100dvh-50px)] overflow-y-scroll snap-y snap-mandatory">
+      <div
+        className="DevelopmentPage relative h-[calc(100dvh-50px)] overflow-y-scroll snap-y snap-mandatory"
+        style={{ overflowY: hasExpanded ? "scroll" : "hidden" }}
+      >
         <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
           <div
             className={`text-white transition-opacity duration-700 ease-in-out ${
@@ -59,7 +66,7 @@ function DevelopmentPage({ projects, information }: Props) {
             }`}
           >
             <h1 className="text-[18px] leading-[22px] tracking-[-0.02em]">
-              {currentTitle || firstProject.title}
+              {currentTitle || firstProject.title}, {currentDate}
             </h1>
           </div>
         </div>

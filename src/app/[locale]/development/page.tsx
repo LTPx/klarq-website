@@ -30,6 +30,7 @@ async function Development(nextParams: {
       return {
         project: matched,
         title: item.project.post_title,
+        date: matched.acf.development_projects.date
       };
     })
     .filter(isDefined);

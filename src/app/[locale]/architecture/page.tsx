@@ -29,6 +29,7 @@ async function Architecture(nextParams: {
       return {
         project: matched,
         title: item.project.post_title,
+        date: matched.acf.architecture_projects.date
       };
     })
     .filter(isDefined);

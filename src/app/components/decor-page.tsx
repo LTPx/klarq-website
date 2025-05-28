@@ -20,9 +20,15 @@ function DecorPage({ decor_information }: Props) {
   const [hasExpanded, setHasExpanded] = useState(false);
 
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const handleExpandEnd = () => {
+    setHasExpanded(true);
+  };
 
   return (
-    <div className="bg-white">
+    <div
+      className="bg-white"
+      style={{ overflowY: hasExpanded ? "scroll" : "hidden" }}
+    >
       <div className="DecorPage relative h-[calc(100dvh-50px)] overflow-y-scroll snap-y snap-mandatory">
         <CoverDynamic
           img={decor_information.cover.url}
