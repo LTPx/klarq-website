@@ -60,6 +60,7 @@ async function DevelopmentSlugPage(nextParams: {
             .filter((project) => project.slug !== slug)
             .map((project, index) => (
               <Link
+                key={index}
                 className="cursor-pointer"
                 href={`/development/${project.slug}`}
               >

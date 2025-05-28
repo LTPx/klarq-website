@@ -8,12 +8,6 @@ import { Link } from "@/navigation";
 function LogoAnimate() {
   const pathname = usePathname();
 
-  if (pathname === "/es") return null;
-
-  const isAllowedRoute = pathname === "/es/architecture" || pathname === "/es/decor" || pathname === "/es/development";
-
-  if (!isAllowedRoute) return null;
-
   const [windowHeight, setWindowHeight] = useState<number | null>(null);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
@@ -28,7 +22,15 @@ function LogoAnimate() {
     return () => window.removeEventListener("resize", updateWindowDimensions);
   }, []);
 
-  if (windowHeight === null || windowWidth === null) return null;
+  if (pathname === "/es") return null;
+
+  const isAllowedRoute =
+    pathname === "/es/architecture" ||
+    pathname === "/es/decor" ||
+    pathname === "/es/development";
+
+  if (!isAllowedRoute || windowHeight === null || windowWidth === null)
+    return null;
 
   const initialHeight = windowHeight * 0.4;
   const finalHeight = 58;
