@@ -38,7 +38,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
     return (
       <>
         <motion.div
-          className="fixed z-[1000]"
+          className="fixed z-[1000] mix-blend-difference text-white"
           style={{
             top: 20,
             left: expanded
@@ -50,10 +50,10 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut", delay: 0.3 }}
-        >
+        > 
           <label
             ref={labelRef}
-            className="uppercase text-[66px] tracking-[-0.03em] mix-blend-difference"
+            className="uppercase text-[66px] tracking-[-0.03em]"
           >
             {labelTitle}
           </label>

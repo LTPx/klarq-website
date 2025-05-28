@@ -13,11 +13,15 @@ async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
 
   return (
     <div className="lg:h-[calc(100dvh-50px)] lg:flex">
-      <div className="fixed top-[35px] left-[35px]">
-        <img src="/images/KLARQ.svg" className="h-[49px] w-full" />
-      </div>
-      <div className="absolute top-[35px] right-[35px]">
-        <img src="/images/contact.svg" className="h-[49px] w-full" />
+      <Link className="cursor-pointer" href={'/'}>
+        <div className="cursor-pointer fixed top-[40px] left-[35px] z-[1000]">
+          <label className="cursor-pointer text-[66px] leading-[46px] ">KLARQ</label>
+        </div> 
+      </Link>
+      <div className="fixed top-[40px] right-[40px] z-[1000] mix-blend-difference text-white">
+        <label className="text-[66px] leading-[46px] tracking-[-0.03em]">
+          CONTACT
+        </label>
       </div>
       <div className="bg-green lg:w-1/2 h-full flex flex-col gap-[16px] justify-center items-center">
         <div

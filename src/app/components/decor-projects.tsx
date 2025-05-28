@@ -19,9 +19,9 @@ function DecorProjects(props: Props) {
       <div className="grid grid-cols-2 pt-[25px]">
         <div>
           <Link href={url || ''}>
-            <h2 className="text-[35px] leading-[46px]">{title}</h2>
+            <h2 className="text-[18px] leading-[22px]">{title}</h2>
           </Link>
-          <span className="text-[18px] leading-[26px] tracking-[-0.03em]">
+          <span className="text-[18px] leading-[22px]">
             {date}
           </span>
         </div>

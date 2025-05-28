@@ -26,13 +26,11 @@ async function DecorSlugPage(nextParams: {
 
   return (
     <div className="architecture-slug-page">
-      <div className="fixed top-[35px] left-[35px]">
-        <label className="dark:mix-blend-difference text-white text-[66px] leading-[46px] mix-blend-difference">
-          KLARQ
-        </label>
+      <div className="fixed top-[40px] left-[35px] mix-blend-difference text-white z-[1000]">
+        <label className="text-[66px] leading-[46px] ">KLARQ</label>
       </div>
-      <div className="fixed top-[35px] right-[35px]">
-        <label className="text-[66px] leading-[46px] tracking-[-0.03em] mix-blend-difference">
+      <div className="fixed top-[40px] right-[40px] z-[1000] mix-blend-difference text-white">
+        <label className="text-[66px] leading-[46px] tracking-[-0.03em]">
           DECOR
         </label>
       </div>
