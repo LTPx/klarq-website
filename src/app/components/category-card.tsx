@@ -4,6 +4,7 @@ interface CategoryCardProps {
   imageCategory: string;
   className?: string;
   showDescription?: boolean;
+  anyCardHovering?: boolean;
 }
 
 function CategoryCard({
@@ -12,13 +13,16 @@ function CategoryCard({
   className,
   description,
   showDescription,
+  anyCardHovering,
 }: CategoryCardProps) {
   return (
     <div className={`relative w-full h-full ${className}`}>
       <img
         src={imageCategory}
         alt={title}
-        className="w-full h-[calc(60dvh-70px)] object-cover"
+        className={`w-full object-cover transition-[height] duration-600 ease-in-out ${
+          anyCardHovering ? "h-[60dvh]" : "h-[calc(60dvh-70px)]"
+        }`}
       />
       <div className="absolute inset-0 bg-black/20 z-[50]" />
       <h1 className="absolute left-[50px] top-[45px] text-white text-[18px] leading-[22px] tracking-[-0.02em] z-[100]">

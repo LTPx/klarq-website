@@ -1,9 +1,11 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import CategoryCard from "./category-card";
 import { servicesHome } from "../_interfaces/wordpress-components";
+import { Link } from "@/navigation";
+import { useHoverStore } from "../store/hover-store";
 
 interface Props {
   services: servicesHome[];
@@ -17,6 +19,7 @@ function HomeAnimation(props: Props) {
   const [isScrolling, setIsScrolling] = useState(false);
 
   const { scrollY } = useScroll();
+  const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard); // <- ✅ Zustand setter
 
   useEffect(() => {
     const updateWindowDimensions = () => {
@@ -47,18 +50,20 @@ function HomeAnimation(props: Props) {
   useEffect(() => {
     if (isScrolling) {
       setHoveredIndex(null);
+      setIsHoveringCard(false);
     }
-  }, [isScrolling]);
+  }, [isScrolling, setIsHoveringCard]);
 
   const height = useTransform(scrollY, [0, 300], [windowHeight * 0.4, 58]);
   const width = useTransform(scrollY, [0, 300], [windowWidth, 322]);
+  const links = ["/architecture", "/decor", "/development"];
 
   return (
     <div className="container">
       <motion.img
         src="/images/KLARQ.svg"
         alt="KLARQ"
-        className="px-[40px] object-contain fixed top-[0px] left-0 z-[1000]"
+        className="px-[40px] object-contain fixed top-[20px] left-0 z-[1000]"
         style={{ height, width }}
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -72,6 +77,7 @@ function HomeAnimation(props: Props) {
         transition={{ duration: 1.2, ease: "easeInOut" }}
       >
         {services.map((card, index) => {
+          const link = links[index];
           let grow = "flex-[1]";
 
           if (hoveredIndex !== null) {
@@ -98,17 +104,26 @@ function HomeAnimation(props: Props) {
               initial={{ flex: 1 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
               onMouseEnter={() => {
-                if (!isScrolling) setHoveredIndex(index);
+                if (!isScrolling) {
+                  setHoveredIndex(index);
+                  setIsHoveringCard(true);
+                }
               }}
-              onMouseLeave={() => setHoveredIndex(null)}
+              onMouseLeave={() => {
+                setHoveredIndex(null);
+                setIsHoveringCard(false);
+              }}
               style={{ display: "flex" }}
             >
-              <CategoryCard
-                description={card.description_service}
-                title={card.title}
-                imageCategory={card.image.url}
-                showDescription={hoveredIndex === index}
-              />
+              <Link href={link} className="w-full">
+                <CategoryCard
+                  description={card.description_service}
+                  title={card.title}
+                  imageCategory={card.image.url}
+                  showDescription={hoveredIndex === index}
+                  anyCardHovering={hoveredIndex !== null}
+                />
+              </Link>
             </motion.div>
           );
         })}
