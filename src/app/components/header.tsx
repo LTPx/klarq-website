@@ -28,11 +28,21 @@ export function Header({
 
   useEffect(() => {
     setIsHoveringCard(false);
+  }, []);
+
+  useEffect(() => {
+    setIsHoveringCard(false);
   }, [currentPath, setIsHoveringCard]);
 
   const handleContactClick = () => {
     setShowMenu((prev) => !prev);
   };
+
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   return (
     <>
@@ -40,7 +50,7 @@ export function Header({
         {!isHoveringCard && (
           <motion.header
             className="bg-gray container fixed bottom-0 z-[1002]"
-            initial={{ y: 100, opacity: 0 }}
+            initial={hasMounted ? { y: 100, opacity: 0 } : false}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 1, transition: { duration: 0.5 } }}
             transition={{ duration: 0.1 }}
