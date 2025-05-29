@@ -53,6 +53,8 @@ function HomeAnimation(props: Props) {
       setIsHoveringCard(false);
     }
   }, [isScrolling, setIsHoveringCard]);
+  
+  `/api/image-proxy?url=${encodeURIComponent(services[0].image.url)}`
 
   const height = useTransform(scrollY, [0, 300], [windowHeight * 0.4, 58]);
   const width = useTransform(scrollY, [0, 300], [windowWidth, 322]);
@@ -119,7 +121,7 @@ function HomeAnimation(props: Props) {
                 <CategoryCard
                   description={card.description_service}
                   title={card.title}
-                  imageCategory={card.image.url}
+                  imageCategory={`/api/image-proxy?url=${encodeURIComponent(card.image.url)}`}
                   showDescription={hoveredIndex === index}
                   anyCardHovering={hoveredIndex !== null}
                 />
