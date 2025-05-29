@@ -18,6 +18,7 @@ export async function GET(request: Request) {
     return new NextResponse(Buffer.from(arrayBuffer), {
       headers: {
         "Content-Type": contentType,
+        "Cache-Control": "public, max-age=86400, immutable",
       },
     });
   } catch (error) {
