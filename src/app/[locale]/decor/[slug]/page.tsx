@@ -5,6 +5,7 @@ import Cover from "@/app/components/cover-pages";
 import DecorProjects from "@/app/components/decor-projects";
 import GalleryProjects from "@/app/components/gallery";
 import { Link } from "@/navigation";
+import { getProxyImageUrl } from "@/utils/image_proxy";
 
 async function DecorSlugPage(nextParams: {
   params: { locale: "es" | "de" | "en"; slug: string };
@@ -34,7 +35,7 @@ async function DecorSlugPage(nextParams: {
           DECOR
         </label>
       </div>
-      <Cover img={decor_projects.cover_project.url} />
+      <Cover img={getProxyImageUrl(decor_projects.cover_project.url)} />
       <section className="py-[200px]">
         <CallToAction title={decor_projects.banner.title} />
       </section>

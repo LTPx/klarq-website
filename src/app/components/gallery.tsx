@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { PublicationsWp } from "../_interfaces/wordpress-components";
+import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface GalleryProps {
   publication: PublicationsWp[];
@@ -53,7 +54,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
           return (
             <img
               key={i}
-              src={item.image.url}
+              src={getProxyImageUrl(item.image.url)}
               alt={item.title}
               onClick={() => setVirtualIndex(itemIndex)}
               className={`object-cover cursor-pointer shrink-0 transition-all duration-300 ease-in-out ${

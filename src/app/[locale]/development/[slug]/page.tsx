@@ -8,6 +8,7 @@ import CarouselProjects from "@/app/components/carosuel-projects";
 import Cover from "@/app/components/cover-pages";
 import ProjectCard from "@/app/components/project-card";
 import { Link } from "@/navigation";
+import { getProxyImageUrl } from "@/utils/image_proxy";
 
 async function DevelopmentSlugPage(nextParams: {
   params: { locale: "es" | "de" | "en"; slug: string };
@@ -43,7 +44,7 @@ async function DevelopmentSlugPage(nextParams: {
           DEVELOPMENT
         </label>
       </div>
-      <Cover img={development_projects.cover_project.url} />
+      <Cover img={getProxyImageUrl(development_projects.cover_project.url)} />
       <section className="pt-[60px]">
         <ArchitectureInformation
           title={development_projects.title_project}
@@ -68,7 +69,7 @@ async function DevelopmentSlugPage(nextParams: {
               >
                 <ProjectCard
                   title={project.acf.development_projects.title_project}
-                  image={project.acf.development_projects.cover_project.url}
+                  image={getProxyImageUrl(project.acf.development_projects.cover_project.url)}
                 />
               </Link>
             ))}

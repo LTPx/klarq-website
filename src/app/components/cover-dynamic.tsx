@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, forwardRef } from "react";
 import { motion } from "framer-motion";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { Link } from "@/navigation";
+import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface Props {
   className?: string;
@@ -107,7 +108,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
                 animate={{ opacity: expanded ? 0 : 1 }}
                 transition={{ duration: 1.2, delay: 0.3 }}
                 className="h-[372px] w-[260px]"
-                src={information.image.url}
+                src={getProxyImageUrl(information.image.url)}
                 alt="team-image"
               />
             )}

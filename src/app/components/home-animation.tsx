@@ -6,6 +6,7 @@ import CategoryCard from "./category-card";
 import { servicesHome } from "../_interfaces/wordpress-components";
 import { Link } from "@/navigation";
 import { useHoverStore } from "../store/hover-store";
+import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface Props {
   services: servicesHome[];
@@ -54,8 +55,6 @@ function HomeAnimation(props: Props) {
     }
   }, [isScrolling, setIsHoveringCard]);
   
-  `/api/image-proxy?url=${encodeURIComponent(services[0].image.url)}`
-
   const height = useTransform(scrollY, [0, 300], [windowHeight * 0.4, 58]);
   const width = useTransform(scrollY, [0, 300], [windowWidth, 322]);
   const links = ["/architecture", "/decor", "/development"];
@@ -121,7 +120,7 @@ function HomeAnimation(props: Props) {
                 <CategoryCard
                   description={card.description_service}
                   title={card.title}
-                  imageCategory={`/api/image-proxy?url=${encodeURIComponent(card.image.url)}`}
+                  imageCategory={getProxyImageUrl(card.image.url)}
                   showDescription={hoveredIndex === index}
                   anyCardHovering={hoveredIndex !== null}
                 />

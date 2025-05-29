@@ -1,3 +1,4 @@
+import { getProxyImageUrl } from "@/utils/image_proxy";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 
 interface Props {
@@ -32,7 +33,7 @@ interface Props {
           return (
             <div key={index} className={wrapperClass}>
               <img
-                src={src.url}
+                src={getProxyImageUrl(src.url)}
                 alt={`Architecture ${index + 1}`}
                 style={imageStyle}
                 className="object-cover"

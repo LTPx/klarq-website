@@ -1,3 +1,4 @@
+import { getProxyImageUrl } from "@/utils/image_proxy";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 
 interface Props {
@@ -17,7 +18,7 @@ function GalleryImagesScroll(props: Props) {
         {images.map((src, index) => (
           <img
             key={index}
-            src={src.url}
+            src={getProxyImageUrl(src.url)}
             alt={`image-${index}`}
             className={`object-contain shrink-0 ${imageClassName}`}
           />

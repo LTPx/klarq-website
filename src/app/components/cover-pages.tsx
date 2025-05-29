@@ -1,5 +1,6 @@
 'use client';
 
+import { getProxyImageUrl } from "@/utils/image_proxy";
 import { MediaFileWp } from "../_interfaces/wordpress-components";
 
 interface Props {
@@ -39,7 +40,7 @@ export function Cover(props: Props) {
       )}
       {media?.type === 'image' && (
         <img
-          src={media.url}
+          src={getProxyImageUrl(media.url)}
           className={`${className} w-full h-[calc(100dvh-50px)] object-cover`}
         />
       )}

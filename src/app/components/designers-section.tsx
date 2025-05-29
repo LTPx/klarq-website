@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ImageAcf } from "../_interfaces/wordpress-page";
+import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface TeamMember {
   name: string;
@@ -45,7 +46,7 @@ export function DesignersSection({ team }: Props) {
       <div className="flex flex-col gap-[100px]">
         {isHovering ? (
           <img
-            src={team.image_team.url}
+            src={getProxyImageUrl(team.image_team.url)}
             alt={team.image_team.alt || "Equipo KLARQ"}
             className="w-[535px] h-[633px] object-cover transition-opacity duration-300"
           />

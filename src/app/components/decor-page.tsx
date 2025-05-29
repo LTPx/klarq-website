@@ -10,6 +10,7 @@ import {
 } from "../_interfaces/wordpress-components";
 import CallToAction from "./call-to-action";
 import DecorProjects from "./decor-projects";
+import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface Props {
   decor_information: DecorPageWp;
@@ -31,7 +32,7 @@ function DecorPage({ decor_information }: Props) {
     >
       <div className="DecorPage relative h-[calc(100dvh-50px)] overflow-y-scroll snap-y snap-mandatory">
         <CoverDynamic
-          img={decor_information.cover.url}
+          img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
           labelTitle="Decor"
         />
