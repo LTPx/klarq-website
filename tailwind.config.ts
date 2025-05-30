@@ -49,6 +49,7 @@ const config: Config = {
       fontFamily: {
         pp_light: ["PP Fragment Light", "sans-serif"],
         pp_variable: ["PP Fragment Variable", "sans-serif"],
+        zoom: ["Zoom Pro Wide", "sans-serif"],
       },
     },
   },

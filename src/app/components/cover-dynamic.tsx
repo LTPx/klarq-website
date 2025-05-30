@@ -54,7 +54,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
         > 
           <label
             ref={labelRef}
-            className="uppercase text-[66px] tracking-[-0.03em]"
+            className="font-zoom uppercase text-[66px] tracking-[-0.03em]"
           >
             {labelTitle}
           </label>

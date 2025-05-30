@@ -12,6 +12,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Zoom Pro Wide';
+  src: url('/fonts/Zoom Pro Wide Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

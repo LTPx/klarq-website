@@ -11,7 +11,7 @@ export function ProjectCard(props: ProjectCardProps) {
       <div className="relative h-[360px] lg:h-[570px]">
         <img
           src={image}
-          alt={"buying-house"}
+          alt={"image"}
           className={"absolute inset-0 h-full w-full object-cover"}
         />
         <div

@@ -21,9 +21,8 @@ interface Props {
 export function DesignersSection({ team }: Props) {
   const members = [team.first_team_member, team.second_team_member];
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
-  const selectedMember = members[selectedIndex];
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const selectedMember = hoveredIndex !== null ? members[hoveredIndex] : null;
 
   return (
     <div className="grid grid-cols-3">
@@ -32,41 +31,49 @@ export function DesignersSection({ team }: Props) {
           <button
             key={index}
             className={`rounded-[50px] h-[33px] border border-[0.75px] border-black px-[25px] transition-colors duration-200 ${
-              selectedIndex === index ? "bg-black/30 text-black" : "text-black"
+              hoveredIndex === index ? "bg-black/30 text-black" : "text-black"
             }`}
-            onClick={() => setSelectedIndex(index)}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
           >
             {member.name.split(" ")[0]}
           </button>
         ))}
       </div>
 
-      <div className="flex flex-col gap-[100px]">
-        {isHovering ? (
-          <img
-            src={getProxyImageUrl(team.image_team.url)}
-            alt={team.image_team.alt || "Equipo KLARQ"}
-            className="w-[535px] h-[633px] object-cover transition-opacity duration-300"
-          />
-        ) : (
-          <>
-            <div>
-              <h3 className="text-[26px] leading-[26px] font-pp_light">
-                {selectedMember.name}
-              </h3>
-              <p className="text-[18px] leading-[30px] font-pp_light">
-                {selectedMember.profession}
-              </p>
-            </div>
-            <div
-              data-aos="fade-up"
-              className="designer-description font-pp_light"
-              dangerouslySetInnerHTML={{ __html: selectedMember.description }}
-            />
-          </>
-        )}
+      <div className="relative w-[535px] h-[633px]">
+        <img
+          src={getProxyImageUrl(team.image_team.url)}
+          alt={team.image_team.alt || "Equipo KLARQ"}
+          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out ${
+            selectedMember ? "opacity-0" : "opacity-100"
+          }`}
+        />
+
+        <div
+          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out flex flex-col gap-[100px] px-[20px] py-[40px] ${
+            selectedMember ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          {selectedMember && (
+            <>
+              <div>
+                <h3 className="text-[26px] leading-[26px] font-pp_light">
+                  {selectedMember.name}
+                </h3>
+                <p className="text-[18px] leading-[30px] font-pp_light">
+                  {selectedMember.profession}
+                </p>
+              </div>
+              <div
+                className="designer-description font-pp_light"
+                dangerouslySetInnerHTML={{
+                  __html: selectedMember.description,
+                }}
+              />
+            </>
+          )}
+        </div>
       </div>
 
       <div></div>

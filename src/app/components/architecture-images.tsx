@@ -33,6 +33,7 @@ interface Props {
           return (
             <div key={index} className={wrapperClass}>
               <img
+                data-aos="fade-up"
                 src={getProxyImageUrl(src.url)}
                 alt={`Architecture ${index + 1}`}
                 style={imageStyle}

@@ -15,18 +15,19 @@ function DecorProjects(props: Props) {
 
   return (
     <div className="DecorProjects w-full">
-      <GalleryImagesScroll images={images}/>
+      <GalleryImagesScroll
+        animationType="fade-left"
+        stagger={false}
+        images={images}
+      />
       <div className="grid grid-cols-2 pt-[25px]">
         <div>
-          <Link href={url || ''}>
+          <Link href={url || ""}>
             <h2 className="text-[18px] leading-[22px]">{title}</h2>
           </Link>
-          <span className="text-[18px] leading-[22px]">
-            {date}
-          </span>
+          <span className="text-[18px] leading-[22px]">{date}</span>
         </div>
         <div
-          data-aos="fade-up"
           className="designer-description pr-[50px]"
           dangerouslySetInnerHTML={{ __html: description }}
         />

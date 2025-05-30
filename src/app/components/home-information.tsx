@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import {
   InformationHome,
   sliderHome,
@@ -9,6 +10,8 @@ import { ImageAcf } from "../_interfaces/wordpress-page";
 import DesignersSection from "./designers-section";
 import GalleryImagesScroll from "./gallery-images-scroll";
 import { SliderBrand } from "./slider";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 interface Props {
   description?: string;
@@ -26,6 +29,16 @@ export function HomeInformation(props: Props) {
     slider,
     carousel_images,
   } = props;
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-out",
+      offset: 80,
+      once: false,
+    });
+  }, []);
+  
   return (
     <section className="container">
       <div className="px-[40px] bg-green pt-[45px]">

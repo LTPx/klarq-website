@@ -11,24 +11,35 @@ import {
 import CallToAction from "./call-to-action";
 import DecorProjects from "./decor-projects";
 import { getProxyImageUrl } from "@/utils/image_proxy";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 interface Props {
   decor_information: DecorPageWp;
 }
 
 function DecorPage({ decor_information }: Props) {
-  const [currentTitle, setCurrentTitle] = useState("");
-  const [hasExpanded, setHasExpanded] = useState(false);
+  // const [currentTitle, setCurrentTitle] = useState("");
+  // const [hasExpanded, setHasExpanded] = useState(false);
 
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const handleExpandEnd = () => {
-    setHasExpanded(true);
-  };
+  // const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  // const handleExpandEnd = () => {
+  //   setHasExpanded(true);
+  // };
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-out",
+      offset: 80,
+      once: false,
+    });
+  }, []);
 
   return (
     <div
       className="bg-white"
-      style={{ overflowY: hasExpanded ? "scroll" : "hidden" }}
+      // style={{ overflowY: hasExpanded ? "scroll" : "hidden" }}
     >
       <div className="DecorPage relative h-[calc(100dvh-50px)] overflow-y-scroll snap-y snap-mandatory">
         <CoverDynamic

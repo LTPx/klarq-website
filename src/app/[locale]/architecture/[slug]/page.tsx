@@ -30,13 +30,13 @@ async function ArchitectureSlugPage(nextParams: {
     <div className="architecture-slug-page bg-white relative overflow-hidden">
       <Link className="cursor-pointer" href={"/"}>
         <div className="cursor-pointer fixed top-[40px] left-[35px] mix-blend-difference text-white z-[1000]">
-          <label className="cursor-pointer text-[66px] leading-[46px] ">
+          <label className="font-zoom cursor-pointer text-[66px] leading-[46px] ">
             KLARQ
           </label>
         </div>
       </Link>
       <div className="fixed top-[40px] right-[40px] z-[1000] mix-blend-difference text-white">
-        <label className="text-[66px] leading-[46px] tracking-[-0.03em]">
+        <label className="font-zoom text-[66px] leading-[46px] tracking-[-0.03em]">
           ARCHITECTURE
         </label>
       </div>
@@ -50,8 +50,9 @@ async function ArchitectureSlugPage(nextParams: {
         />
       </section>
       <section className="flex flex-col gap-[40px] pt-[150px] px-[40px] pb-[40px]">
-        <div className="flex flex-col gap-[8px]">
-          <div className="border-[1px] border-t-black "></div>
+        <div           data-aos="fade-up"
+ className="flex flex-col gap-[8px]">
+          <div  className="border-[1px] border-t-black "></div>
           <span className="text-[18px] leading-[28px]">More projects</span>
         </div>
         <CarouselProjects slidesNumber={3}>

@@ -34,13 +34,13 @@ async function DevelopmentSlugPage(nextParams: {
     <div className="architecture-slug-page relative bg-white overflow-hidden">
       <Link className="cursor-pointer" href={"/"}>
         <div className="cursor-pointer fixed top-[40px] left-[35px] mix-blend-difference text-white z-[1000]">
-          <label className="cursor-pointer text-[66px] leading-[46px] ">
+          <label className="font-zoom cursor-pointer text-[66px] leading-[46px] ">
             KLARQ
           </label>
         </div>
       </Link>
       <div className="fixed top-[40px] right-[40px] z-[1000] mix-blend-difference text-white">
-        <label className="text-[66px] leading-[46px] tracking-[-0.03em]">
+        <label className="font-zoom text-[66px] leading-[46px] tracking-[-0.03em]">
           DEVELOPMENT
         </label>
       </div>
@@ -69,7 +69,9 @@ async function DevelopmentSlugPage(nextParams: {
               >
                 <ProjectCard
                   title={project.acf.development_projects.title_project}
-                  image={getProxyImageUrl(project.acf.development_projects.cover_project.url)}
+                  image={getProxyImageUrl(
+                    project.acf.development_projects.cover_project.url
+                  )}
                 />
               </Link>
             ))}

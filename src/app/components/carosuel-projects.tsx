@@ -1,7 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Slider from 'react-slick';
+import React, { useState, useEffect } from "react";
+import Slider from "react-slick";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 type CarouselProjectsProps = {
   className?: string;
@@ -18,14 +20,14 @@ function SampleDefaultNextArrow(props: any) {
     <div
       className={className}
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: '#B77F1E',
-        height: '44px',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#B77F1E",
+        height: "44px",
         zIndex: 500,
-        width: '44px',
-        cursor: disabled && 'default',
+        width: "44px",
+        cursor: disabled && "default",
         opacity: disabled ? 0.5 : 1,
       }}
       onClick={onClick}
@@ -34,8 +36,8 @@ function SampleDefaultNextArrow(props: any) {
         src="/images/right-arrow-white.svg"
         style={{
           ...style,
-          width: '24px',
-          height: '24px',
+          width: "24px",
+          height: "24px",
         }}
       />
     </div>
@@ -46,16 +48,16 @@ function SampleDefaultPrevArrow(props: any) {
   const { className, style, onClick, disabled } = props;
   return (
     <div
-      className={`${className} ${disabled ? 'opacity-100' : ''}`}
+      className={`${className} ${disabled ? "opacity-100" : ""}`}
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: '#B77F1E',
-        height: '44px',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#B77F1E",
+        height: "44px",
         zIndex: 500,
-        width: '44px',
-        cursor: disabled && 'default',
+        width: "44px",
+        cursor: disabled && "default",
         opacity: disabled ? 0.5 : 1,
       }}
       onClick={onClick}
@@ -64,8 +66,8 @@ function SampleDefaultPrevArrow(props: any) {
         src="/images/left-arrow-white.svg"
         style={{
           ...style,
-          width: '24px',
-          height: '24px',
+          width: "24px",
+          height: "24px",
         }}
       />
     </div>
@@ -78,14 +80,14 @@ function SampleNextArrow(props: any) {
     <div className="absolute bottom-[-35px] lg:bottom-[-40px] right-0">
       <img
         src="/images/icons/arrow-right.svg"
-        className={`${className} ${disabled ? 'opacity-0' : ''}`}
+        className={`${className} ${disabled ? "opacity-0" : ""}`}
         style={{
           ...style,
-          right: '10px',
-          position: 'relative',
-          width: '45px',
+          right: "10px",
+          position: "relative",
+          width: "45px",
           zIndex: 500,
-          cursor: disabled && 'default',
+          cursor: disabled && "default",
         }}
         onClick={!disabled ? onClick : undefined}
       />
@@ -99,14 +101,14 @@ function SamplePrevArrow(props: any) {
     <div className="absolute bottom-[-35px] lg:bottom-[-40px] left-0">
       <img
         src="/images/icons/arrow-left.svg"
-        className={`${className} ${disabled ? 'opacity-0' : ''}`}
+        className={`${className} ${disabled ? "opacity-0" : ""}`}
         style={{
           ...style,
-          left: '0px',
-          position: 'relative',
-          width: '45px',
+          left: "0px",
+          position: "relative",
+          width: "45px",
           zIndex: 500,
-          cursor: disabled && 'default',
+          cursor: disabled && "default",
         }}
         onClick={!disabled ? onClick : undefined}
       />
@@ -127,12 +129,21 @@ export function CarouselProjects(props: CarouselProjectsProps) {
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
 
   useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-out",
+      offset: 80,
+      once: false,
+    });
+  }, []);
+
+  useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 640);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const shouldShowSlider =
@@ -192,7 +203,7 @@ export function CarouselProjects(props: CarouselProjectsProps) {
   return shouldShowSlider ? (
     <Slider {...settings}>
       {React.Children.map(children, (child, index) => (
-        <div className="pr-[10px] lg:pr-[15px]" key={index}>
+        <div data-aos="fade-up" className="pr-[10px] lg:pr-[15px]" key={index}>
           {child}
         </div>
       ))}
@@ -200,7 +211,7 @@ export function CarouselProjects(props: CarouselProjectsProps) {
   ) : (
     <div className={`grid grid-cols-${slidesNumber} gap-[5px]`}>
       {React.Children.map(children, (child, index) => (
-        <div key={index} className="col-span-1">
+        <div data-aos="fade-up" key={index} className="col-span-1">
           {child}
         </div>
       ))}
