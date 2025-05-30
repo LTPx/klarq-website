@@ -22,9 +22,26 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
     const labelRef = useRef<HTMLLabelElement>(null);
 
     useEffect(() => {
-      if (labelRef.current) {
-        setLabelWidth(labelRef.current.offsetWidth);
-      }
+      const waitForFonts = async () => {
+        await document.fonts.ready;
+        if (labelRef.current) {
+          setLabelWidth(labelRef.current.offsetWidth);
+        }
+      };
+      waitForFonts();
+    }, [labelTitle]);
+
+    useEffect(() => {
+      if (!labelRef.current) return;
+
+      const observer = new ResizeObserver(() => {
+        if (labelRef.current) {
+          setLabelWidth(labelRef.current.offsetWidth);
+        }
+      });
+
+      observer.observe(labelRef.current);
+      return () => observer.disconnect();
     }, [labelTitle]);
 
     useEffect(() => {
@@ -51,7 +68,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut", delay: 0.3 }}
-        > 
+        >
           <label
             ref={labelRef}
             className="font-zoom uppercase text-[66px] tracking-[-0.03em]"
