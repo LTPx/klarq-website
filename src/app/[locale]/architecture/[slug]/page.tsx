@@ -50,9 +50,8 @@ async function ArchitectureSlugPage(nextParams: {
         />
       </section>
       <section className="flex flex-col gap-[40px] pt-[150px] px-[40px] pb-[40px]">
-        <div           data-aos="fade-up"
- className="flex flex-col gap-[8px]">
-          <div  className="border-[1px] border-t-black "></div>
+        <div data-aos="fade-up" className="flex flex-col gap-[8px]">
+          <div className="border-[1px] border-t-black "></div>
           <span className="text-[18px] leading-[28px]">More projects</span>
         </div>
         <CarouselProjects slidesNumber={3}>
@@ -66,7 +65,9 @@ async function ArchitectureSlugPage(nextParams: {
               >
                 <ProjectCard
                   title={project.acf.architecture_projects.title_project}
-                  image={getProxyImageUrl(project.acf.architecture_projects.cover_project.url)}
+                  image={getProxyImageUrl(
+                    project.acf.architecture_projects.cover_project.url
+                  )}
                 />
               </Link>
             ))}

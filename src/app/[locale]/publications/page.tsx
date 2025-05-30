@@ -1,6 +1,7 @@
 import { getWordPressCustomPage } from "@/app/_services/api";
 import Cover from "@/app/components/cover-pages";
 import GalleryProjects from "@/app/components/gallery";
+import PublicationsPage from "@/app/components/publications-page";
 import { useTranslations } from "next-intl";
 
 async function Publications(nextParams: {
@@ -21,27 +22,12 @@ async function Publications(nextParams: {
     "https://images.unsplash.com/photo-1746822132410-0aa489a964f2?q=80&w=3607&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   ];
 
-    const data = await getWordPressCustomPage(locale, "publications");
-    const { acf } = data;
-    const { publications_information } = acf;
-  
+  const data = await getWordPressCustomPage(locale, "publications");
+  const { acf } = data;
+  const { publications_information } = acf;
 
   return (
-    <div className="h-[calc(100dvh-50px)] flex justify-center items-center">
-      <div className="fixed top-[35px] left-[35px]">
-        <label className="dark:mix-blend-difference text-black text-[66px] leading-[46px] mix-blend-difference">
-          KLARQ
-        </label>
-      </div>
-      <div className="fixed top-[35px] right-[35px]">
-        <label className="text-[66px] leading-[46px] tracking-[-0.03em] mix-blend-difference">
-          PUBLICACIONES
-        </label>
-      </div>
-      <section>
-        <GalleryProjects publication={publications_information.publications} />
-      </section>
-    </div>
+    <PublicationsPage publications_information={publications_information} />
   );
 }
 
