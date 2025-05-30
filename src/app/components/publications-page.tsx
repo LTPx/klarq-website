@@ -5,6 +5,7 @@ import { PublicationsPageWp } from "../_interfaces/wordpress-components";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import GalleryProjects from "./gallery";
+import { Link } from "@/navigation";
 
 interface Props {
   publications_information: PublicationsPageWp;
@@ -22,11 +23,13 @@ function PublicationsPage({ publications_information }: Props) {
 
   return (
     <div className="h-[calc(100dvh-50px)] flex justify-center items-center">
-      <div className="fixed top-[35px] left-[35px]">
-        <label className="font-zoom dark:mix-blend-difference text-black text-[66px] leading-[46px] mix-blend-difference">
-          KLARQ
-        </label>
-      </div>
+      <Link className="cursor-pointer" href={"/"}>
+        <div className="cursor-pointer fixed top-[40px] left-[35px] z-[1000]">
+          <label className="font-zoom cursor-pointer text-[66px] leading-[46px] ">
+            KLARQ
+          </label>
+        </div>
+      </Link>
       <div className="fixed top-[35px] right-[35px]">
         <label className="font-zoom text-[66px] leading-[46px] tracking-[-0.03em] mix-blend-difference">
           PUBLICACIONES
