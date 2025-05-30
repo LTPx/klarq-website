@@ -27,6 +27,25 @@ body {
   background-color: #e5e5e5;
 }
 
+.custom-cursor {
+  transition: transform 0.5s ease;
+}
+
+.hide-native-cursor,
+.hide-native-cursor * {
+  cursor: none !important;
+}
+
+body.cursor-hidden,
+body.cursor-hidden * {
+  cursor: none !important;
+}
+
+body.hide-native-cursor, 
+body.hide-native-cursor * {
+  cursor: none !important;
+}
+
 
 .aspect-16-9 {
   aspect-ratio: 16 / 9;
@@ -129,4 +148,12 @@ body {
     line-height: 45px;
     text-align: center;
   }
+}
+
+.cursor-custom-arrow {
+  cursor: url("/images/cursor-arrow.svg") 8 8, auto;
+}
+
+.custom-cursor {
+  transition: transform 0.5s ease;
 }

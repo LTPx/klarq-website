@@ -7,6 +7,7 @@ import { servicesHome } from "../_interfaces/wordpress-components";
 import { Link } from "@/navigation";
 import { useHoverStore } from "../store/hover-store";
 import { getProxyImageUrl } from "@/utils/image_proxy";
+import CustomCursor from "./custom-cursor";
 
 interface Props {
   services: servicesHome[];
@@ -18,9 +19,12 @@ function HomeAnimation(props: Props) {
   const [windowWidth, setWindowWidth] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isCursorVisible, setIsCursorVisible] = useState(false);
+  const [rotationDegree, setRotationDegree] = useState(0);
+  const [hasRotatedOnce, setHasRotatedOnce] = useState(false);
 
   const { scrollY } = useScroll();
-  const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard); // <- ✅ Zustand setter
+  const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
 
   useEffect(() => {
     const updateWindowDimensions = () => {
@@ -52,9 +56,24 @@ function HomeAnimation(props: Props) {
     if (isScrolling) {
       setHoveredIndex(null);
       setIsHoveringCard(false);
+      setIsCursorVisible(false);
     }
   }, [isScrolling, setIsHoveringCard]);
-  
+
+  useEffect(() => {
+    if (hoveredIndex !== null && hoveredIndex !== 0) {
+      setRotationDegree((prev) => prev + 180);
+    }
+  }, [hoveredIndex]);
+
+  useEffect(() => {
+    if (isCursorVisible) {
+      document.body.classList.add("cursor-hidden");
+    } else {
+      document.body.classList.remove("cursor-hidden");
+    }
+  }, [isCursorVisible]);
+
   const height = useTransform(scrollY, [0, 300], [windowHeight * 0.4, 58]);
   const width = useTransform(scrollY, [0, 300], [windowWidth, 322]);
   const links = ["/architecture", "/decor", "/development"];
@@ -108,11 +127,13 @@ function HomeAnimation(props: Props) {
                 if (!isScrolling) {
                   setHoveredIndex(index);
                   setIsHoveringCard(true);
+                  setIsCursorVisible(true);
                 }
               }}
               onMouseLeave={() => {
                 setHoveredIndex(null);
                 setIsHoveringCard(false);
+                setIsCursorVisible(false);
               }}
               style={{ display: "flex" }}
             >
@@ -129,6 +150,8 @@ function HomeAnimation(props: Props) {
           );
         })}
       </motion.div>
+
+      <CustomCursor isVisible={isCursorVisible} rotation={rotationDegree} />
     </div>
   );
 }
