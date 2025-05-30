@@ -20,6 +20,18 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
     const [expanded, setExpanded] = useState(false);
     const [labelWidth, setLabelWidth] = useState(0);
     const labelRef = useRef<HTMLLabelElement>(null);
+    const [imageLoaded, setImageLoaded] = useState(false);
+
+    useEffect(() => {
+      if (!imageLoaded) return;
+
+      const timer = setTimeout(() => {
+        setExpanded(true);
+        if (onExpandEnd) onExpandEnd();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }, [imageLoaded, onExpandEnd]);
 
     useEffect(() => {
       const waitForFonts = async () => {
@@ -97,6 +109,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
                 <img
                   src={img}
                   alt="architecture-cover"
+                  onLoad={() => setImageLoaded(true)}
                   className="cursor-pointer w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/20 z-10" />
@@ -106,6 +119,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
                 <img
                   src={img}
                   alt="architecture-cover"
+                  onLoad={() => setImageLoaded(true)}
                   className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/20 z-10" />
