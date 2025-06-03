@@ -21,9 +21,6 @@ export function Footer() {
     return null;
   }
 
-  const [hovered, setHovered] = useState(false);
-  const [hoverOrigin, setHoverOrigin] = useState<"left" | "right">("left");
-
   return (
     <div className="bg-gray">
       <footer
