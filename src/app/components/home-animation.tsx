@@ -79,7 +79,7 @@ function HomeAnimation(props: Props) {
   const links = ["/architecture", "/decor", "/development"];
 
   return (
-    <div className="container">
+    <div className="container bg-white">
       <motion.img
         src="/images/KLARQ.svg"
         alt="KLARQ"

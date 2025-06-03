@@ -23,6 +23,15 @@ export function DesignersSection({ team }: Props) {
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const selectedMember = hoveredIndex !== null ? members[hoveredIndex] : null;
+  const [hoverOrigin, setHoverOrigin] = useState<"left" | "right">("left");
+
+  const handleMouseEnter = (e: React.MouseEvent, index: number) => {
+    const rect = (e.target as HTMLButtonElement).getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const origin = x < rect.width / 2 ? "left" : "right";
+    setHoverOrigin(origin);
+    setHoveredIndex(index);
+  };
 
   return (
     <div className="grid grid-cols-3">
@@ -30,13 +39,21 @@ export function DesignersSection({ team }: Props) {
         {members.map((member, index) => (
           <button
             key={index}
-            className={`rounded-[50px] h-[33px] border border-[0.75px] border-black px-[25px] transition-colors duration-200 ${
-              hoveredIndex === index ? "bg-black/30 text-black" : "text-black"
-            }`}
-            onMouseEnter={() => setHoveredIndex(index)}
+            className="relative overflow-hidden rounded-[50px] h-[33px] border border-[0.75px] border-black px-[25px] group text-black"
+            onMouseEnter={(e) => handleMouseEnter(e, index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
-            {member.name.split(" ")[0]}
+            <span
+              className={`absolute inset-0 rounded-[50px] bg-black/30 z-0 transition-transform duration-700 ease-in-out ${
+                hoveredIndex === index ? "scale-x-100" : "scale-x-0"
+              }`}
+              style={{
+                transformOrigin: hoveredIndex === index ? hoverOrigin : "left",
+              }}
+            />
+            <span className="relative z-10 transition-colors duration-300">
+              {member.name.split(" ")[0]}
+            </span>
           </button>
         ))}
       </div>

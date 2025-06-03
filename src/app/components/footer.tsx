@@ -3,6 +3,8 @@
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import HoverFillButton from "./hover-btn";
 
 export function Footer() {
   const t = useTranslations();
@@ -18,6 +20,9 @@ export function Footer() {
   if (noShowFooter) {
     return null;
   }
+
+  const [hovered, setHovered] = useState(false);
+  const [hoverOrigin, setHoverOrigin] = useState<"left" | "right">("left");
 
   return (
     <div className="bg-gray">
@@ -54,15 +59,9 @@ export function Footer() {
               {`${t("footer.follow")}`}
             </span>
             <div className="flex gap-[15px]">
-              <span className="flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
-                "footer.architecture"
-              )}`}</span>
-              <span className="flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
-                "footer.decor"
-              )}`}</span>
-              <span className="flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
-                "footer.development"
-              )}`}</span>
+              <HoverFillButton>{t("footer.architecture")}</HoverFillButton>
+              <HoverFillButton>{t("footer.decor")}</HoverFillButton>
+              <HoverFillButton>{t("footer.development")}</HoverFillButton>
             </div>
           </div>
           <div className="flex flex-col justify-end gap-[15px]">

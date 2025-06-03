@@ -10,7 +10,7 @@ interface Props {
 function Home(props: Props) {
   const { homeInformation } = props;
   return (
-    <div className="container">
+    <div className="container bg-white">
       <HomeAnimation services={homeInformation?.services} />
       <HomeInformation
         team_section={homeInformation.team}
