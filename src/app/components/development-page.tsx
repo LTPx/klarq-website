@@ -77,7 +77,7 @@ function DevelopmentPage({ projects, information }: Props) {
               expanded ? "opacity-100" : "opacity-0"
             }`}
           >
-            <h1 className="text-[18px] leading-[22px] tracking-[-0.02em]">
+            <h1 className="uppercase text-[18px] leading-[22px] tracking-[-0.02em]">
               {currentTitle || firstProject.title}, {currentDate}
             </h1>
           </div>

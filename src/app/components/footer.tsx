@@ -5,17 +5,20 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import HoverFillButton from "./hover-btn";
+import { useExpandStore } from "../store/expand-store";
 
 export function Footer() {
   const t = useTranslations();
   const pathname = usePathname();
+  const { isExpandedReady } = useExpandStore();
 
   const noShowFooter =
     pathname?.includes("/publications") ||
     pathname?.includes("/contact") ||
     pathname === "/es/architecture" ||
     pathname === "/es/development" ||
-    pathname === "/en/architecture";
+    pathname === "/en/architecture" ||
+    (pathname === "/es/decor" && !isExpandedReady);
 
   if (noShowFooter) {
     return null;

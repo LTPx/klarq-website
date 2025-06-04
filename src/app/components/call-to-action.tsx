@@ -1,9 +1,24 @@
+"use client";
+
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
+
 interface Props {
   title: string;
 }
 
 function CallToAction(props: Props) {
   const { title } = props;
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-out",
+      offset: 80,
+      once: false,
+    });
+  }, []);
 
   return (
     <div className="flex flex-col gap-[45px] justify-center items-center ">
