@@ -20,8 +20,10 @@ function DevelopmentPage({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
   const [hasExpanded, setHasExpanded] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
+  const [expanded, setExpanded] = useState(false);
 
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [firstProject, ...restProjects] = projects;
 
@@ -48,22 +50,31 @@ function DevelopmentPage({ projects, information }: Props) {
     return () => observer.disconnect();
   }, [projects]);
 
-  const handleExpandEnd = () => {
-    setTimeout(() => {
-      setHasExpanded(true);
-    }, 1100);
-  };
+  useEffect(() => {
+    const onWheel = (e: WheelEvent) => {
+      if (!expanded && e.deltaY > 30) {
+        setExpanded(true);
+      }
+    };
 
+    const container = scrollContainerRef.current;
+    container?.addEventListener("wheel", onWheel);
+    return () => container?.removeEventListener("wheel", onWheel);
+  }, [expanded]);
   return (
     <>
       <div
-        className="DevelopmentPage relative h-[calc(100dvh-50px)] overflow-y-scroll snap-y snap-mandatory"
-        style={{ overflowY: hasExpanded ? "scroll" : "hidden" }}
+        ref={scrollContainerRef}
+        className={`ArchitecturePage relative h-[calc(100dvh-50px)] ${
+          expanded
+            ? "overflow-y-scroll snap-y snap-mandatory"
+            : "overflow-y-hidden"
+        }`}
       >
         <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
           <div
             className={`text-white transition-opacity duration-700 ease-in-out ${
-              hasExpanded ? "opacity-100" : "opacity-0"
+              expanded ? "opacity-100" : "opacity-0"
             }`}
           >
             <h1 className="text-[18px] leading-[22px] tracking-[-0.02em]">
@@ -76,9 +87,11 @@ function DevelopmentPage({ projects, information }: Props) {
           ref={(el) => {
             sectionRefs.current[0] = el;
           }}
-          img={getProxyImageUrl(firstProject.project.acf.development_projects.cover_project.url)}
+          img={getProxyImageUrl(
+            firstProject.project.acf.development_projects.cover_project.url
+          )}
           information={information}
-          onExpandEnd={handleExpandEnd}
+          expanded={expanded}
           linkSlug={`/development/${firstProject.project.slug}`}
           labelTitle="Development"
         />
@@ -98,7 +111,9 @@ function DevelopmentPage({ projects, information }: Props) {
             >
               <img
                 className="bg-[#00000026] object-cover w-full h-full"
-                src={getProxyImageUrl(item.project.acf.development_projects.cover_project.url)}
+                src={getProxyImageUrl(
+                  item.project.acf.development_projects.cover_project.url
+                )}
                 alt={item.title}
               />
               <div className="absolute inset-0 bg-black/20 z-10" />

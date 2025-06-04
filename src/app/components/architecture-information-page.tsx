@@ -108,7 +108,9 @@ function ArchitecturePage({ projects, information }: Props) {
             key={item.project.id}
             href={`/architecture/${item.project.slug}`}
             className={`block h-[calc(100dvh-50px)] relative transition-opacity duration-500 ${
-              expanded ? "snap-start opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+              expanded
+                ? "snap-start opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
             }`}
           >
             <div
