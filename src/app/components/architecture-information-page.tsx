@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@/navigation";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
 import CoverDynamic from "./cover-dynamic";
@@ -19,12 +19,14 @@ interface Props {
 function ArchitecturePage({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDate, setCurrentDate] = useState("");
-
-  const [hasExpanded, setHasExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const [firstProject, ...restProjects] = projects;
+  const [firstProject, restProjects] = useMemo(() => {
+    return [projects[0], projects.slice(1)];
+  }, [projects]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -46,25 +48,40 @@ function ArchitecturePage({ projects, information }: Props) {
       if (ref) observer.observe(ref);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      sectionRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+      observer.disconnect();
+    };
   }, [projects]);
 
-  const handleExpandEnd = () => {
-    setTimeout(() => {
-      setHasExpanded(true);
-    }, 1100);
-  };
+  useEffect(() => {
+    const onWheel = (e: WheelEvent) => {
+      if (!expanded && e.deltaY > 30) {
+        setExpanded(true);
+      }
+    };
+
+    const container = scrollContainerRef.current;
+    container?.addEventListener("wheel", onWheel);
+    return () => container?.removeEventListener("wheel", onWheel);
+  }, [expanded]);
 
   return (
     <>
       <div
-        className="ArchitecturePage relative h-[calc(100dvh-50px)] overflow-y-scroll snap-y snap-mandatory"
-        style={{ overflowY: hasExpanded ? "scroll" : "hidden" }}
+        ref={scrollContainerRef}
+        className={`ArchitecturePage relative h-[calc(100dvh-50px)] ${
+          expanded
+            ? "overflow-y-scroll snap-y snap-mandatory"
+            : "overflow-y-hidden"
+        }`}
       >
         <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
           <div
             className={`text-white transition-opacity duration-700 ease-in-out ${
-              hasExpanded ? "opacity-100" : "opacity-0"
+              expanded ? "opacity-100" : "opacity-0"
             }`}
           >
             <h1 className="text-[18px] leading-[22px] tracking-[-0.02em]">
@@ -77,18 +94,22 @@ function ArchitecturePage({ projects, information }: Props) {
           ref={(el) => {
             sectionRefs.current[0] = el;
           }}
-          img={getProxyImageUrl(firstProject.project.acf.architecture_projects.cover_project.url)}
+          img={getProxyImageUrl(
+            firstProject.project.acf.architecture_projects.cover_project.url
+          )}
           information={information}
-          onExpandEnd={handleExpandEnd}
           linkSlug={`/architecture/${firstProject.project.slug}`}
           labelTitle="Architecture"
+          expanded={expanded}
         />
 
         {restProjects.map((item, index) => (
           <Link
             key={item.project.id}
             href={`/architecture/${item.project.slug}`}
-            className="snap-start block h-[calc(100dvh-50px)] relative"
+            className={`block h-[calc(100dvh-50px)] relative transition-opacity duration-500 ${
+              expanded ? "snap-start opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            }`}
           >
             <div
               ref={(el) => {
@@ -99,7 +120,9 @@ function ArchitecturePage({ projects, information }: Props) {
             >
               <img
                 className="bg-[#00000026] object-cover w-full h-full"
-                src={getProxyImageUrl(item.project.acf.architecture_projects.cover_project.url)}
+                src={getProxyImageUrl(
+                  item.project.acf.architecture_projects.cover_project.url
+                )}
                 alt={item.title}
               />
               <div className="absolute inset-0 bg-black/20 z-10" />

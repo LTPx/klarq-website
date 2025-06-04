@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, forwardRef } from "react";
+import { useEffect, useRef, forwardRef, useState } from "react";
 import { motion } from "framer-motion";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { Link } from "@/navigation";
@@ -10,28 +10,15 @@ interface Props {
   className?: string;
   information: InformationWp;
   img?: string;
-  onExpandEnd?: () => void;
   linkSlug?: string;
   labelTitle: string;
+  expanded: boolean;
 }
 
 const CoverDynamic = forwardRef<HTMLDivElement, Props>(
-  ({ className, img, information, linkSlug, onExpandEnd, labelTitle }, ref) => {
-    const [expanded, setExpanded] = useState(false);
-    const [labelWidth, setLabelWidth] = useState(0);
+  ({ className, img, information, linkSlug, labelTitle, expanded }, ref) => {
     const labelRef = useRef<HTMLLabelElement>(null);
-    const [imageLoaded, setImageLoaded] = useState(false);
-
-    useEffect(() => {
-      if (!imageLoaded) return;
-
-      const timer = setTimeout(() => {
-        setExpanded(true);
-        if (onExpandEnd) onExpandEnd();
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }, [imageLoaded, onExpandEnd]);
+    const [labelWidth, setLabelWidth] = useState(0);
 
     useEffect(() => {
       const waitForFonts = async () => {
@@ -55,15 +42,6 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
       observer.observe(labelRef.current);
       return () => observer.disconnect();
     }, [labelTitle]);
-
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setExpanded(true);
-        if (onExpandEnd) onExpandEnd();
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }, [onExpandEnd]);
 
     return (
       <>
@@ -109,7 +87,6 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
                 <img
                   src={img}
                   alt="architecture-cover"
-                  onLoad={() => setImageLoaded(true)}
                   className="cursor-pointer w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/20 z-10" />
@@ -119,7 +96,6 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
                 <img
                   src={img}
                   alt="architecture-cover"
-                  onLoad={() => setImageLoaded(true)}
                   className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/20 z-10" />
