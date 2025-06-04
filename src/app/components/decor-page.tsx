@@ -52,7 +52,7 @@ function DecorPage({ decor_information }: Props) {
         <section className="py-[200px]">
           <CallToAction title={decor_information.page_content.title_banner} />
         </section>
-        <section className="px-[40px] flex flex-col gap-[180px] pb-[130px]">
+        <section className="pl-[40px] flex flex-col gap-[180px] pb-[130px]">
           {decor_information.page_content.projects_decor &&
             decor_information.page_content.projects_decor.map(
               (decor, index) => (
