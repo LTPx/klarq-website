@@ -1,83 +1,68 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Keyboard } from "swiper/modules";
+import "swiper/css";
+
 import { PublicationsWp } from "../_interfaces/wordpress-components";
-import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface GalleryProps {
   publication: PublicationsWp[];
 }
 
 const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
-  const VISIBLE_ITEMS = 7;
-  const CENTER_INDEX = Math.floor(VISIBLE_ITEMS / 2);
-  const [virtualIndex, setVirtualIndex] = useState(100000);
-
-  const getRealItem = (index: number) =>
-    publication[
-      ((index % publication.length) + publication.length) % publication.length
-    ];
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        setVirtualIndex((prev) => prev - 1);
-      } else if (e.key === "ArrowRight") {
-        setVirtualIndex((prev) => prev + 1);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  const handlePrev = () => setVirtualIndex((prev) => prev - 1);
-  const handleNext = () => setVirtualIndex((prev) => prev + 1);
-
-  if (publication.length === 0) return null;
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const swiperRef = useRef<any>(null);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-screen h-auto">
       <button
-        onClick={handlePrev}
-        className="absolute left-[40px] top-[380px] -translate-y-1/2"
+        onClick={() => swiperRef.current?.slidePrev()}
+        className="absolute left-[40px] top-[380px] -translate-y-1/2 z-10"
       >
         <img src="/images/left.svg" alt="Previous" />
       </button>
-
-      <div className="flex overflow-hidden gap-[4px] transition-all duration-300 ease-in-out">
-        {Array.from({ length: VISIBLE_ITEMS }).map((_, i) => {
-          const relativeIndex = i - CENTER_INDEX;
-          const itemIndex = virtualIndex + relativeIndex;
-          const item = getRealItem(itemIndex);
-          const isSelected = i === CENTER_INDEX;
-
-          return (
+      <Swiper
+        modules={[Keyboard]}
+        slidesPerView={6.1}
+        centeredSlides={true}
+        spaceBetween={5}
+        loop={true}
+        keyboard={{ enabled: true }}
+        onSlideChange={(swiper) => setSelectedIndex(swiper.realIndex)}
+        onBeforeInit={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        initialSlide={selectedIndex}
+        style={{
+          width: "100vw",
+          boxSizing: "border-box",
+        }}
+      >
+        {publication.map((project, index) => (
+          <SwiperSlide key={index}>
             <img
-              key={i}
-              src={getProxyImageUrl(item.image.url)}
-              alt={item.title}
-              onClick={() => setVirtualIndex(itemIndex)}
-              className={`cursor-pointer shrink-0 transition-all duration-300 ease-in-out ${
-                isSelected ? "h-[365px] opacity-100" : "h-[290px] opacity-30"
-              }`}
-              style={{ width: "calc((100% - 6 * 4px) / 7)" }}
+              src={project.image.url}
+              alt={project.image.alt || `Image ${index + 1}`}
+              onClick={() => {
+                swiperRef.current?.slideToLoop(index);
+                setSelectedIndex(index);
+              }}
+              className={`cursor-pointer transition-transform duration-300 mx-auto
+    ${
+      index === selectedIndex ? "h-[370px] opacity-100" : "h-[290px] opacity-30"
+    }
+  `}
+              style={{ width: "100%" }}
             />
-          );
-        })}
-      </div>
-
-      <div className="mt-[16px] text-center">
-        <h2 className="uppercase text-[16px] leading-[22px]">
-          {getRealItem(virtualIndex)?.title}
-        </h2>
-        <p className="uppercase text-[16px] leading-[22px]">
-          {getRealItem(virtualIndex)?.sub_title}
-        </p>
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
       <button
-        onClick={handleNext}
-        className="absolute right-[40px] top-[380px]"
+        onClick={() => swiperRef.current?.slideNext()}
+        className="absolute right-[40px] top-[380px] -translate-y-1/2 z-10"
       >
         <img src="/images/right.svg" alt="Next" />
       </button>
