@@ -35,7 +35,7 @@ function GalleryImagesScroll({
   return (
     <div className="w-full">
       <div
-        className="flex overflow-y-hidden overflow-x-auto scrollbar-hide gap-[8px] no-scrollbar"
+        className="flex overflow-y-hidden overflow-x-auto scrollbar-hide gap-[5px] no-scrollbar"
         style={{ cursor: "grab" }}
       >
         {images.map((src, index) => (

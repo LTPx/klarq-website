@@ -44,7 +44,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
         <img src="/images/left.svg" alt="Previous" />
       </button>
 
-      <div className="flex overflow-hidden gap-[4px] mx-[40px] transition-all duration-300 ease-in-out">
+      <div className="flex overflow-hidden gap-[4px] transition-all duration-300 ease-in-out">
         {Array.from({ length: VISIBLE_ITEMS }).map((_, i) => {
           const relativeIndex = i - CENTER_INDEX;
           const itemIndex = virtualIndex + relativeIndex;
@@ -57,7 +57,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
               src={getProxyImageUrl(item.image.url)}
               alt={item.title}
               onClick={() => setVirtualIndex(itemIndex)}
-              className={`object-cover cursor-pointer shrink-0 transition-all duration-300 ease-in-out ${
+              className={`cursor-pointer shrink-0 transition-all duration-300 ease-in-out ${
                 isSelected ? "h-[365px] opacity-100" : "h-[290px] opacity-30"
               }`}
               style={{ width: "calc((100% - 6 * 4px) / 7)" }}
