@@ -8,6 +8,7 @@ import { Link } from "@/navigation";
 import { useHoverStore } from "../store/hover-store";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import CustomCursor from "./custom-cursor";
+import { useScrollStore } from "../store/scroll-store";
 
 interface Props {
   services: servicesHome[];
@@ -22,6 +23,7 @@ function HomeAnimation(props: Props) {
   const [isCursorVisible, setIsCursorVisible] = useState(false);
   const [rotationDegree, setRotationDegree] = useState(0);
   const [hasRotatedOnce, setHasRotatedOnce] = useState(false);
+  const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
 
   const { scrollY } = useScroll();
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
@@ -42,6 +44,7 @@ function HomeAnimation(props: Props) {
 
     const handleScroll = () => {
       setIsScrolling(true);
+      setHasScrolled(true);
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
         setIsScrolling(false);

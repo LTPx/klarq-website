@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DesktopMenu from "./desktop-menu";
 import { useHoverStore } from "../store/hover-store";
+import { useScrollStore } from "../store/scroll-store";
 
 interface LinksHeader {
   title: string;
@@ -22,6 +23,7 @@ export function Header({
   const locale = params.locale;
   const currentPath = usePathname();
   const [showMenu, setShowMenu] = useState(false);
+  const hasScrolled = useScrollStore((state) => state.hasScrolled);
 
   const isHoveringCard = useHoverStore((state) => state.isHoveringCard);
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
@@ -60,14 +62,35 @@ export function Header({
                 showMenu ? "border-t-[0.8px] border-black" : ""
               }`}
             >
-              <img
-                className="cursor-pointer"
-                onClick={handleContactClick}
-                src={
-                  showMenu ? "/images/close-menu.svg" : "/images/menu-logo.svg"
-                }
-                alt={showMenu ? "Cerrar menú" : "Abrir menú"}
-              />
+              {currentPath === "/" ? (
+                <motion.img
+                  className="cursor-pointer"
+                  onClick={handleContactClick}
+                  src={
+                    showMenu
+                      ? "/images/close-menu.svg"
+                      : "/images/menu-logo.svg"
+                  }
+                  alt={showMenu ? "Cerrar menú" : "Abrir menú"}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={
+                    hasScrolled ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
+                  }
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                />
+              ) : (
+                <img
+                  className="cursor-pointer"
+                  onClick={handleContactClick}
+                  src={
+                    showMenu
+                      ? "/images/close-menu.svg"
+                      : "/images/menu-logo.svg"
+                  }
+                  alt={showMenu ? "Cerrar menú" : "Abrir menú"}
+                />
+              )}
+
               <div className="pl-[30px] flex justify-between">
                 {links.map((link, index) => {
                   const isActive = currentPath === link.url;
