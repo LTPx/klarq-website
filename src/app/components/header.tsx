@@ -27,6 +27,7 @@ export function Header({
 
   const isHoveringCard = useHoverStore((state) => state.isHoveringCard);
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     setIsHoveringCard(false);
@@ -94,16 +95,20 @@ export function Header({
               <div className="pl-[30px] flex justify-between">
                 {links.map((link, index) => {
                   const isActive = currentPath === link.url;
+                  const isHovered = hoveredIndex === index;
+
                   return (
                     <Link
                       key={index}
                       href={link.url}
                       className="flex items-center gap-[6px]"
                       onClick={() => setShowMenu(false)}
+                      onMouseEnter={() => setHoveredIndex(index)}
+                      onMouseLeave={() => setHoveredIndex(null)}
                     >
                       <img
                         src={
-                          isActive
+                          isActive || isHovered
                             ? "/images/circle-black.svg"
                             : "/images/circle.svg"
                         }

@@ -48,7 +48,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
         <motion.div
           className="fixed z-[1000] mix-blend-difference text-white"
           style={{
-            top: 20,
+            top: 15,
             left: expanded
               ? `calc(100% - ${labelWidth + 40}px)`
               : `calc(50% + 40px)`,

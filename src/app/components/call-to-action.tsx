@@ -75,7 +75,7 @@ function CallToAction(props: Props) {
                 onClick={() => setSelectedCategory(category)}
                 onMouseEnter={(e) => handleMouseEnter(e, i)}
                 onMouseLeave={handleMouseLeave}
-                className={`relative uppercase flex items-center text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[25px] overflow-hidden ${
+                className={`relative uppercase flex items-center text-[16px] leading-[16px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[25px] overflow-hidden ${
                   isSelected ? "bg-[#E5E5E5]" : "bg-transparent"
                 }`}
               >
@@ -89,8 +89,6 @@ function CallToAction(props: Props) {
                     }}
                   />
                 )}
-
-                {/* Text */}
                 <span
                   className={`relative z-10 transition-colors duration-300 ${
                     isSelected ? "text-black" : "text-black"

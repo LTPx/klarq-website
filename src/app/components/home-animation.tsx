@@ -75,7 +75,12 @@ function HomeAnimation(props: Props) {
     } else {
       document.body.classList.remove("cursor-hidden");
     }
+  
+    return () => {
+      document.body.classList.remove("cursor-hidden");
+    };
   }, [isCursorVisible]);
+  
 
   const height = useTransform(scrollY, [0, 300], [windowHeight * 0.4, 58]);
   const width = useTransform(scrollY, [0, 300], [windowWidth, 322]);

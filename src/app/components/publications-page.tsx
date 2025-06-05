@@ -24,7 +24,7 @@ function PublicationsPage({ publications_information }: Props) {
   return (
     <div className="h-[calc(100dvh-50px)] flex justify-center items-center">
       <Link className="cursor-pointer" href={"/"}>
-        <div className="cursor-pointer fixed top-[40px] left-[35px] z-[1000]">
+        <div className="cursor-pointer fixed top-[35px] left-[35px] z-[1000]">
           <label className="font-zoom cursor-pointer text-[66px] leading-[46px] ">
             KLARQ
           </label>
@@ -35,7 +35,7 @@ function PublicationsPage({ publications_information }: Props) {
           PUBLICACIONES
         </label>
       </div>
-      <section>
+      <section className="pt-[80px]">
         <GalleryProjects publication={publications_information.publications} />
       </section>
     </div>

@@ -28,11 +28,16 @@ body {
   /* background-color: #e5e5e5; */
 }
 
-.custom-cursor {
+/* .custom-cursor {
   transition: transform 0.5s ease;
+} */
+
+.cursor-hidden,
+.cursor-hidden * {
+  cursor: none !important;
 }
 
-.hide-native-cursor,
+/* .hide-native-cursor,
 .hide-native-cursor * {
   cursor: none !important;
 }
@@ -45,7 +50,7 @@ body.cursor-hidden * {
 body.hide-native-cursor, 
 body.hide-native-cursor * {
   cursor: none !important;
-}
+} */
 
 
 .aspect-16-9 {
@@ -151,13 +156,13 @@ body.hide-native-cursor * {
   }
 }
 
-.cursor-custom-arrow {
+/* .cursor-custom-arrow {
   cursor: url("/images/cursor-arrow.svg") 8 8, auto;
 }
 
 .custom-cursor {
   transition: transform 0.5s ease;
-}
+} */
 
 .introduction-title {
   p {
@@ -170,15 +175,3 @@ body.hide-native-cursor * {
   }
 }
 
-.fade-in {
-  animation: fadeIn 0.3s ease forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
