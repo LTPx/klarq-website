@@ -33,13 +33,13 @@ async function DevelopmentSlugPage(nextParams: {
   return (
     <div className="architecture-slug-page relative bg-white overflow-hidden">
       <Link className="cursor-pointer" href={"/"}>
-        <div className="cursor-pointer fixed top-[40px] left-[35px] mix-blend-difference text-white z-[1000]">
+        <div className="cursor-pointer fixed top-[30px] left-[35px] mix-blend-difference text-white z-[1000]">
           <label className="font-zoom cursor-pointer text-[66px] leading-[46px] ">
             KLARQ
           </label>
         </div>
       </Link>
-      <div className="fixed top-[40px] right-[40px] z-[1000] mix-blend-difference text-white">
+      <div className="fixed top-[30px] right-[40px] z-[1000] mix-blend-difference text-white">
         <label className="font-zoom text-[66px] leading-[46px] tracking-[-0.03em]">
           DEVELOPMENT
         </label>

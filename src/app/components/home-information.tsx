@@ -57,7 +57,7 @@ export function HomeInformation(props: Props) {
           </section>
         )}
         {information_home && (
-          <section className="pt-[240px] pb-[190px]">
+          <section className="pt-[185px] pb-[190px]">
             <div className="grid grid-cols-3">
               <div
                 data-aos="fade-up"
