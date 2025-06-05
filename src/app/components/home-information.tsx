@@ -78,12 +78,14 @@ export function HomeInformation(props: Props) {
         )}
       </div>
       {slider && <SliderBrand brands={slider} />}
-      {carousel_images && (
-        <GalleryImagesScroll
-          imageClassName="lg:h-[575px]"
-          images={carousel_images}
-        />
-      )}
+      <section className="pb-[5px]">
+        {carousel_images && (
+          <GalleryImagesScroll
+            imageClassName="lg:h-[575px]"
+            images={carousel_images}
+          />
+        )}
+      </section>
     </section>
   );
 }
