@@ -7,11 +7,11 @@ interface Props {
   date?: string;
   description: string;
   images: ImageAcf[];
-  url?: string;
+  // url?: string;
 }
 
 function DecorProjects(props: Props) {
-  const { title, description, images, date, url } = props;
+  const { title, description, images, date } = props;
 
   return (
     <div className="DecorProjects w-full">
@@ -22,9 +22,9 @@ function DecorProjects(props: Props) {
       />
       <div className="grid grid-cols-2 pt-[25px]">
         <div>
-          <Link href={url || ""}>
+          {/* <Link href={url || ""}> */}
             <h2 className="text-[18px] leading-[22px]">{title}</h2>
-          </Link>
+          {/* </Link> */}
           <span className="text-[18px] leading-[22px]">{date}</span>
         </div>
         <div

@@ -8,15 +8,7 @@ async function Decor(nextParams: { params: { locale: "en" | "es" | "de" } }) {
   } = nextParams;
 
   const page = "decor";
-  const parentSlug =
-    locale === "es"
-      ? "spanish-pages"
-      : locale === "de"
-      ? "german-pages"
-      : "english-pages";
-
   const data = await getWordPressCustomPage(locale, page);
-  const allProjects = await getChildPages(page, locale, parentSlug);
 
   const { acf } = data;
   const { decor_information } = acf;

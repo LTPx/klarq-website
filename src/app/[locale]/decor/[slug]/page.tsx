@@ -36,9 +36,9 @@ async function DecorSlugPage(nextParams: {
         </label>
       </div>
       <Cover img={getProxyImageUrl(decor_projects.cover_project.url)} />
-      <section className="py-[200px]">
+      {/* <section className="py-[200px]">
         <CallToAction title={decor_projects.banner.title} />
-      </section>
+      </section> */}
       <section className="px-[40px] flex flex-col gap-[180px] pb-[130px]">
         {decor_projects.projects &&
           decor_projects.projects.map((decor, index) => (
@@ -48,7 +48,7 @@ async function DecorSlugPage(nextParams: {
                 description={decor.description}
                 images={decor.gallery}
                 date={decor.date}
-                url="/"
+                // url="/"
               />
             </div>
           ))}

@@ -6,8 +6,10 @@ import CoverDynamic from "./cover-dynamic";
 import {
   DecorPageWp,
   InformationWp,
+  ProjectCategoryItem,
+  ProjectCategoryWp,
 } from "../_interfaces/wordpress-components";
-import CallToAction from "./call-to-action";
+import CallToAction, { CategoryWithProjects } from "./call-to-action";
 import DecorProjects from "./decor-projects";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import AOS from "aos";
@@ -62,6 +64,37 @@ function DecorPage({ decor_information }: Props) {
     return () => container?.removeEventListener("wheel", onWheel);
   }, [expanded]);
 
+  const projectKeys = [
+    "kitchen_projects",
+    "rooms_projects",
+    "furniture_projects",
+    "textiles_projects",
+    "materials_projects",
+  ] as const;
+
+  const categories: CategoryWithProjects[] = projectKeys
+  .map((key) => {
+    const projectData = decor_information.page_content[key];
+    if (!projectData?.category?.name) return null;
+
+    const allProjects = Array.isArray(projectData.category_project)
+      ? projectData.category_project
+          .map((categoryProject) => categoryProject.project_category || [])
+          .flat()
+      : [];
+
+    const introduction = Array.isArray(projectData.category_introduction)
+      ? projectData.category_introduction
+      : [];
+
+    return {
+      name: projectData.category.name,
+      projects: allProjects,
+      introduction,
+    } as CategoryWithProjects; // 👈 esto es clave
+  })
+  .filter((item): item is CategoryWithProjects => item !== null);
+
   return (
     <div
       ref={scrollContainerRef}
@@ -78,7 +111,10 @@ function DecorPage({ decor_information }: Props) {
       {isExpandedReady && (
         <>
           <section className="py-[200px]">
-            <CallToAction title={decor_information.page_content.title_banner} />
+            <CallToAction
+              categories={categories}
+              title={decor_information.page_content.title_banner}
+            />
           </section>
           <section className="pl-[40px] flex flex-col gap-[180px] pb-[130px]">
             {decor_information.page_content.projects_decor?.map(
@@ -89,7 +125,7 @@ function DecorPage({ decor_information }: Props) {
                     description={decor.description}
                     images={decor.gallery}
                     date={decor.date}
-                    url="/"
+                    // url="/"
                   />
                 </div>
               )
