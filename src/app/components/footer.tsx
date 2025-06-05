@@ -33,7 +33,7 @@ export function Footer() {
           {`${t("footer.title")}`}
         </label>
         <div className="grid grid-cols-3">
-          <div className="">
+          <div className="col-span-1">
             <div className="flex flex-col">
               <p className="text-[16px] leading-[22px] ">
                 C/ Vicent Serra i Orvay, 49
@@ -54,7 +54,7 @@ export function Footer() {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col justify-end gap-[40px]">
+          <div className="col-span-1 flex flex-col justify-end gap-[40px]">
             <span className="text-[16px] leading-[22px]">
               {`${t("footer.follow")}`}
             </span>
@@ -70,25 +70,29 @@ export function Footer() {
               </HoverFillButton>
             </div>
           </div>
-          <div className="flex flex-col justify-end gap-[15px]">
-            <img
-              className="h-[30px] w-[166.18px]"
-              src="/images/logo-footer.svg"
-            />
-            <div className="flex flex-col">
-              <div className="flex gap-[5px]">
+          <div className="col-span-1 grid grid-cols-5">
+            <div className="col-span-1"></div>
+            <div className="col-span-3 flex flex-col justify-end gap-[15px]">
+              <img
+                className="h-[30px] w-[166.18px]"
+                src="/images/logo-footer.svg"
+              />
+              <div className="flex flex-col">
+                <div className="flex gap-[5px]">
+                  <Link className="text-[16px] leading-[22px]" href={"/"}>
+                    {`${t("footer.privacy-policy")}`}
+                  </Link>
+                  <span> | </span>
+                  <Link className="text-[16px] leading-[22px]" href={"/"}>
+                    {`${t("footer.legal-notice")}`}
+                  </Link>
+                </div>
                 <Link className="text-[16px] leading-[22px]" href={"/"}>
-                  {`${t("footer.privacy-policy")}`}
-                </Link>
-                <span> | </span>
-                <Link className="text-[16px] leading-[22px]" href={"/"}>
-                  {`${t("footer.legal-notice")}`}
+                  {`${t("footer.cookies-policy")}`}
                 </Link>
               </div>
-              <Link className="text-[16px] leading-[22px]" href={"/"}>
-                {`${t("footer.cookies-policy")}`}
-              </Link>
             </div>
+            <div className="col-span-1"></div>
           </div>
         </div>
       </footer>

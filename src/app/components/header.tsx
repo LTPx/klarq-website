@@ -56,7 +56,7 @@ export function Header({
             transition={{ duration: 0.1 }}
           >
             <div
-              className={`h-[50px] px-[40px] flex justify-between items-center transition-all duration-300 ${
+              className={`h-[50px] px-[40px] grid grid-cols-2 items-center transition-all duration-300 ${
                 showMenu ? "border-t-[0.8px] border-black" : ""
               }`}
             >
@@ -68,7 +68,7 @@ export function Header({
                 }
                 alt={showMenu ? "Cerrar menú" : "Abrir menú"}
               />
-              <div className="flex gap-[150px]">
+              <div className="pl-[30px] flex justify-between">
                 {links.map((link, index) => {
                   const isActive = currentPath === link.url;
                   return (
