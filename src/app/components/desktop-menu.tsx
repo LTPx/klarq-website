@@ -3,6 +3,7 @@
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import HoverFillButton from "./hover-btn";
 
 interface Props {
   showContact: boolean;
@@ -54,15 +55,15 @@ export function DesktopMenu(props: Props) {
               "menu.follow"
             )}`}</span>
             <div className="flex gap-[15px]">
-              <span className="cursor-pointer flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
-                "footer.architecture"
-              )}`}</span>
-              <span className="cursor-pointer flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
-                "footer.decor"
-              )}`}</span>
-              <span className="cursor-pointer flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px]">{`${t(
-                "footer.development"
-              )}`}</span>
+              <HoverFillButton href="https://instagram.com">
+                {t("footer.architecture")}
+              </HoverFillButton>
+              <HoverFillButton href="https://instagram.com">
+                {t("footer.decor")}
+              </HoverFillButton>
+              <HoverFillButton href="https://instagram.com">
+                {t("footer.development")}
+              </HoverFillButton>
             </div>
           </div>
         </div>

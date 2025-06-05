@@ -7,10 +7,10 @@ type Props = {
   className?: string;
 };
 
-export default function HoverFillButton({
+export default function HoverButton({
   children,
   href = "#",
-  className,
+  className = "",
 }: Props) {
   const [hovered, setHovered] = useState(false);
   const [hoverOrigin, setHoverOrigin] = useState<"left" | "right">("left");
@@ -24,14 +24,15 @@ export default function HoverFillButton({
 
   return (
     <a
-      target="_blank"
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setHovered(false)}
-      className={`relative group overflow-hidden inline-flex items-center capitalize text-[16px] leading-[15px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px] text-black ${className}`}
+      className={`relative overflow-hidden inline-flex items-center rounded-[50px] border border-black border-[0.75px] h-[33px] px-[20px] text-[16px] leading-[15px] text-black cursor-pointer ${className}`}
     >
       <span
-        className={`absolute inset-0 rounded-[50px] bg-black z-0 transition-transform duration-700 ease-in-out ${
+        className={`absolute inset-0 rounded-[50px] bg-black/30 z-0 transition-transform duration-700 ease-in-out ${
           hovered ? "scale-x-100" : "scale-x-0"
         }`}
         style={{
@@ -40,7 +41,7 @@ export default function HoverFillButton({
       />
       <span
         className={`relative z-10 transition-colors duration-700 ${
-          hovered ? "text-white" : "text-black"
+          hovered ? "" : "text-black"
         }`}
       >
         {children}

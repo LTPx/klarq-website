@@ -59,9 +59,15 @@ export function Footer() {
               {`${t("footer.follow")}`}
             </span>
             <div className="flex gap-[15px]">
-              <HoverFillButton>{t("footer.architecture")}</HoverFillButton>
-              <HoverFillButton>{t("footer.decor")}</HoverFillButton>
-              <HoverFillButton>{t("footer.development")}</HoverFillButton>
+              <HoverFillButton href="https://instagram.com">
+                {t("footer.architecture")}
+              </HoverFillButton>
+              <HoverFillButton href="https://instagram.com">
+                {t("footer.decor")}
+              </HoverFillButton>
+              <HoverFillButton href="https://instagram.com">
+                {t("footer.development")}
+              </HoverFillButton>
             </div>
           </div>
           <div className="flex flex-col justify-end gap-[15px]">

@@ -38,7 +38,7 @@ export function HomeInformation(props: Props) {
       once: false,
     });
   }, []);
-  
+
   return (
     <section className="container pt-[5px]">
       <div className="px-[40px] bg-green pt-[45px]">
