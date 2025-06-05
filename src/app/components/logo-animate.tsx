@@ -33,7 +33,7 @@ function LogoAnimate() {
     return null;
 
   const initialHeight = windowHeight * 0.4;
-  const finalHeight = 58;
+  const finalHeight = 66;
   const initialWidth = windowWidth;
   const finalWidth = 322;
 
@@ -43,7 +43,7 @@ function LogoAnimate() {
         <motion.img
           src="/images/KLARQ.svg"
           alt="KLARQ"
-          className="px-[40px] object-contain fixed top-[25px] left-0 z-[1000] mix-blend-difference filter invert"
+          className="px-[40px] object-contain fixed top-[20px] left-0 z-[1000] mix-blend-difference filter invert"
           initial={{
             y: 0,
             opacity: 1,

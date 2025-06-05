@@ -61,7 +61,8 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
         >
           <label
             ref={labelRef}
-            className="font-zoom uppercase text-[66px] tracking-[-0.03em]"
+            className="inline-block align-top font-zoom uppercase text-[66px] tracking-[-0.03em]"
+            style={{ lineHeight: "66px" }}
           >
             {labelTitle}
           </label>
