@@ -169,3 +169,16 @@ body.hide-native-cursor * {
     line-height: 22px;
   }
 }
+
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
