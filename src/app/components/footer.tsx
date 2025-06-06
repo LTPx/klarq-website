@@ -27,7 +27,7 @@ export function Footer() {
   return (
     <div className="bg-gray">
       <footer
-        className={`flex flex-col gap-[35px] bg-gray pt-[30px] px-[40px] pb-[60px]`}
+        className={`flex flex-col gap-[35px] bg-gray pt-[50px] px-[40px] pb-[50px]`}
       >
         <label className="text-[26px] leading-[45px]">
           {`${t("footer.title")}`}
