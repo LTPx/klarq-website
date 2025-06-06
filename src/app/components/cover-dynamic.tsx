@@ -19,12 +19,14 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
   ({ className, img, information, linkSlug, labelTitle, expanded }, ref) => {
     const labelRef = useRef<HTMLLabelElement>(null);
     const [labelWidth, setLabelWidth] = useState(0);
+    const [labelHeight, setLabelHeight] = useState(0);
 
     useEffect(() => {
       const waitForFonts = async () => {
         await document.fonts.ready;
         if (labelRef.current) {
           setLabelWidth(labelRef.current.offsetWidth);
+          setLabelHeight(labelRef.current.offsetHeight);
         }
       };
       waitForFonts();
@@ -36,6 +38,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
       const observer = new ResizeObserver(() => {
         if (labelRef.current) {
           setLabelWidth(labelRef.current.offsetWidth);
+          setLabelHeight(labelRef.current.offsetHeight);
         }
       });
 
@@ -103,16 +106,19 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
               </>
             )}
           </motion.div>
-
           <motion.div
             initial={{ x: 0 }}
             animate={{ x: expanded ? "100%" : "0%" }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute top-0 right-0 w-1/2 h-full pl-[40px] pr-[90px] flex flex-col gap-[115px] justify-center items-center bg-white"
+            className="pt-[15px] pb-[40px] absolute top-0 right-0 w-1/2 h-full pl-[40px] pr-[90px]  flex flex-col justify-between items-center bg-white"
           >
+            <div
+              // className="bg-red-500"
+              style={{ minHeight: labelHeight, width: labelWidth }}
+            />
             {information.image.url && (
               <motion.img
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 0 }}
                 animate={{ opacity: expanded ? 0 : 1 }}
                 transition={{ duration: 1.2, delay: 0.3 }}
                 className="h-[372px] w-[260px]"
@@ -121,7 +127,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
               />
             )}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 0 }}
               animate={{ opacity: expanded ? 0 : 1 }}
               transition={{ duration: 1.2, delay: 0.6 }}
               className={`designer-description ${
