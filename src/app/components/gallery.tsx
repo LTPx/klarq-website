@@ -15,7 +15,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
 
   const extendedPublications = Array(copies).fill(publication).flat();
 
-  const [selectedIndex, setSelectedIndex] = useState(baseLength * copies / 2);
+  const [selectedIndex, setSelectedIndex] = useState((baseLength * copies) / 2);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [imagesLoaded, setImagesLoaded] = useState(0);
@@ -163,11 +163,13 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
                 alt={pub.title}
                 onClick={() => setSelectedIndex(index)}
                 onLoad={() => setImagesLoaded((prev) => prev + 1)}
-                className={`cursor-pointer shrink-0 transition-[width,opacity,transform] duration-700 ease-in-out ease-[cubic-bezier(0.4, 0, 0.2, 1)] origin-top ${
-                  isSelected
-                    ? "h-[365px] w-[280px] opacity-100 scale-y-100"
-                    : "h-[290px] w-auto opacity-30 scale-y-90"
-                }`}
+                className={`cursor-pointer shrink-0 transition-[width,opacity,transform] duration-700 ease-[cubic-bezier(0.4, 0, 0.2, 1)] origin-top`}
+                style={{
+                  height: isSelected ? 365 : 320,
+                  opacity: isSelected ? 1 : 0.3,
+                  transform: `scaleY(${isSelected ? 1 : 0.9})`,
+                  width: isSelected ? "calc(auto + 50px)" : "auto",
+                }}
               />
             );
           })}
