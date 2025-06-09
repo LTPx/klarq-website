@@ -33,6 +33,16 @@ function CallToAction(props: Props) {
     useState<CategoryWithProjects | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoverOrigin, setHoverOrigin] = useState<"left" | "right">("left");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     AOS.init({ duration: 1000, easing: "ease-out", offset: 80 });
@@ -56,47 +66,65 @@ function CallToAction(props: Props) {
     setHoveredIndex(null);
   };
 
+  function mergeParagraphs(html: string, isMobile: boolean): string {
+    if (!isMobile) return html;
+  
+    const matches: RegExpExecArray[] = [];
+    const regex = /<p[^>]*>(.*?)<\/p>/gi;
+    let match;
+  
+    while ((match = regex.exec(html)) !== null) {
+      matches.push(match);
+    }
+  
+    const mergedText = matches.map((m) => m[1].trim()).join(" ");
+    return `<p>${mergedText}</p>`;
+  }
+  
+
   return (
     <div>
-      <div className="flex flex-col gap-[45px] justify-center items-center">
+      <div className="px-[15px] lg:px-[0px] flex flex-col gap-[60px] lg:gap-[45px] justify-center items-center">
         <div
           data-aos="fade-up"
           className="call-title"
-          dangerouslySetInnerHTML={{ __html: title }}
-        />
-        <div className="flex gap-[15px]" data-aos="fade-up">
+          dangerouslySetInnerHTML={{ __html: mergeParagraphs(title, isMobile) }}
+          />
+        <div className="flex flex-wrap justify-center lg:flex-row gap-[15px]" data-aos="fade-up">
           {categories.map((category, i) => {
             const isSelected = selectedCategory?.name === category.name;
             const isHovered = hoveredIndex === i;
 
             return (
-              <button
-                key={i}
-                onClick={() => setSelectedCategory(category)}
-                onMouseEnter={(e) => handleMouseEnter(e, i)}
-                onMouseLeave={handleMouseLeave}
-                className={`relative uppercase flex items-center text-[16px] leading-[33px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[25px] overflow-hidden ${
-                  isSelected ? "bg-[#E5E5E5]" : "bg-transparent"
-                }`}
-              >
-                {!isSelected && (
-                  <span
-                    className={`absolute inset-0 rounded-[50px] bg-[#E5E5E5] z-0 transition-transform duration-700 ease-in-out ${
-                      isHovered ? "scale-x-100" : "scale-x-0"
-                    }`}
-                    style={{
-                      transformOrigin: isHovered ? hoverOrigin : "left",
-                    }}
-                  />
-                )}
-                <span
-                  className={`relative top-[1.5px] z-10 transition-colors duration-300 ${
-                    isSelected ? "text-black" : "text-black"
+              <div>
+                <button
+                  key={i}
+                  onClick={() => setSelectedCategory(category)}
+                  onMouseEnter={(e) => handleMouseEnter(e, i)}
+                  onMouseLeave={handleMouseLeave}
+                  className={`relative uppercase flex items-center text-[12px] leading-[15px] lg:text-[16px] lg:leading-[33px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[25px] overflow-hidden ${
+                    isSelected ? "bg-[#E5E5E5]" : "bg-transparent"
                   }`}
                 >
-                  {decodeHtml(category.name)}
-                </span>
-              </button>
+                  {!isSelected && (
+                    <span
+                      className={`absolute inset-0 rounded-[50px] bg-[#E5E5E5] z-0 transition-transform duration-700 ease-in-out ${
+                        isHovered ? "scale-x-100" : "scale-x-0"
+                      }`}
+                      style={{
+                        transformOrigin: isHovered ? hoverOrigin : "left",
+                      }}
+                    />
+                  )}
+                  <span
+                    className={`relative top-[1.5px] z-10 transition-colors duration-300 ${
+                      isSelected ? "text-black" : "text-black"
+                    }`}
+                  >
+                    {decodeHtml(category.name)}
+                  </span>
+                </button>
+              </div>
             );
           })}
         </div>
@@ -110,7 +138,7 @@ function CallToAction(props: Props) {
           />
         </section>
       ) : (
-        <section className="pt-[200px] pl-[40px] flex flex-col gap-[180px] pb-[130px]">
+        <section className="pt-[200px] pl-[15px] lg:pl-[40px] flex flex-col gap-[180px] pb-[130px]">
           {defaultProjects?.map((decor, index) => (
             <div key={index}>
               <DecorProjects

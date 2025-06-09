@@ -20,15 +20,15 @@ function DecorProjects(props: Props) {
         stagger={false}
         images={images}
       />
-      <div className="grid grid-cols-2 pt-[25px]">
-        <div>
+      <div className="grid gap-[30px] lg:gap-[0px] grid-cols-1 lg:grid-cols-2 pt-[25px]">
+        <div className="flex pr-[15px] lg:pr-[0px] lg:flex-col lg:justify-start justify-between flex-row">
           {/* <Link href={url || ""}> */}
-            <h2 className="text-[18px] leading-[22px]">{title}</h2>
+          <h2 className="text-[18px] leading-[22px]">{title}</h2>
           {/* </Link> */}
           <span className="text-[18px] leading-[22px]">{date}</span>
         </div>
         <div
-          className="designer-description pr-[50px]"
+          className="designer-description pr-[15px] lg:pr-[50px]"
           dangerouslySetInnerHTML={{ __html: description }}
         />
       </div>

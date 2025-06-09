@@ -175,3 +175,70 @@ body.hide-native-cursor * {
   }
 }
 
+
+@media (max-width: 768px) {
+  .description-home {
+    p {
+      font-size: 30px;
+      line-height: 37px;
+    }
+    div {
+      font-size: 30px;
+      line-height: 37px;
+    }
+  }
+
+  .information-home-title {
+    p {
+      font-size: 26px;
+      line-height: 35px;
+    }
+    div {
+      font-size: 26px;
+      line-height: 35px;
+    }
+  }
+
+  .information-home-description{
+    p {
+      font-size: 16px;
+      line-height: 22px;
+    }
+    div {
+      font-size: 16px;
+      line-height: 22px;
+    }
+  }
+
+  .designer-description {
+    p {
+      font-size: 16px;
+      line-height: 22px;
+    }
+  }
+  
+  .call-title {
+    p {
+      font-size: 30px;
+      line-height: 37px;
+      text-align: center;
+    }
+    div {
+      font-size: 30px;
+      line-height: 37px;
+      text-align: center;
+    }
+  }
+}
+
+.scale-100 {
+  /* transform: scale(1); */
+  width: auto; /* fijo */
+  height: 365px; /* fijo */
+}
+
+.scale-75 {
+  /* transform: scale(0.75); */
+  width: auto; /* mismo ancho para evitar layout shift */
+  height: 365px;
+}

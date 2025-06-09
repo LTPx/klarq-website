@@ -27,34 +27,52 @@ export function Footer() {
   return (
     <div className="bg-gray">
       <footer
-        className={`flex flex-col gap-[35px] bg-gray pt-[50px] px-[40px] pb-[50px]`}
+        className={`flex flex-col lg:gap-[35px] bg-gray pt-[20px] lg:pt-[50px] px-[15px] lg:px-[40px] pb-[50px]`}
       >
-        <label className="text-[26px] leading-[45px]">
+        <label className="text-[26px] leading-[24px] lg:leading-[45px]">
           {`${t("footer.title")}`}
         </label>
-        <div className="grid grid-cols-3">
+        <div className="pt-[24px] lg:pt-[0px] grid grid-rows gap-[7px] lg:gap-[0px] lg:grid-cols-3">
           <div className="col-span-1">
             <div className="flex flex-col">
-              <p className="text-[16px] leading-[22px] ">
+              <p className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px]">
                 C/ Vicent Serra i Orvay, 49
-                <br />
+                <br className="hidden lg:block" />
                 07800 Ibiza
               </p>
               <Link
                 href={`mailto:info@klarq.eu`}
-                className="text-[16px] leading-[22px]"
+                className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px]"
               >
                 info@klarq.eu
               </Link>
               <Link
-                className="text-[16px] leading-[22px] "
+                className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px] "
                 href={`tel:+34656362863`}
               >
-                <p className="text-[16px] leading-[22px] ">+34 656 362 863</p>
+                <p className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px] ">
+                  +34 656 362 863
+                </p>
               </Link>
             </div>
           </div>
-          <div className="col-span-1 flex flex-col justify-end gap-[40px]">
+          <div className="lg:hidden col-span-1 flex flex-col justify-end gap-[7px]">
+            <span className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px]">
+              {`${t("footer.follow")}`}
+            </span>
+            <div className="flex gap-[15px]">
+              <HoverFillButton className="h-[25px] text-[12px] leading-[12px]" href="https://instagram.com">
+                Instagram
+              </HoverFillButton>
+              <HoverFillButton className="h-[25px] text-[12px] leading-[12px]" href="https://instagram.com">
+                Facebook
+              </HoverFillButton>
+              <HoverFillButton className="h-[25px] text-[12px] leading-[12px]" href="https://instagram.com">
+                YouTube
+              </HoverFillButton>
+            </div>
+          </div>
+          <div className="hidden lg:flex col-span-1  flex-col justify-end gap-[40px]">
             <span className="text-[16px] leading-[22px]">
               {`${t("footer.follow")}`}
             </span>
@@ -70,7 +88,7 @@ export function Footer() {
               </HoverFillButton>
             </div>
           </div>
-          <div className="col-span-1 grid grid-cols-5">
+          <div className="pt-[50px] lg:pt-[0px] col-span-1 lg:grid grid-cols-5">
             <div className="col-span-1"></div>
             <div className="col-span-3 flex flex-col justify-end gap-[15px]">
               <img

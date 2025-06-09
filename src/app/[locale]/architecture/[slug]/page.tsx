@@ -41,7 +41,7 @@ async function ArchitectureSlugPage(nextParams: {
         </label>
       </div>
       <Cover img={getProxyImageUrl(architecture_projects.cover_project.url)} />
-      <section className="pt-[60px]">
+      <section className="pt-[15px] lg:pt-[60px]">
         <ArchitectureInformation
           title={architecture_projects.title_project}
           date={architecture_projects.date}

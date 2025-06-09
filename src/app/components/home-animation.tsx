@@ -75,12 +75,11 @@ function HomeAnimation(props: Props) {
     } else {
       document.body.classList.remove("cursor-hidden");
     }
-  
+
     return () => {
       document.body.classList.remove("cursor-hidden");
     };
   }, [isCursorVisible]);
-  
 
   const height = useTransform(scrollY, [0, 300], [windowHeight * 0.4, 58]);
   const width = useTransform(scrollY, [0, 300], [windowWidth, 322]);
@@ -91,15 +90,18 @@ function HomeAnimation(props: Props) {
       <motion.img
         src="/images/KLARQ.svg"
         alt="KLARQ"
-        className="px-[40px] object-contain fixed top-[20px] left-0 z-[1000] mix-blend-difference filter invert"
+        className="hidden lg:block lg:fixed px-[40px] object-contain top-[20px] left-0 z-[1000] mix-blend-difference filter invert"
         style={{ height, width }}
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
       />
-      <div className="h-[40dvh]" />
+      <div className="lg:hidden py-[15px] px-[15px]">
+        <img src="/images/KLARQ.svg" className="" />
+      </div>
+      <div className="md:h-[40dvh]" />
       <motion.div
-        className="flex gap-[5px] mt-[20px] transition-all duration-300"
+        className="flex flex-col lg:flex-row gap-[5px] lg:mt-[20px] transition-all duration-300"
         initial={{ y: 1, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeInOut" }}
@@ -143,7 +145,7 @@ function HomeAnimation(props: Props) {
                 setIsHoveringCard(false);
                 setIsCursorVisible(false);
               }}
-              style={{ display: "flex" }}
+              className="flex"
             >
               <Link href={link} className="w-full">
                 <CategoryCard

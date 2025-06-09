@@ -30,7 +30,7 @@ export function DesignersSection({ team }: Props) {
   const selectedMember = selectedIndex !== null ? members[selectedIndex] : null;
 
   const handleMouseEnter = (e: React.MouseEvent, index: number) => {
-    if (fixedIndex !== null) return; // desactivar hover si hay selección fija
+    if (fixedIndex !== null) return;
 
     const rect = (e.target as HTMLButtonElement).getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -40,7 +40,7 @@ export function DesignersSection({ team }: Props) {
   };
 
   const handleMouseLeave = () => {
-    if (fixedIndex !== null) return; // no ocultar si está fijo
+    if (fixedIndex !== null) return;
     setHoveredIndex(null);
   };
 
@@ -56,7 +56,7 @@ export function DesignersSection({ team }: Props) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="grid grid-cols-3">
+    <div className="grid grid-row gap-[65px] md:gap-[0px] md:grid-cols-3">
       <div className="flex gap-[15px]">
         {members.map((member, index) => (
           <button
@@ -90,17 +90,17 @@ export function DesignersSection({ team }: Props) {
         )}
       </div>
 
-      <div className="relative w-[535px] h-[633px]">
+      <div className="relative md:w-[535px] h-[550px] md:h-[633px]">
         <img
           src={getProxyImageUrl(team.image_team.url)}
           alt={team.image_team.alt || "Equipo KLARQ"}
-          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out ${
+          className={`absolute top-0 left-0 w-full h-[422px] md:h-full object-cover transition-opacity duration-500 ease-in-out ${
             selectedMember ? "opacity-0" : "opacity-100"
           }`}
         />
 
         <div
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out flex flex-col gap-[100px] pt-[13px] py-[0px] ${
+          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out flex flex-col gap-[50px] md:gap-[100px] pt-[13px] py-[0px] ${
             selectedMember ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >

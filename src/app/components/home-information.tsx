@@ -40,8 +40,8 @@ export function HomeInformation(props: Props) {
   }, []);
 
   return (
-    <section className="container pt-[5px]">
-      <div className="px-[40px] bg-green pt-[45px]">
+    <section className="container md:pt-[5px]">
+      <div className="px-[15px] md:px-[40px] bg-green pt-[25px] md:pt-[45px]">
         {description && (
           <div
             data-aos="fade-up"
@@ -52,13 +52,13 @@ export function HomeInformation(props: Props) {
           />
         )}
         {team_section && (
-          <section className="pt-[140px]">
+          <section className="pt-[60px] md:pt-[140px]">
             <DesignersSection team={team_section} />
           </section>
         )}
         {information_home && (
-          <section className="pt-[185px] pb-[190px]">
-            <div className="grid grid-cols-3">
+          <section className="pt-[60px] md:pt-[185px] pb-[57px] md:pb-[190px]">
+            <div className="grid grid-rows gap-[22px] md:gap-[0px] md:grid-cols-3">
               <div
                 data-aos="fade-up"
                 className="information-home-title font-pp_light"
@@ -78,10 +78,10 @@ export function HomeInformation(props: Props) {
         )}
       </div>
       {slider && <SliderBrand brands={slider} />}
-      <section className="pb-[5px]">
+      <section className="pb-[3px] lg:pb-[5px]">
         {carousel_images && (
           <GalleryImagesScroll
-            imageClassName="lg:h-[575px]"
+            imageClassName="h-[422px] lg:h-[575px]"
             images={carousel_images}
           />
         )}

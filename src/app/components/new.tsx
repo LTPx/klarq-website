@@ -2,14 +2,13 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { PublicationsWp } from "../_interfaces/wordpress-components";
-import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface GalleryProps {
   publication: PublicationsWp[];
 }
 
 const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
-  const copies = 20;
+  const copies = 10;
   const baseLength = publication.length;
   const totalLength = baseLength * copies;
 
@@ -17,32 +16,9 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
 
   const [selectedIndex, setSelectedIndex] = useState(baseLength * 2 + 3);
   const containerRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<ResizeObserver | null>(null);
 
   const scrollToSelected = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const images = container.querySelectorAll("img");
-    const selectedImage = images[selectedIndex] as HTMLImageElement;
-    if (!selectedImage) return;
-
-    const imageOffsetLeft = selectedImage.offsetLeft;
-    const imageWidth = selectedImage.offsetWidth;
-    const containerWidth = container.clientWidth;
-
-    const scrollTo = imageOffsetLeft - containerWidth / 2 + imageWidth / 2;
-
-    container.scrollTo({
-      left: scrollTo,
-      behavior: "instant" as ScrollBehavior,
-    });
-  }, [selectedIndex]);
-
-  useEffect(() => {
-    scrollToSelected();
-  }, []);
-
-  useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
@@ -61,6 +37,30 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
       behavior: "smooth",
     });
   }, [selectedIndex]);
+
+  useEffect(() => {
+    scrollToSelected();
+  }, [scrollToSelected]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const images = container.querySelectorAll("img");
+    const selectedImage = images[selectedIndex] as HTMLImageElement;
+    if (!selectedImage) return;
+
+    observerRef.current?.disconnect();
+
+    const observer = new ResizeObserver(() => {
+      scrollToSelected();
+    });
+
+    observer.observe(selectedImage);
+    observerRef.current = observer;
+
+    return () => observer.disconnect();
+  }, [selectedIndex, scrollToSelected]);
 
   const handleNext = useCallback(() => {
     setSelectedIndex((prev) => {
@@ -153,13 +153,13 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
             return (
               <img
                 key={index}
-                src={getProxyImageUrl(pub.image.url)}
+                src={pub.image.url}
                 alt={pub.title}
                 onClick={() => setSelectedIndex(index)}
-                className={`cursor-pointer shrink-0 transition-[width,opacity,transform] duration-700  ease-in-out ease-[cubic-bezier(0.4, 0, 0.2, 1)] origin-top ${
+                className={`cursor-pointer shrink-0 transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
                   isSelected
-                    ? "h-[365px] w-[280px] opacity-100 scale-y-100"
-                    : "h-[290px] w-auto opacity-30 scale-y-90"
+                    ? "h-[365px] opacity-100 w-[280px]"
+                    : "h-[290px] opacity-30 w-auto"
                 }`}
               />
             );

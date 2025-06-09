@@ -27,10 +27,15 @@ function ArchitectureInformation(props: Props) {
 
   return (
     <div className="architectureInformation">
-      <div className="grid grid-cols-2 px-[40px]">
-        <div data-aos="fade-up">
-          <h2 className="text-[35px] leading-[46px]">{title}</h2>
-          <span className="text-[18px] leading-[26px] tracking-[-0.03em]">
+      <div className="grid grid-rows gap-[60px] lg:gap-[0px] lg:grid-cols-2 px-[15px] lg:px-[40px]">
+        <div
+          className="flex lg:flex-col lg:justify-start justify-between"
+          data-aos="fade-up"
+        >
+          <h2 className="text-[16px] leading-[22px] lg:text-[35px] lg:leading-[46px]">
+            {title}
+          </h2>
+          <span className="text-[16px] leading-[22px] lg:text-[18px] lg:leading-[26px] tracking-[-0.03em]">
             {date}
           </span>
         </div>
@@ -40,7 +45,7 @@ function ArchitectureInformation(props: Props) {
           dangerouslySetInnerHTML={{ __html: description }}
         />
       </div>
-      <section className="pt-[170px] px-[40px]">
+      <section className="pt-[170px] px-[15px] lg:px-[40px]">
         <ArchitectureImages images={images_project} />
       </section>
       {/* <section className="pt-[170px] px-[40px]">

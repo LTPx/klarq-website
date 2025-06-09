@@ -18,14 +18,14 @@ export function DesktopMenu(props: Props) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-screen bg-gray transform transition-transform duration-500 ease-in-out z-[1001] ${
+      className={`fixed flex items-center lg:items-start top-0 left-0 w-full h-screen bg-gray transform transition-transform duration-500 ease-in-out z-[1001] ${
         showContact ? "translate-y-0" : "translate-y-full"
       }`}
     >
-      <div className="container flex flex-col gap-[110px]">
-        <div className="h-[35dvh]">
+      <div className="container flex flex-col lg:gap-[110px]">
+        <div className="lg:h-[35dvh]">
           <Link href={"/"} onClick={() => setShowContact(false)}>
-            <div className=" px-[40px] pt-[40px] pb-[30px]">
+            <div className="lg:relative absolute top-[0px] px-[15px] lg:px-[40px] pt-[15px] lg:pt-[40px] lg:pb-[30px]">
               <img src="/images/KLARQ.svg" className="h-full w-full" />
             </div>
           </Link>
@@ -36,32 +36,78 @@ export function DesktopMenu(props: Props) {
         <div className="flex flex-col items-center gap-[35px]">
           <div className="flex flex-col">
             <Link
+              href={"/architecture"}
+              className="block lg:hidden text-center text-[30px] leading-[37px] lg:text-[40px] lg:leading-[60px]"
+              onClick={() => setShowContact(false)}
+            >{`${t("header.architecture")}`}</Link>
+            <Link
+              href={"/decor"}
+              className="block lg:hidden text-center text-[30px] leading-[37px] lg:text-[40px] lg:leading-[60px]"
+              onClick={() => setShowContact(false)}
+            >{`${t("header.decor")}`}</Link>
+            <Link
+              href={"/development"}
+              className="block lg:hidden text-center text-[30px] leading-[37px] lg:text-[40px] lg:leading-[60px]"
+              onClick={() => setShowContact(false)}
+            >{`${t("header.development")}`}</Link>
+            <Link
               href={"/publications"}
-              className="text-center text-[40px] leading-[60px]"
+              className="text-center text-[30px] leading-[37px] lg:text-[40px] lg:leading-[60px]"
               onClick={() => setShowContact(false)}
             >{`${t("menu.publications")}`}</Link>
             <Link
               href={"/contact"}
-              className="text-center text-[40px] leading-[60px]"
+              className="text-center text-[30px] leading-[37px] lg:text-[40px] lg:leading-[60px]"
               onClick={() => setShowContact(false)}
             >{`${t("menu.contact")}`}</Link>
             <Link
               href={""}
-              className="text-center text-[40px] leading-[60px]"
+              className="text-center text-[30px] leading-[37px] lg:text-[40px] lg:leading-[60px]"
             >{`${t("menu.spanish")}`}</Link>
           </div>
           <div className="flex flex-col items-center gap-[15px]">
             <span className="text-center text-[16px] leading-[22px]">{`${t(
               "menu.follow"
             )}`}</span>
-            <div className="flex gap-[15px]">
-              <HoverFillButton href="https://instagram.com">
+            <div className="flex flex-col lg:flex-row gap-[15px]">
+              <div className="flex justify-center lg:hidden">
+                <HoverFillButton
+                  className="h-[33px] text-[16px] leading-[15px]"
+                  href="https://instagram.com"
+                >
+                  {t("footer.architecture")}
+                </HoverFillButton>
+                <HoverFillButton
+                  className="h-[33px] text-[16px] leading-[15px]"
+                  href="https://instagram.com"
+                >
+                  {t("footer.decor")}
+                </HoverFillButton>
+              </div>
+              <HoverFillButton
+                className="hidden lg:flex h-[33px] text-[16px] leading-[15px]"
+                href="https://instagram.com"
+              >
                 {t("footer.architecture")}
               </HoverFillButton>
-              <HoverFillButton href="https://instagram.com">
+              <HoverFillButton
+                className="hidden lg:flex h-[33px] text-[16px] leading-[15px]"
+                href="https://instagram.com"
+              >
                 {t("footer.decor")}
               </HoverFillButton>
-              <HoverFillButton href="https://instagram.com">
+              <div className="flex justify-center lg:hidden">
+                <HoverFillButton
+                  className="h-[33px] text-[16px] leading-[15px]"
+                  href="https://instagram.com"
+                >
+                  {t("footer.development")}
+                </HoverFillButton>
+              </div>
+              <HoverFillButton
+                className="hidden lg:flex h-[33px] text-[16px] leading-[15px]"
+                href="https://instagram.com"
+              >
                 {t("footer.development")}
               </HoverFillButton>
             </div>

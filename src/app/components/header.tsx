@@ -59,7 +59,7 @@ export function Header({
             transition={{ duration: 0.1 }}
           >
             <div
-              className={`h-[50px] px-[40px] grid grid-cols-2 items-center transition-all duration-300 ${
+              className={`h-[50px] px-[15px] lg:px-[40px] grid grid-cols-2 items-center transition-all duration-300 ${
                 showMenu ? "border-t-[0.8px] border-black" : ""
               }`}
             >
@@ -92,7 +92,7 @@ export function Header({
                 />
               )}
 
-              <div className="pl-[30px] flex justify-between">
+              <div className="hidden lg:flex pl-[30px]  justify-between">
                 {links.map((link, index) => {
                   const isActive = currentPath === link.url;
                   const isHovered = hoveredIndex === index;
