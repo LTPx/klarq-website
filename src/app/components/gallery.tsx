@@ -50,7 +50,6 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
     []
   );
 
-  // 🔧 Scroll inicial cuando todas las imágenes estén cargadas
   useEffect(() => {
     if (!hasScrolledInitially && imagesLoaded >= extendedPublications.length) {
       requestAnimationFrame(() => {
