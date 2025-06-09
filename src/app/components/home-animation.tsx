@@ -85,6 +85,11 @@ function HomeAnimation(props: Props) {
   const width = useTransform(scrollY, [0, 300], [windowWidth, 322]);
   const links = ["/architecture", "/decor", "/development"];
 
+  useEffect(() => {
+    setHasScrolled(false);
+  }, []);
+  
+
   return (
     <div className="container bg-white">
       <motion.img
