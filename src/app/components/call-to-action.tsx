@@ -96,7 +96,7 @@ function CallToAction(props: Props) {
             const isHovered = hoveredIndex === i;
 
             return (
-              <div>
+              <div key={i}>
                 <button
                   key={i}
                   onClick={() => setSelectedCategory(category)}
