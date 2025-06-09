@@ -64,7 +64,7 @@ function HomeAnimation(props: Props) {
   }, [isScrolling, setIsHoveringCard]);
 
   useEffect(() => {
-    if (hoveredIndex !== null && hoveredIndex !== 0) {
+    if (hoveredIndex !== null) {
       setRotationDegree((prev) => prev + 180);
     }
   }, [hoveredIndex]);
