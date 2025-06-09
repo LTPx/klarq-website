@@ -50,7 +50,7 @@ export function Header({
   return (
     <>
       <AnimatePresence>
-        {!isHoveringCard && (
+        {hasScrolled && !isHoveringCard && (
           <motion.header
             className="bg-gray container fixed bottom-0 z-[1002]"
             initial={hasMounted ? { y: 100, opacity: 0 } : false}

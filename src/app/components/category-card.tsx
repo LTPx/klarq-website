@@ -5,6 +5,7 @@ interface CategoryCardProps {
   className?: string;
   showDescription?: boolean;
   anyCardHovering?: boolean;
+  hasScrolled?: boolean;
 }
 
 function CategoryCard({
@@ -14,6 +15,7 @@ function CategoryCard({
   description,
   showDescription,
   anyCardHovering,
+  hasScrolled,
 }: CategoryCardProps) {
   return (
     <div className={`relative w-full h-full ${className}`}>
@@ -21,7 +23,11 @@ function CategoryCard({
         src={imageCategory}
         alt={title}
         className={`w-full object-cover transition-[height] duration-600 ease-in-out ${
-          anyCardHovering ? "h-[60dvh]" : "h-[calc(60dvh-70px)]"
+          !hasScrolled
+            ? "h-[60dvh]"
+            : anyCardHovering
+            ? "h-[60dvh]"
+            : "h-[calc(60dvh-70px)]"
         }`}
       />
       <div className="absolute inset-0 bg-black/20 z-[50]" />

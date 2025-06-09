@@ -154,6 +154,7 @@ function HomeAnimation(props: Props) {
                   imageCategory={getProxyImageUrl(card.image.url)}
                   showDescription={hoveredIndex === index}
                   anyCardHovering={hoveredIndex !== null}
+                  hasScrolled={useScrollStore.getState().hasScrolled}
                 />
               </Link>
             </motion.div>
