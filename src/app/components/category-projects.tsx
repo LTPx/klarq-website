@@ -1,6 +1,9 @@
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import { ProjectCategoryItem } from "../_interfaces/wordpress-components";
 import { ImageAcf } from "../_interfaces/wordpress-page";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 interface IntroductionItem {
   image: ImageAcf;
@@ -13,6 +16,15 @@ interface Props {
 }
 
 function ProjectsCategory({ projects, introduction }: Props) {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-out",
+      offset: 80,
+      once: false,
+    });
+  }, []);
+
   return (
     <div className="mt-[200px]">
       {Array.isArray(introduction) && introduction.length > 0 && (

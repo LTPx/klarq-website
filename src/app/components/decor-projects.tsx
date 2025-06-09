@@ -1,6 +1,10 @@
-import { Link } from "@/navigation";
+"use client";
+
 import { ImageAcf } from "../_interfaces/wordpress-page";
 import GalleryImagesScroll from "./gallery-images-scroll";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 
 interface Props {
   title: string;
@@ -12,6 +16,15 @@ interface Props {
 
 function DecorProjects(props: Props) {
   const { title, description, images, date } = props;
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-out",
+      offset: 80,
+      once: false,
+    });
+  }, []);
 
   return (
     <div className="DecorProjects w-full">

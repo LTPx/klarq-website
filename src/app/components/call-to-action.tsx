@@ -28,7 +28,6 @@ interface Props {
 
 function CallToAction(props: Props) {
   const { title, categories, defaultProjects } = props;
-
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryWithProjects | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -45,7 +44,12 @@ function CallToAction(props: Props) {
   }, []);
 
   useEffect(() => {
-    AOS.init({ duration: 1000, easing: "ease-out", offset: 80 });
+    AOS.init({
+      duration: 1000,
+      easing: "ease-out",
+      offset: 80,
+      once: false,
+    });
   }, []);
 
   function decodeHtml(html: string): string {
@@ -68,19 +72,18 @@ function CallToAction(props: Props) {
 
   function mergeParagraphs(html: string, isMobile: boolean): string {
     if (!isMobile) return html;
-  
+
     const matches: RegExpExecArray[] = [];
     const regex = /<p[^>]*>(.*?)<\/p>/gi;
     let match;
-  
+
     while ((match = regex.exec(html)) !== null) {
       matches.push(match);
     }
-  
+
     const mergedText = matches.map((m) => m[1].trim()).join(" ");
     return `<p>${mergedText}</p>`;
   }
-  
 
   return (
     <div>
@@ -89,8 +92,11 @@ function CallToAction(props: Props) {
           data-aos="fade-up"
           className="call-title"
           dangerouslySetInnerHTML={{ __html: mergeParagraphs(title, isMobile) }}
-          />
-        <div className="flex flex-wrap justify-center lg:flex-row gap-[15px]" data-aos="fade-up">
+        />
+        <div
+          className="flex flex-wrap justify-center lg:flex-row gap-[15px]"
+          data-aos="fade-up"
+        >
           {categories.map((category, i) => {
             const isSelected = selectedCategory?.name === category.name;
             const isHovered = hoveredIndex === i;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@/navigation";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
 import CoverDynamic from "./cover-dynamic";
@@ -18,14 +18,17 @@ interface Props {
 
 function DevelopmentPage({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
-  const [hasExpanded, setHasExpanded] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
-  const [expanded, setExpanded] = useState(false);
-
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [allowScroll, setAllowScroll] = useState(false);
+  const ignoreNextScroll = useRef(false);
 
-  const [firstProject, ...restProjects] = projects;
+  const [firstProject, restProjects] = useMemo(() => {
+    return [projects[0], projects.slice(1)];
+  }, [projects]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,26 +50,72 @@ function DevelopmentPage({ projects, information }: Props) {
       if (ref) observer.observe(ref);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      sectionRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+      observer.disconnect();
+    };
   }, [projects]);
 
   useEffect(() => {
-    const onWheel = (e: WheelEvent) => {
-      if (!expanded && e.deltaY > 30) {
-        setExpanded(true);
-      }
-    };
+    let releaseTimeout: NodeJS.Timeout;
 
-    const container = scrollContainerRef.current;
-    container?.addEventListener("wheel", onWheel);
-    return () => container?.removeEventListener("wheel", onWheel);
-  }, [expanded]);
+    function onWheel(e: WheelEvent) {
+      if (isExpanded) {
+        if (!allowScroll) {
+          if (ignoreNextScroll.current) {
+            ignoreNextScroll.current = false;
+            e.preventDefault();
+            return;
+          }
+          return;
+        }
+        return;
+      }
+
+      e.preventDefault();
+
+      setProgress((prev) => {
+        let next = prev + e.deltaY * 0.001;
+
+        if (next >= 1) {
+          setIsExpanded(true);
+          ignoreNextScroll.current = true;
+          return 1;
+        }
+
+        return Math.min(1, Math.max(0, next));
+      });
+    }
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+
+    if (!isExpanded) {
+      document.body.style.overflow = "hidden";
+      setAllowScroll(false);
+    } else {
+      releaseTimeout = setTimeout(() => {
+        document.body.style.overflow = "";
+        setAllowScroll(true);
+        ignoreNextScroll.current = true;
+      }, 700);
+    }
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      document.body.style.overflow = "";
+      clearTimeout(releaseTimeout);
+      ignoreNextScroll.current = false;
+    };
+  }, [isExpanded]);
+
   return (
     <>
       <div
         ref={scrollContainerRef}
         className={`ArchitecturePage relative h-[calc(100dvh-50px)] ${
-          expanded
+          isExpanded
             ? "overflow-y-scroll snap-y snap-mandatory"
             : "overflow-y-hidden"
         }`}
@@ -74,7 +123,7 @@ function DevelopmentPage({ projects, information }: Props) {
         <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
           <div
             className={`text-white transition-opacity duration-700 ease-in-out ${
-              expanded ? "opacity-100" : "opacity-0"
+              isExpanded ? "opacity-100" : "opacity-0"
             }`}
           >
             <h1 className="uppercase text-[18px] leading-[22px] tracking-[-0.02em]">
@@ -84,16 +133,13 @@ function DevelopmentPage({ projects, information }: Props) {
         </div>
 
         <CoverDynamic
-          ref={(el) => {
-            sectionRefs.current[0] = el;
-          }}
           img={getProxyImageUrl(
             firstProject.project.acf.development_projects.cover_project.url
           )}
           information={information}
-          expanded={expanded}
-          linkSlug={`/development/${firstProject.project.slug}`}
           labelTitle="Development"
+          linkSlug={`/development/${firstProject.project.slug}`}
+          progress={progress}
         />
 
         {restProjects.map((item, index) => (

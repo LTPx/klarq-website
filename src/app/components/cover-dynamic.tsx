@@ -12,14 +12,15 @@ interface Props {
   img?: string;
   linkSlug?: string;
   labelTitle: string;
-  expanded: boolean;
+  progress: number;
 }
 
 const CoverDynamic = forwardRef<HTMLDivElement, Props>(
-  ({ className, img, information, linkSlug, labelTitle, expanded }, ref) => {
+  ({ className, img, information, linkSlug, labelTitle, progress }, ref) => {
     const labelRef = useRef<HTMLLabelElement>(null);
     const [labelWidth, setLabelWidth] = useState(0);
     const [labelHeight, setLabelHeight] = useState(0);
+    const [windowWidth, setWindowWidth] = useState(0);
 
     useEffect(() => {
       const waitForFonts = async () => {
@@ -46,17 +47,36 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
       return () => observer.disconnect();
     }, [labelTitle]);
 
+    useEffect(() => {
+      function updateWidth() {
+        setWindowWidth(window.innerWidth);
+      }
+      updateWidth();
+      window.addEventListener("resize", updateWidth);
+      return () => window.removeEventListener("resize", updateWidth);
+    }, []);
+
+    const startLeftPx = windowWidth * 0.5 + 40;
+    const endLeftPx = windowWidth - labelWidth - 40;
+    const interpolatedLeftPx =
+      startLeftPx + (endLeftPx - startLeftPx) * progress;
+    const left = `${interpolatedLeftPx}px`;
+
+    const translateX = -50 * (1 - progress); // -50% a 0%
+    const transform = `translateX(${translateX}%)`;
+
+    const widthPercent = 50 + 50 * progress;
+    const textTranslateX = 100 * progress;
+
     return (
       <>
         <motion.div
           className="fixed z-[1000] mix-blend-difference text-white"
           style={{
             top: 15,
-            left: expanded
-              ? `calc(100% - ${labelWidth + 40}px)`
-              : `calc(50% + 40px)`,
-            transform: expanded ? "none" : "translateX(-50%)",
-            transition: "left 1.5s ease-in-out, transform 1.5s ease-in-out",
+            left,
+            transform,
+            transition: "left 0.15s ease-out, transform 0.15s ease-out",
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: 0 }}
@@ -74,16 +94,10 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
         <div
           ref={ref}
           data-index={0}
-          className={`bg-white snap-start transition-all duration-[1500ms] ease-in-out relative flex lg:h-[calc(100dvh-50px)] overflow-hidden`}
+          className={`bg-white snap-start relative flex lg:h-[calc(100dvh-50px)] overflow-hidden`}
         >
           <motion.div
-            initial={{ width: "50%", x: -500, opacity: 0 }}
-            animate={{
-              width: expanded ? "100%" : "50%",
-              x: 0,
-              opacity: 1,
-            }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            style={{ width: `${widthPercent}%` }}
             className="relative h-full overflow-hidden"
           >
             {linkSlug ? (
@@ -106,30 +120,41 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
               </>
             )}
           </motion.div>
+
           <motion.div
-            initial={{ x: 0 }}
-            animate={{ x: expanded ? "100%" : "0%" }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="pt-[15px] pb-[40px] absolute top-0 right-0 w-1/2 h-full pl-[40px] pr-[90px]  flex flex-col justify-between items-center bg-white"
+            style={{
+              transform: `translateX(${textTranslateX}%)`,
+              width: "50%",
+              paddingTop: "15px",
+              paddingBottom: "40px",
+              position: "absolute",
+              top: 0,
+              right: 0,
+              height: "100%",
+              paddingLeft: "40px",
+              paddingRight: "90px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              alignItems: "center",
+              backgroundColor: "white",
+            }}
+            animate={{ opacity: 1 - progress }}
+            transition={{ ease: "easeInOut" }}
           >
-            <div
-              // className="bg-red-500"
-              style={{ minHeight: labelHeight, width: labelWidth }}
-            />
+            <div style={{ minHeight: labelHeight, width: labelWidth }} />
             {information.image.url && (
               <motion.img
                 initial={{ opacity: 0, y: 0 }}
-                animate={{ opacity: expanded ? 0 : 1 }}
-                transition={{ duration: 1.2, delay: 0.3 }}
+                animate={{ opacity: 1 - progress }}
+                transition={{ duration: 0.3 }}
                 className="h-[372px] w-[260px]"
                 src={getProxyImageUrl(information.image.url)}
                 alt="team-image"
               />
             )}
             <motion.div
-              initial={{ opacity: 0, y: 0 }}
-              animate={{ opacity: expanded ? 0 : 1 }}
-              transition={{ duration: 1.2, delay: 0.6 }}
+              style={{ opacity: 1 - progress }}
               className={`designer-description ${
                 !information?.image?.url ? "pt-[400px]" : ""
               }`}

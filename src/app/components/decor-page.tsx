@@ -1,29 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
 import CoverDynamic from "./cover-dynamic";
-import {
-  DecorPageWp,
-  InformationWp,
-  ProjectCategoryItem,
-  ProjectCategoryWp,
-} from "../_interfaces/wordpress-components";
+import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
-import DecorProjects from "./decor-projects";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useExpandStore } from "../store/expand-store";
 
 interface Props {
   decor_information: DecorPageWp;
 }
 
 function DecorPage({ decor_information }: Props) {
-  const [expanded, setExpanded] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const { isExpandedReady, setIsExpandedReady } = useExpandStore();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [allowScroll, setAllowScroll] = useState(false);
+  const ignoreNextScroll = useRef(false);
 
   useEffect(() => {
     AOS.init({
@@ -35,34 +28,56 @@ function DecorPage({ decor_information }: Props) {
   }, []);
 
   useEffect(() => {
-    if (expanded) {
-      AOS.refresh();
-    }
-  }, [expanded]);
+    let releaseTimeout: NodeJS.Timeout;
 
-  useEffect(() => {
-    if (expanded) {
-      const timer = setTimeout(() => {
-        setIsExpandedReady(true);
-      }, 1000);
-
-      return () => clearTimeout(timer);
-    } else {
-      setIsExpandedReady(false);
-    }
-  }, [expanded]);
-
-  useEffect(() => {
-    const onWheel = (e: WheelEvent) => {
-      if (!expanded && e.deltaY > 30) {
-        setExpanded(true);
+    function onWheel(e: WheelEvent) {
+      if (isExpanded) {
+        if (!allowScroll) {
+          if (ignoreNextScroll.current) {
+            ignoreNextScroll.current = false;
+            e.preventDefault();
+            return;
+          }
+          return;
+        }
+        return;
       }
-    };
 
-    const container = scrollContainerRef.current;
-    container?.addEventListener("wheel", onWheel);
-    return () => container?.removeEventListener("wheel", onWheel);
-  }, [expanded]);
+      e.preventDefault();
+
+      setProgress((prev) => {
+        let next = prev + e.deltaY * 0.001;
+
+        if (next >= 1) {
+          setIsExpanded(true);
+          ignoreNextScroll.current = true;
+          return 1;
+        }
+
+        return Math.min(1, Math.max(0, next));
+      });
+    }
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+
+    if (!isExpanded) {
+      document.body.style.overflow = "hidden";
+      setAllowScroll(false);
+    } else {
+      releaseTimeout = setTimeout(() => {
+        document.body.style.overflow = "";
+        setAllowScroll(true);
+        ignoreNextScroll.current = true;
+      }, 700);
+    }
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      document.body.style.overflow = "";
+      clearTimeout(releaseTimeout);
+      ignoreNextScroll.current = false;
+    };
+  }, [isExpanded]);
 
   const projectKeys = [
     "kitchen_projects",
@@ -96,28 +111,23 @@ function DecorPage({ decor_information }: Props) {
     .filter((item): item is CategoryWithProjects => item !== null);
 
   return (
-    <div
-      ref={scrollContainerRef}
-      className={`bg-white ${expanded ? "" : "overflow-y-hidden"}`}
-    >
-      <div className="DecorPage relative">
+    <div>
+      <div className="DecorPage">
         <CoverDynamic
           img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
           labelTitle="Decor"
-          expanded={expanded}
+          progress={progress}
         />
       </div>
-      {isExpandedReady && (
-        <>
-          <section className="py-[200px]">
-            <CallToAction
-              categories={categories}
-              title={decor_information.page_content.title_banner}
-              defaultProjects={decor_information.page_content.projects_decor}
-            />
-          </section>
-        </>
+      {isExpanded && (
+        <section className="py-[200px]">
+          <CallToAction
+            categories={categories}
+            title={decor_information.page_content.title_banner}
+            defaultProjects={decor_information.page_content.projects_decor}
+          />
+        </section>
       )}
     </div>
   );
