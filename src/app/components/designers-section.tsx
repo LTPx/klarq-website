@@ -22,27 +22,13 @@ interface Props {
 export function DesignersSection({ team }: Props) {
   const members = [team.first_team_member, team.second_team_member];
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [fixedIndex, setFixedIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoverOrigin, setHoverOrigin] = useState<"left" | "right">("left");
+  const [isHovered, setIsHovered] = useState(false);
 
-  const selectedIndex = fixedIndex !== null ? fixedIndex : hoveredIndex;
+  const selectedIndex = fixedIndex;
   const selectedMember = selectedIndex !== null ? members[selectedIndex] : null;
-
-  const handleMouseEnter = (e: React.MouseEvent, index: number) => {
-    if (fixedIndex !== null) return;
-
-    const rect = (e.target as HTMLButtonElement).getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const origin = x < rect.width / 2 ? "left" : "right";
-    setHoverOrigin(origin);
-    setHoveredIndex(index);
-  };
-
-  const handleMouseLeave = () => {
-    if (fixedIndex !== null) return;
-    setHoveredIndex(null);
-  };
 
   const handleClick = (index: number) => {
     setFixedIndex(index);
@@ -50,10 +36,22 @@ export function DesignersSection({ team }: Props) {
 
   const handleReset = () => {
     setFixedIndex(null);
-    setHoveredIndex(null);
   };
 
-  const [isHovered, setIsHovered] = useState(false);
+  const handleMouseEnter = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const origin = x < rect.width / 2 ? "left" : "right";
+    setHoverOrigin(origin);
+    setHoveredIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredIndex(null);
+  };
 
   return (
     <div className="grid grid-row gap-[65px] md:gap-[0px] md:grid-cols-3">
@@ -61,17 +59,22 @@ export function DesignersSection({ team }: Props) {
         {members.map((member, index) => (
           <button
             key={index}
-            className="relative overflow-hidden rounded-[50px] h-[33px] border border-[0.75px] border-black px-[25px] group text-black"
+            className="relative overflow-hidden rounded-[50px] h-[33px] border border-[0.75px] border-black px-[25px] text-black group"
+            onClick={() => handleClick(index)}
             onMouseEnter={(e) => handleMouseEnter(e, index)}
             onMouseLeave={handleMouseLeave}
-            onClick={() => handleClick(index)}
           >
             <span
               className={`absolute inset-0 rounded-[50px] bg-black/30 z-0 transition-transform duration-700 ease-in-out ${
-                selectedIndex === index ? "scale-x-100" : "scale-x-0"
+                selectedIndex === index || hoveredIndex === index
+                  ? "scale-x-100"
+                  : "scale-x-0"
               }`}
               style={{
-                transformOrigin: selectedIndex === index ? hoverOrigin : "left",
+                transformOrigin:
+                  selectedIndex === index || hoveredIndex === index
+                    ? hoverOrigin
+                    : "left",
               }}
             />
             <span className="relative z-10 transition-colors duration-300">
@@ -135,8 +138,11 @@ export function DesignersSection({ team }: Props) {
                     className="h-[10px] w-[10px]"
                     alt=""
                   />
-                  <Link className="underline" href={"/decor"}>
-                    Ver Decor
+                  <Link
+                    className="underline"
+                    href={selectedIndex === 0 ? "/decor" : "/architecture"}
+                  >
+                    {selectedIndex === 0 ? "Ver Decor" : "Ver Arquitectura"}
                   </Link>
                 </div>
               </div>
