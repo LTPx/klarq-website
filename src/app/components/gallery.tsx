@@ -17,18 +17,15 @@ interface GalleryProps {
 const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
   const copies = 3;
   const baseLength = publication.length;
-  if (baseLength === 0) return null;
-
-  const extendedPublications = Array(copies).fill(publication).flat();
   const middleIndexStart = baseLength;
 
   const [selectedIndex, setSelectedIndex] = useState(middleIndexStart);
   const containerRef = useRef<HTMLDivElement>(null);
-
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const [hasScrolledInitially, setHasScrolledInitially] = useState(false);
-
   const isResettingRef = useRef(false);
+
+  const extendedPublications = Array(copies).fill(publication).flat();
 
   const scrollToIndex = useCallback(
     (index: number, behavior: ScrollBehavior = "smooth") => {
@@ -53,12 +50,21 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
     []
   );
 
+  // 🔧 Scroll inicial cuando todas las imágenes estén cargadas
   useEffect(() => {
-    if (!hasScrolledInitially && imagesLoaded >= 5) {
-      scrollToIndex(selectedIndex, "instant");
-      setHasScrolledInitially(true);
+    if (!hasScrolledInitially && imagesLoaded >= extendedPublications.length) {
+      requestAnimationFrame(() => {
+        scrollToIndex(selectedIndex, "instant");
+        setHasScrolledInitially(true);
+      });
     }
-  }, [imagesLoaded, hasScrolledInitially, scrollToIndex, selectedIndex]);
+  }, [
+    imagesLoaded,
+    hasScrolledInitially,
+    extendedPublications.length,
+    scrollToIndex,
+    selectedIndex,
+  ]);
 
   useEffect(() => {
     if (!isResettingRef.current) {
@@ -142,6 +148,8 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleNext, handlePrev]);
 
+  if (baseLength === 0) return null;
+
   return (
     <div className="relative w-[100vw]">
       <div style={{ height: 370 }}>
@@ -164,7 +172,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
             return (
               <img
                 key={index}
-                src={getProxyImageUrl(pub.image.url)}
+                src={pub.image.url}
                 alt={pub.title}
                 onClick={() => setSelectedIndex(index)}
                 onLoad={() => setImagesLoaded((prev) => prev + 1)}
