@@ -172,7 +172,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
             return (
               <img
                 key={index}
-                src={pub.image.url}
+                src={getProxyImageUrl(pub.image.url)}
                 alt={pub.title}
                 onClick={() => setSelectedIndex(index)}
                 onLoad={() => setImagesLoaded((prev) => prev + 1)}
