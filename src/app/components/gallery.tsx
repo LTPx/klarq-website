@@ -165,10 +165,10 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
                 onLoad={() => setImagesLoaded((prev) => prev + 1)}
                 className={`cursor-pointer shrink-0 transition-[width,opacity,transform] duration-700 ease-[cubic-bezier(0.4, 0, 0.2, 1)] origin-top`}
                 style={{
-                  height: isSelected ? 365 : 320,
+                  height: isSelected ? 365 : 310,
                   opacity: isSelected ? 1 : 0.3,
-                  transform: `scaleY(${isSelected ? 1 : 0.9})`,
-                  width: isSelected ? "calc(auto + 50px)" : "auto",
+                  // transform: `scaleY(${isSelected ? 1 : 0.9})`,
+                  width: isSelected ? 280 : "auto",
                 }}
               />
             );
