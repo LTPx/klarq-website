@@ -15,7 +15,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
 
   const extendedPublications = Array(copies).fill(publication).flat();
 
-  const [selectedIndex, setSelectedIndex] = useState(baseLength * 2 + 3);
+  const [selectedIndex, setSelectedIndex] = useState(baseLength * copies / 2);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [imagesLoaded, setImagesLoaded] = useState(0);
@@ -42,7 +42,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
   }, [selectedIndex]);
 
   useEffect(() => {
-    if (!hasScrolledInitially && imagesLoaded >= 10) {
+    if (!hasScrolledInitially && imagesLoaded >= 5) {
       scrollToSelected();
       setHasScrolledInitially(true);
     }
@@ -93,7 +93,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
     if (!container) return;
 
     let lastScrollTime = 0;
-    const scrollCooldown = 600;
+    const scrollCooldown = 900;
 
     const handleWheel = (e: WheelEvent) => {
       const now = Date.now();
