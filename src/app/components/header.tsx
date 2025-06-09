@@ -28,6 +28,7 @@ export function Header({
   const isHoveringCard = useHoverStore((state) => state.isHoveringCard);
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
     setIsHoveringCard(false);
@@ -37,94 +38,79 @@ export function Header({
     setIsHoveringCard(false);
   }, [currentPath, setIsHoveringCard]);
 
-  const handleContactClick = () => {
-    setShowMenu((prev) => !prev);
-  };
-
-  const [hasMounted, setHasMounted] = useState(false);
-
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
+  const handleContactClick = () => {
+    setShowMenu((prev) => !prev);
+  };
+
+  const renderHeaderContent = () => (
+    <div
+      className={`h-[50px] px-[15px] lg:px-[40px] grid grid-cols-2 items-center transition-all duration-300 ${
+        showMenu ? "border-t-[0.8px] border-black" : ""
+      }`}
+    >
+      <img
+        className="cursor-pointer"
+        onClick={handleContactClick}
+        src={showMenu ? "/images/close-menu.svg" : "/images/menu-logo.svg"}
+        alt={showMenu ? "Cerrar menú" : "Abrir menú"}
+      />
+
+      <div className="hidden lg:flex pl-[30px] justify-between">
+        {links.map((link, index) => {
+          const isActive = currentPath === link.url;
+          const isHovered = hoveredIndex === index;
+
+          return (
+            <Link
+              key={index}
+              href={link.url}
+              className="flex items-center gap-[6px]"
+              onClick={() => setShowMenu(false)}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <img
+                src={
+                  isActive || isHovered
+                    ? "/images/circle-black.svg"
+                    : "/images/circle.svg"
+                }
+                className="h-[10px] w-[10px]"
+                alt=""
+              />
+              <span className="text-[18px] leading-[18px]">{link.title}</span>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+
   return (
     <>
       <AnimatePresence>
-        {hasScrolled && !isHoveringCard && (
-          <motion.header
-            className="bg-gray container fixed bottom-0 z-[1002]"
-            initial={hasMounted ? { y: 100, opacity: 0 } : false}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 1, transition: { duration: 0.5 } }}
-            transition={{ duration: 0.1 }}
-          >
-            <div
-              className={`h-[50px] px-[15px] lg:px-[40px] grid grid-cols-2 items-center transition-all duration-300 ${
-                showMenu ? "border-t-[0.8px] border-black" : ""
-              }`}
-            >
-              {currentPath === "/" ? (
-                <motion.img
-                  className="cursor-pointer"
-                  onClick={handleContactClick}
-                  src={
-                    showMenu
-                      ? "/images/close-menu.svg"
-                      : "/images/menu-logo.svg"
-                  }
-                  alt={showMenu ? "Cerrar menú" : "Abrir menú"}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={
-                    hasScrolled ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
-                  }
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                />
-              ) : (
-                <img
-                  className="cursor-pointer"
-                  onClick={handleContactClick}
-                  src={
-                    showMenu
-                      ? "/images/close-menu.svg"
-                      : "/images/menu-logo.svg"
-                  }
-                  alt={showMenu ? "Cerrar menú" : "Abrir menú"}
-                />
-              )}
-
-              <div className="hidden lg:flex pl-[30px]  justify-between">
-                {links.map((link, index) => {
-                  const isActive = currentPath === link.url;
-                  const isHovered = hoveredIndex === index;
-
-                  return (
-                    <Link
-                      key={index}
-                      href={link.url}
-                      className="flex items-center gap-[6px]"
-                      onClick={() => setShowMenu(false)}
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                      <img
-                        src={
-                          isActive || isHovered
-                            ? "/images/circle-black.svg"
-                            : "/images/circle.svg"
-                        }
-                        className="h-[10px] w-[10px]"
-                        alt=""
-                      />
-                      <span className="text-[18px] leading-[18px]">
-                        {link.title}
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.header>
-        )}
+        {currentPath === "/"
+          ? hasScrolled &&
+            !isHoveringCard && (
+              <motion.header
+                className="bg-gray container fixed bottom-0 z-[1002]"
+                initial={hasMounted ? { y: 100, opacity: 0 } : false}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 1, transition: { duration: 0.5 } }}
+                transition={{ duration: 0.1 }}
+              >
+                {renderHeaderContent()}
+              </motion.header>
+            )
+          : !isHoveringCard && (
+              <header className="bg-gray container fixed bottom-0 z-[1002]">
+                {renderHeaderContent()}
+              </header>
+            )}
       </AnimatePresence>
 
       <DesktopMenu showContact={showMenu} setShowContact={setShowMenu} />

@@ -9,6 +9,7 @@ import { useHoverStore } from "../store/hover-store";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import CustomCursor from "./custom-cursor";
 import { useScrollStore } from "../store/scroll-store";
+import { usePathname } from "next/navigation";
 
 interface Props {
   services: servicesHome[];
@@ -24,6 +25,7 @@ function HomeAnimation(props: Props) {
   const [rotationDegree, setRotationDegree] = useState(0);
   const [hasRotatedOnce, setHasRotatedOnce] = useState(false);
   const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
+  const pathname = usePathname();
 
   const { scrollY } = useScroll();
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
@@ -86,10 +88,17 @@ function HomeAnimation(props: Props) {
   const links = ["/architecture", "/decor", "/development"];
 
   useEffect(() => {
-    setHasScrolled(false);
-  }, []);
+    const rootPaths = ["/es", "/de", "/en", "/"];
+    
+    const normalizedPath = pathname.endsWith("/")
+      ? pathname.slice(0, -1)
+      : pathname;
   
-
+    if (rootPaths.includes(normalizedPath)) {
+      setHasScrolled(false);
+    }
+  }, [pathname, setHasScrolled]);
+  
   return (
     <div className="container bg-white">
       <motion.img
