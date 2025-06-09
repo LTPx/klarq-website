@@ -1,92 +1,99 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import { PublicationsWp } from "../_interfaces/wordpress-components";
-import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface GalleryProps {
   publication: PublicationsWp[];
 }
 
 const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
-  const copies = 20;
+  const copies = 3;
   const baseLength = publication.length;
-  const totalLength = baseLength * copies;
+  if (baseLength === 0) return null;
 
   const extendedPublications = Array(copies).fill(publication).flat();
+  const middleIndexStart = baseLength;
 
-  const [selectedIndex, setSelectedIndex] = useState((baseLength * copies) / 2);
+  const [selectedIndex, setSelectedIndex] = useState(middleIndexStart);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const [hasScrolledInitially, setHasScrolledInitially] = useState(false);
 
-  const scrollToSelected = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
+  const isResettingRef = useRef(false);
 
-    const images = container.querySelectorAll("img");
-    const selectedImage = images[selectedIndex] as HTMLImageElement;
-    if (!selectedImage) return;
+  const scrollToIndex = useCallback(
+    (index: number, behavior: ScrollBehavior = "smooth") => {
+      const container = containerRef.current;
+      if (!container) return;
 
-    const imageOffsetLeft = selectedImage.offsetLeft;
-    const imageWidth = selectedImage.offsetWidth;
-    const containerWidth = container.clientWidth;
+      const images = container.querySelectorAll("img");
+      const targetImage = images[index] as HTMLImageElement;
+      if (!targetImage) return;
 
-    const scrollTo = imageOffsetLeft - containerWidth / 2 + imageWidth / 2;
+      const imageOffsetLeft = targetImage.offsetLeft;
+      const imageWidth = targetImage.offsetWidth;
+      const containerWidth = container.clientWidth;
 
-    container.scrollTo({
-      left: scrollTo,
-      behavior: "instant" as ScrollBehavior,
-    });
-  }, [selectedIndex]);
+      const scrollTo = imageOffsetLeft - containerWidth / 2 + imageWidth / 2;
+
+      container.scrollTo({
+        left: scrollTo,
+        behavior,
+      });
+    },
+    []
+  );
 
   useEffect(() => {
     if (!hasScrolledInitially && imagesLoaded >= 5) {
-      scrollToSelected();
+      scrollToIndex(selectedIndex, "instant");
       setHasScrolledInitially(true);
     }
-  }, [imagesLoaded, hasScrolledInitially, scrollToSelected]);
+  }, [imagesLoaded, hasScrolledInitially, scrollToIndex, selectedIndex]);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    if (!isResettingRef.current) {
+      scrollToIndex(selectedIndex, "smooth");
+    }
+  }, [selectedIndex, scrollToIndex]);
 
-    const images = container.querySelectorAll("img");
-    const selectedImage = images[selectedIndex] as HTMLImageElement;
-    if (!selectedImage) return;
+  useLayoutEffect(() => {
+    if (!containerRef.current) return;
 
-    const imageOffsetLeft = selectedImage.offsetLeft;
-    const imageWidth = selectedImage.offsetWidth;
-    const containerWidth = container.clientWidth;
-
-    const scrollTo = imageOffsetLeft - containerWidth / 2 + imageWidth / 2;
-
-    container.scrollTo({
-      left: scrollTo,
-      behavior: "smooth",
-    });
-  }, [selectedIndex]);
+    if (selectedIndex < baseLength) {
+      isResettingRef.current = true;
+      const newIndex = selectedIndex + baseLength;
+      setSelectedIndex(newIndex);
+      scrollToIndex(newIndex, "instant");
+      requestAnimationFrame(() => {
+        isResettingRef.current = false;
+      });
+    } else if (selectedIndex >= baseLength * 2) {
+      isResettingRef.current = true;
+      const newIndex = selectedIndex - baseLength;
+      setSelectedIndex(newIndex);
+      scrollToIndex(newIndex, "instant");
+      requestAnimationFrame(() => {
+        isResettingRef.current = false;
+      });
+    }
+  }, [selectedIndex, baseLength, scrollToIndex]);
 
   const handleNext = useCallback(() => {
-    setSelectedIndex((prev) => {
-      let next = prev + 1;
-      if (next >= totalLength - baseLength) {
-        next = next - baseLength;
-      }
-      return next;
-    });
-  }, [baseLength, totalLength]);
+    setSelectedIndex((prev) => prev + 1);
+  }, []);
 
   const handlePrev = useCallback(() => {
-    setSelectedIndex((prev) => {
-      let next = prev - 1;
-      if (next < baseLength) {
-        next = next + baseLength;
-      }
-      return next;
-    });
-  }, [baseLength]);
+    setSelectedIndex((prev) => prev - 1);
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -106,7 +113,6 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
 
       if (Math.abs(delta) > 20) {
         lastScrollTime = now;
-
         if (delta > 0) {
           handleNext();
         } else {
@@ -135,8 +141,6 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleNext, handlePrev]);
 
-  if (baseLength === 0) return null;
-
   return (
     <div className="relative w-[100vw]">
       <div style={{ height: 370 }}>
@@ -159,7 +163,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
             return (
               <img
                 key={index}
-                src={getProxyImageUrl(pub.image.url)}
+                src={pub.image.url}
                 alt={pub.title}
                 onClick={() => setSelectedIndex(index)}
                 onLoad={() => setImagesLoaded((prev) => prev + 1)}
@@ -167,7 +171,6 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
                 style={{
                   height: isSelected ? 365 : 310,
                   opacity: isSelected ? 1 : 0.3,
-                  // transform: `scaleY(${isSelected ? 1 : 0.9})`,
                   width: isSelected ? 280 : "auto",
                 }}
               />
