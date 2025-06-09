@@ -18,6 +18,9 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
   const [selectedIndex, setSelectedIndex] = useState(baseLength * 2 + 3);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [hasScrolledInitially, setHasScrolledInitially] = useState(false);
+
   const scrollToSelected = useCallback(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -39,8 +42,11 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
   }, [selectedIndex]);
 
   useEffect(() => {
-    scrollToSelected();
-  }, []);
+    if (!hasScrolledInitially && imagesLoaded >= 10) {
+      scrollToSelected();
+      setHasScrolledInitially(true);
+    }
+  }, [imagesLoaded, hasScrolledInitially, scrollToSelected]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -156,7 +162,8 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
                 src={getProxyImageUrl(pub.image.url)}
                 alt={pub.title}
                 onClick={() => setSelectedIndex(index)}
-                className={`cursor-pointer shrink-0 transition-[width,opacity,transform] duration-700  ease-in-out ease-[cubic-bezier(0.4, 0, 0.2, 1)] origin-top ${
+                onLoad={() => setImagesLoaded((prev) => prev + 1)}
+                className={`cursor-pointer shrink-0 transition-[width,opacity,transform] duration-700 ease-in-out ease-[cubic-bezier(0.4, 0, 0.2, 1)] origin-top ${
                   isSelected
                     ? "h-[365px] w-[280px] opacity-100 scale-y-100"
                     : "h-[290px] w-auto opacity-30 scale-y-90"
