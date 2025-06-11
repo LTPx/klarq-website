@@ -23,10 +23,13 @@ function HomeAnimation(props: Props) {
   const [isScrolling, setIsScrolling] = useState(false);
   const [isCursorVisible, setIsCursorVisible] = useState(false);
   const [rotationDegree, setRotationDegree] = useState(0);
-  const [hasRotatedOnce, setHasRotatedOnce] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [expandedIndexMobile, setExpandedIndexMobile] = useState<number | null>(
+    null
+  );
+
   const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
   const pathname = usePathname();
-
   const { scrollY } = useScroll();
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
 
@@ -34,6 +37,7 @@ function HomeAnimation(props: Props) {
     const updateWindowDimensions = () => {
       setWindowHeight(window.innerHeight);
       setWindowWidth(window.innerWidth);
+      setIsMobile(window.innerWidth < 1024); // tailwind lg breakpoint
     };
 
     updateWindowDimensions();
@@ -89,16 +93,16 @@ function HomeAnimation(props: Props) {
 
   useEffect(() => {
     const rootPaths = ["/es", "/de", "/en", "/"];
-    
+
     const normalizedPath = pathname.endsWith("/")
       ? pathname.slice(0, -1)
       : pathname;
-  
+
     if (rootPaths.includes(normalizedPath)) {
       setHasScrolled(false);
     }
   }, [pathname, setHasScrolled]);
-  
+
   return (
     <div className="container bg-white">
       <motion.img
@@ -110,12 +114,15 @@ function HomeAnimation(props: Props) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
       />
-      <div className="lg:hidden py-[15px] px-[15px]">
-        <img src="/images/KLARQ.svg" className="" />
+      <div className="h-[10vh] lg:hidden py-[10px] px-[15px]">
+        <img src="/images/KLARQ.svg" />
       </div>
       <div className="md:h-[40dvh]" />
+
       <motion.div
-        className="flex flex-col lg:flex-row gap-[5px] lg:mt-[20px] transition-all duration-300"
+        className={`flex ${
+          isMobile ? "flex-col" : "lg:flex-row"
+        } gap-[3px] lg:gap-[5px] lg:mt-[20px] transition-all duration-300`}
         initial={{ y: 1, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeInOut" }}
@@ -124,7 +131,7 @@ function HomeAnimation(props: Props) {
           const link = links[index];
           let grow = "flex-[1]";
 
-          if (hoveredIndex !== null) {
+          if (!isMobile && hoveredIndex !== null) {
             if (hoveredIndex === index) {
               grow = "flex-[6]";
             } else if (hoveredIndex === 0) {
@@ -142,22 +149,28 @@ function HomeAnimation(props: Props) {
           return (
             <motion.div
               key={index}
-              animate={{
-                flex: parseFloat(grow.match(/\d+(\.\d+)?/)?.[0] || "1"),
-              }}
+              animate={
+                !isMobile
+                  ? {
+                      flex: parseFloat(grow.match(/\d+(\.\d+)?/)?.[0] || "1"),
+                    }
+                  : {}
+              }
               initial={{ flex: 1 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
               onMouseEnter={() => {
-                if (!isScrolling) {
+                if (!isScrolling && !isMobile) {
                   setHoveredIndex(index);
                   setIsHoveringCard(true);
                   setIsCursorVisible(true);
                 }
               }}
               onMouseLeave={() => {
-                setHoveredIndex(null);
-                setIsHoveringCard(false);
-                setIsCursorVisible(false);
+                if (!isMobile) {
+                  setHoveredIndex(null);
+                  setIsHoveringCard(false);
+                  setIsCursorVisible(false);
+                }
               }}
               className="flex"
             >
@@ -169,6 +182,14 @@ function HomeAnimation(props: Props) {
                   showDescription={hoveredIndex === index}
                   anyCardHovering={hoveredIndex !== null}
                   hasScrolled={useScrollStore.getState().hasScrolled}
+                  isMobile={isMobile}
+                  expandedIndexMobile={expandedIndexMobile}
+                  index={index}
+                  onExpandClick={() =>
+                    setExpandedIndexMobile(
+                      expandedIndexMobile === index ? null : index
+                    )
+                  }
                 />
               </Link>
             </motion.div>

@@ -177,6 +177,18 @@ body.hide-native-cursor * {
 
 
 @media (max-width: 768px) {
+
+  .description-cards-home {
+    p {
+      font-size: 16px;
+      line-height: 22px;
+    }
+    div {
+      font-size: 16px;
+      line-height: 22px;
+    }
+  }
+
   .description-home {
     p {
       font-size: 30px;
