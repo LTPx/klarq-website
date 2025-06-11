@@ -92,8 +92,7 @@ export function DesignersSection({ team }: Props) {
           />
         )}
       </div>
-
-      <div className="relative md:w-[535px] h-[550px] md:h-[633px]">
+      <div className="relative md:w-[535px] min-h-[422px] md:h-[633px]">
         <img
           src={getProxyImageUrl(team.image_team.url)}
           alt={team.image_team.alt || "Equipo KLARQ"}
@@ -103,7 +102,7 @@ export function DesignersSection({ team }: Props) {
         />
 
         <div
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out flex flex-col gap-[50px] md:gap-[100px] pt-[13px] py-[0px] ${
+          className={`lg:absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out flex flex-col gap-[50px] md:gap-[100px] pt-[13px] py-[0px] ${
             selectedMember ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
@@ -150,7 +149,7 @@ export function DesignersSection({ team }: Props) {
           )}
         </div>
       </div>
-      <div></div>
+      <div className="hidden lg:block"></div>
     </div>
   );
 }
