@@ -25,10 +25,18 @@ function ArchitecturePage({ projects, information }: Props) {
   const [progress, setProgress] = useState(0);
   const [allowScroll, setAllowScroll] = useState(false);
   const ignoreNextScroll = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const [firstProject, restProjects] = useMemo(() => {
     return [projects[0], projects.slice(1)];
   }, [projects]);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -61,37 +69,55 @@ function ArchitecturePage({ projects, information }: Props) {
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
 
-    function onWheel(e: WheelEvent) {
-      if (isExpanded) {
-        if (!allowScroll) {
-          if (ignoreNextScroll.current) {
-            ignoreNextScroll.current = false;
-            e.preventDefault();
-            return;
-          }
+    const onWheel = (e: WheelEvent) => {
+      if (isMobile) return;
+      if (isExpanded && !allowScroll) {
+        if (ignoreNextScroll.current) {
+          ignoreNextScroll.current = false;
+          e.preventDefault();
           return;
         }
         return;
       }
-
-      e.preventDefault();
+      if (!isExpanded) e.preventDefault();
 
       setProgress((prev) => {
         let next = prev + e.deltaY * 0.001;
-
         if (next >= 1) {
           setIsExpanded(true);
           ignoreNextScroll.current = true;
           return 1;
         }
-
         return Math.min(1, Math.max(0, next));
       });
-    }
+    };
 
-    window.addEventListener("wheel", onWheel, { passive: false });
+    const handleMobileScroll = (e: WheelEvent | TouchEvent) => {
+      if (!isMobile || isExpanded) return;
+      e.preventDefault();
+      const deltaY = (e as WheelEvent).deltaY || 5;
+
+      setProgress((prev) => {
+        let next = prev + deltaY * 0.005;
+        if (next >= 1) {
+          setIsExpanded(true);
+          return 1;
+        }
+        return Math.min(1, Math.max(0, next));
+      });
+    };
 
     if (!isExpanded) {
+      if (isMobile) {
+        window.addEventListener("wheel", handleMobileScroll, {
+          passive: false,
+        });
+        window.addEventListener("touchmove", handleMobileScroll, {
+          passive: false,
+        });
+      } else {
+        window.addEventListener("wheel", onWheel, { passive: false });
+      }
       document.body.style.overflow = "hidden";
       setAllowScroll(false);
     } else {
@@ -103,34 +129,45 @@ function ArchitecturePage({ projects, information }: Props) {
     }
 
     return () => {
-      window.removeEventListener("wheel", onWheel);
+      if (isMobile) {
+        window.removeEventListener("wheel", handleMobileScroll);
+        window.removeEventListener("touchmove", handleMobileScroll);
+      } else {
+        window.removeEventListener("wheel", onWheel);
+      }
       document.body.style.overflow = "";
       clearTimeout(releaseTimeout);
       ignoreNextScroll.current = false;
     };
-  }, [isExpanded]);
+  }, [isExpanded, isMobile]);
+
+  const restProjectsMarginTop = isExpanded ? "-50vh" : "0";
 
   return (
     <>
       <div
         ref={scrollContainerRef}
-        className={`ArchitecturePage relative h-[calc(100dvh-50px)] ${
+        className={`ArchitecturePage relative lg:block flex flex-col gap-[3px] ${
+          isMobile ? "" : "h-[calc(100dvh-50px)]"
+        } ${
           isExpanded
             ? "overflow-y-scroll snap-y snap-mandatory"
             : "overflow-y-hidden"
         }`}
       >
-        <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
-          <div
-            className={`text-white transition-opacity duration-700 ease-in-out ${
-              isExpanded ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <h1 className="text-[18px] leading-[22px] tracking-[-0.02em]">
-              {currentTitle || firstProject.title}, {currentDate}
-            </h1>
+        {!isMobile && (
+          <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
+            <div
+              className={`text-white transition-opacity duration-700 ease-in-out ${
+                isExpanded ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <h1 className="text-[18px] leading-[22px] tracking-[-0.02em]">
+                {currentTitle || firstProject.title}, {currentDate}
+              </h1>
+            </div>
           </div>
-        </div>
+        )}
         <CoverDynamic
           img={getProxyImageUrl(
             firstProject.project.acf.architecture_projects.cover_project.url
@@ -139,35 +176,56 @@ function ArchitecturePage({ projects, information }: Props) {
           labelTitle="Architecture"
           linkSlug={`/architecture/${firstProject.project.slug}`}
           progress={progress}
+          isMobile={isMobile}
+          title={firstProject.project.acf.architecture_projects.title_project}
         />
-        {restProjects.map((item, index) => (
-          <Link
-            key={item.project.id}
-            href={`/architecture/${item.project.slug}`}
-            className={`block h-[calc(100dvh-50px)] relative transition-opacity duration-500 ${
-              isExpanded
-                ? "snap-start opacity-100 pointer-events-auto"
-                : "opacity-0 pointer-events-none"
-            }`}
-          >
-            <div
-              ref={(el) => {
-                sectionRefs.current[index + 1] = el;
-              }}
-              data-index={index + 1}
-              className="h-full w-full relative"
+        <div
+          className="lg:block flex flex-col gap-[3px]"
+          style={
+            isMobile
+              ? {
+                  marginTop: restProjectsMarginTop,
+                  transition: "margin-top 0.5s ease",
+                }
+              : {}
+          }
+        >
+          {restProjects.map((item, index) => (
+            <Link
+              key={item.project.id}
+              href={`/architecture/${item.project.slug}`}
+              className={`block relative transition-opacity duration-500 ${
+                isExpanded
+                  ? "snap-start opacity-100 pointer-events-auto"
+                  : "opacity-0 pointer-events-none"
+              } ${isMobile ? "h-[50dvh]" : "h-[calc(100dvh-50px)]"}`}
             >
-              <img
-                className="bg-[#00000026] object-cover w-full h-full"
-                src={getProxyImageUrl(
-                  item.project.acf.architecture_projects.cover_project.url
+              <div
+                ref={(el) => {
+                  sectionRefs.current[index + 1] = el;
+                }}
+                data-index={index + 1}
+                className="h-full w-full relative"
+              >
+                <img
+                  className="bg-[#00000026] object-cover w-full h-full"
+                  src={getProxyImageUrl(
+                    item.project.acf.architecture_projects.cover_project.url
+                  )}
+                  alt={item.title}
+                />
+                <div className="absolute inset-0 bg-black/20 z-10" />
+                {isMobile && (
+                  <div className="absolute inset-0 flex justify-center items-center z-20 px-4">
+                    <h2 className="uppercase text-white text-center text-[14px] leading-[22px] tracking-[-0.02em]">
+                      {item.title}
+                    </h2>
+                  </div>
                 )}
-                alt={item.title}
-              />
-              <div className="absolute inset-0 bg-black/20 z-10" />
-            </div>
-          </Link>
-        ))}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   );

@@ -23,14 +23,21 @@ function PublicationsPage({ publications_information }: Props) {
 
   return (
     <div className="h-[calc(100dvh-50px)] flex justify-center items-center">
-      <Link className="cursor-pointer" href={"/"}>
+      <Link className="lg:hidden cursor-pointer" href={"/"}>
+        <div className="cursor-pointer fixed top-[10px] left-[15px] mix-blend-difference text-white z-[1000]">
+          <label className="uppercase tracking-[-0.02em] font-zoom cursor-pointer text-[38px] leading-[38px]">
+            KLARQ <br /> PUBLICACIONES
+          </label>
+        </div>
+      </Link>
+      <Link className="hidden lg:block cursor-pointer" href={"/"}>
         <div className="cursor-pointer fixed top-[35px] left-[35px] z-[1000]">
           <label className="font-zoom cursor-pointer text-[66px] leading-[46px] ">
             KLARQ
           </label>
         </div>
       </Link>
-      <div className="fixed top-[35px] right-[35px]">
+      <div className="hidden lg:block fixed top-[35px] right-[35px]">
         <label className="font-zoom text-[66px] leading-[46px] tracking-[-0.03em] mix-blend-difference">
           PUBLICACIONES
         </label>

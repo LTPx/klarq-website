@@ -15,8 +15,7 @@ interface Props {
 function DecorPage({ decor_information }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [allowScroll, setAllowScroll] = useState(false);
-  const ignoreNextScroll = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     AOS.init({
@@ -28,20 +27,17 @@ function DecorPage({ decor_information }: Props) {
   }, []);
 
   useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
 
     function onWheel(e: WheelEvent) {
-      if (isExpanded) {
-        if (!allowScroll) {
-          if (ignoreNextScroll.current) {
-            ignoreNextScroll.current = false;
-            e.preventDefault();
-            return;
-          }
-          return;
-        }
-        return;
-      }
+      if (isMobile) return;
 
       e.preventDefault();
 
@@ -50,34 +46,58 @@ function DecorPage({ decor_information }: Props) {
 
         if (next >= 1) {
           setIsExpanded(true);
-          ignoreNextScroll.current = true;
           return 1;
         }
-
         return Math.min(1, Math.max(0, next));
       });
     }
 
-    window.addEventListener("wheel", onWheel, { passive: false });
+    const handleMobileScroll = (e: WheelEvent | TouchEvent) => {
+      if (!isMobile) return;
+
+      e.preventDefault();
+      const deltaY = (e as WheelEvent).deltaY || 5;
+
+      setProgress((prev) => {
+        let next = prev + deltaY * 0.005;
+
+        if (next >= 1) {
+          setIsExpanded(true);
+          return 1;
+        }
+        return Math.min(1, Math.max(0, next));
+      });
+    };
 
     if (!isExpanded) {
+      if (isMobile) {
+        window.addEventListener("wheel", handleMobileScroll, {
+          passive: false,
+        });
+        window.addEventListener("touchmove", handleMobileScroll, {
+          passive: false,
+        });
+      } else {
+        window.addEventListener("wheel", onWheel, { passive: false });
+      }
       document.body.style.overflow = "hidden";
-      setAllowScroll(false);
     } else {
       releaseTimeout = setTimeout(() => {
         document.body.style.overflow = "";
-        setAllowScroll(true);
-        ignoreNextScroll.current = true;
       }, 700);
     }
 
     return () => {
-      window.removeEventListener("wheel", onWheel);
-      document.body.style.overflow = "";
+      if (isMobile) {
+        window.removeEventListener("wheel", handleMobileScroll);
+        window.removeEventListener("touchmove", handleMobileScroll);
+      } else {
+        window.removeEventListener("wheel", onWheel);
+      }
       clearTimeout(releaseTimeout);
-      ignoreNextScroll.current = false;
+      document.body.style.overflow = "";
     };
-  }, [isExpanded]);
+  }, [isExpanded, isMobile]);
 
   const projectKeys = [
     "kitchen_projects",
@@ -110,6 +130,8 @@ function DecorPage({ decor_information }: Props) {
     })
     .filter((item): item is CategoryWithProjects => item !== null);
 
+  const restProjectsMarginTop = isExpanded ? "-50vh" : "0";
+
   return (
     <div>
       <div className="DecorPage">
@@ -118,10 +140,21 @@ function DecorPage({ decor_information }: Props) {
           information={decor_information.information}
           labelTitle="Decor"
           progress={progress}
+          isMobile={isMobile}
         />
       </div>
       {isExpanded && (
-        <section className="py-[200px]">
+        <section
+          className="py-[200px]"
+          style={
+            isMobile
+              ? {
+                  marginTop: restProjectsMarginTop,
+                  transition: "margin-top 0.5s ease",
+                }
+              : {}
+          }
+        >
           <CallToAction
             categories={categories}
             title={decor_information.page_content.title_banner}

@@ -114,8 +114,8 @@ function HomeAnimation(props: Props) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
       />
-      <div className="h-[10vh] lg:hidden py-[10px] px-[15px]">
-        <img src="/images/KLARQ.svg" />
+      <div className="h-[10dvh] lg:hidden px-[15px]">
+        <img className="h-full" src="/images/KLARQ.svg" />
       </div>
       <div className="md:h-[40dvh]" />
 

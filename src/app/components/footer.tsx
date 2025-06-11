@@ -3,7 +3,7 @@
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HoverFillButton from "./hover-btn";
 import { useExpandStore } from "../store/expand-store";
 
@@ -12,11 +12,22 @@ export function Footer() {
   const pathname = usePathname();
   const { isExpandedReady } = useExpandStore();
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    function checkMobile() {
+      setIsMobile(window.innerWidth < 768);
+    }
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const noShowFooter =
     pathname?.includes("/publications") ||
     pathname?.includes("/contact") ||
-    pathname === "/es/architecture" ||
-    pathname === "/es/development" ||
+    (pathname === "/es/architecture" && !isMobile) ||
+    (pathname === "/es/development" && !isMobile) ||
     pathname === "/en/architecture" ||
     (pathname === "/es/decor" && !isExpandedReady);
 
@@ -61,13 +72,22 @@ export function Footer() {
               {`${t("footer.follow")}`}
             </span>
             <div className="flex gap-[15px]">
-              <HoverFillButton className="h-[25px] text-[12px] leading-[12px]" href="https://instagram.com">
+              <HoverFillButton
+                className="h-[25px] text-[12px] leading-[12px]"
+                href="https://instagram.com"
+              >
                 Instagram
               </HoverFillButton>
-              <HoverFillButton className="h-[25px] text-[12px] leading-[12px]" href="https://instagram.com">
+              <HoverFillButton
+                className="h-[25px] text-[12px] leading-[12px]"
+                href="https://instagram.com"
+              >
                 Facebook
               </HoverFillButton>
-              <HoverFillButton className="h-[25px] text-[12px] leading-[12px]" href="https://instagram.com">
+              <HoverFillButton
+                className="h-[25px] text-[12px] leading-[12px]"
+                href="https://instagram.com"
+              >
                 YouTube
               </HoverFillButton>
             </div>

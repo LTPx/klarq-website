@@ -43,7 +43,7 @@ function LogoAnimate() {
         <motion.img
           src="/images/KLARQ.svg"
           alt="KLARQ"
-          className="px-[40px] object-contain fixed top-[20px] left-0 z-[1000] mix-blend-difference filter invert"
+          className="hidden lg:block px-[40px] object-contain fixed top-[20px] left-0 z-[1000] mix-blend-difference filter invert"
           initial={{
             y: 0,
             opacity: 1,
