@@ -24,6 +24,17 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const [hasScrolledInitially, setHasScrolledInitially] = useState(false);
   const isResettingRef = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const touchStartXRef = useRef<number | null>(null);
+  const touchEndXRef = useRef<number | null>(null);
 
   const extendedPublications = Array(copies).fill(publication).flat();
 
@@ -134,6 +145,45 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
   }, [handleNext, handlePrev]);
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartXRef.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      touchEndXRef.current = e.changedTouches[0].clientX;
+      const startX = touchStartXRef.current;
+      const endX = touchEndXRef.current;
+
+      if (startX !== null && endX !== null) {
+        const deltaX = startX - endX;
+        if (Math.abs(deltaX) > 50) {
+          if (deltaX > 0) {
+            handleNext();
+          } else {
+            handlePrev();
+          }
+        }
+      }
+
+      touchStartXRef.current = null;
+      touchEndXRef.current = null;
+    };
+
+    container.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    container.addEventListener("touchend", handleTouchEnd, { passive: true });
+
+    return () => {
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [handleNext, handlePrev]);
+
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowRight") {
         event.preventDefault();
@@ -151,10 +201,10 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
 
   return (
     <div className="relative w-[100vw]">
-      <div style={{ height: 370 }}>
+      <div style={{ height: isMobile ? 320 : 370 }}>
         <button
           onClick={handlePrev}
-          className="absolute left-[40px] top-[380px] -translate-y-1/2 z-10"
+          className="absolute left-[15px] lg:left-[40px] top-[340px] lg:top-[380px] -translate-y-1/2 z-10"
         >
           <img src="/images/left.svg" alt="Prev" />
         </button>
@@ -164,6 +214,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
           style={{
             overflowX: "hidden",
             scrollBehavior: "smooth",
+            touchAction: "pan-y",
           }}
         >
           {extendedPublications.map((pub, index) => {
@@ -177,30 +228,45 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
                 onLoad={() => setImagesLoaded((prev) => prev + 1)}
                 className={`cursor-pointer shrink-0 transition-[width,opacity,transform] duration-700 ease-[cubic-bezier(0.4, 0, 0.2, 1)] origin-top`}
                 style={{
-                  height: isSelected ? 365 : 310,
+                  height: isMobile
+                    ? isSelected
+                      ? 310
+                      : 280
+                    : isSelected
+                    ? 365
+                    : 310,
+                  width: isMobile
+                    ? isSelected
+                      ? 250
+                      : 250
+                    : isSelected
+                    ? 280
+                    : "auto",
                   opacity: isSelected ? 1 : 0.3,
-                  width: isSelected ? 280 : "auto",
                 }}
               />
             );
           })}
         </div>
-
         <button
           onClick={handleNext}
-          className="absolute right-[40px] top-[380px] -translate-y-1/2 z-10"
+          className="absolute right-[15px] lg:right-[40px] top-[340px] lg:top-[380px] -translate-y-1/2 z-10"
         >
           <img src="/images/right.svg" alt="Next" />
         </button>
       </div>
-
-      <div className="pt-[16px] text-center" style={{ minHeight: "54px" }}>
-        <h2 className="uppercase text-[16px] leading-[22px]">
-          {publication[selectedIndex % baseLength]?.title}
-        </h2>
-        <p className="uppercase text-[16px] leading-[22px]">
-          {publication[selectedIndex % baseLength]?.sub_title}
-        </p>
+      <div
+        className="pt-[16px] flex flex-col justify-center items-center text-center"
+        style={{ minHeight: "54px" }}
+      >
+        <div className="w-[250px] lg:w-auto">
+          <h2 className=" uppercase text-[16px] leading-[22px]">
+            {publication[selectedIndex % baseLength]?.title}
+          </h2>
+          <p className="uppercase text-[16px] leading-[22px]">
+            {publication[selectedIndex % baseLength]?.sub_title}
+          </p>
+        </div>
       </div>
     </div>
   );
