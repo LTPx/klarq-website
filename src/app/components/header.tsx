@@ -29,6 +29,14 @@ export function Header({
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hasMounted, setHasMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
 
   useEffect(() => {
     setIsHoveringCard(false);
@@ -93,24 +101,25 @@ export function Header({
   return (
     <>
       <AnimatePresence>
-        {currentPath === "/"
-          ? hasScrolled &&
-            !isHoveringCard && (
-              <motion.header
-                className="bg-gray container fixed bottom-0 z-[1002]"
-                initial={hasMounted ? { y: 100, opacity: 0 } : false}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 100, opacity: 1, transition: { duration: 0.5 } }}
-                transition={{ duration: 0.1 }}
-              >
-                {renderHeaderContent()}
-              </motion.header>
-            )
-          : !isHoveringCard && (
-              <header className="bg-gray container fixed bottom-0 z-[1002]">
-                {renderHeaderContent()}
-              </header>
-            )}
+        {currentPath === "/" ? (
+          isMobile || (hasScrolled && !isHoveringCard) ? (
+            <motion.header
+              className="bg-gray container fixed bottom-0 z-[1002]"
+              initial={hasMounted && !isMobile ? { y: 100, opacity: 0 } : false}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 1, transition: { duration: 0.5 } }}
+              transition={{ duration: 0.1 }}
+            >
+              {renderHeaderContent()}
+            </motion.header>
+          ) : null
+        ) : (
+          !isHoveringCard && (
+            <header className="bg-gray container fixed bottom-0 z-[1002]">
+              {renderHeaderContent()}
+            </header>
+          )
+        )}
       </AnimatePresence>
 
       <DesktopMenu showContact={showMenu} setShowContact={setShowMenu} />

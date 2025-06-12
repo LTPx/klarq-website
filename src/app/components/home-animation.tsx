@@ -37,7 +37,7 @@ function HomeAnimation(props: Props) {
     const updateWindowDimensions = () => {
       setWindowHeight(window.innerHeight);
       setWindowWidth(window.innerWidth);
-      setIsMobile(window.innerWidth < 1024); // tailwind lg breakpoint
+      setIsMobile(window.innerWidth < 1024);
     };
 
     updateWindowDimensions();
@@ -114,8 +114,8 @@ function HomeAnimation(props: Props) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
       />
-      <div className="h-[10dvh] lg:hidden px-[15px]">
-        <img className="h-full" src="/images/KLARQ.svg" />
+      <div className="flex justify-center items-center h-[12dvh] lg:hidden px-[15px]">
+        <img className="h-full w-full" src="/images/KLARQ.svg" />
       </div>
       <div className="md:h-[40dvh]" />
 
