@@ -18,7 +18,7 @@ export function DesktopMenu(props: Props) {
 
   return (
     <div
-      className={`fixed flex items-center lg:items-start top-0 left-0 w-full h-screen bg-gray transform transition-transform duration-500 ease-in-out z-[1001] ${
+      className={`fixed flex items-center lg:items-start top-0 left-0 w-full h-[100dvh] bg-gray transform transition-transform duration-500 ease-in-out z-[1001] ${
         showContact ? "translate-y-0" : "translate-y-full"
       }`}
     >
