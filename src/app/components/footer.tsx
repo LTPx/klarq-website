@@ -112,23 +112,21 @@ export function Footer() {
               </HoverFillButton>
             </div>
           </div>
-          <div className="pt-[50px] lg:pt-[0px] col-span-3 flex justify-end">
-            <div className="col-span-3 flex flex-col justify-end gap-[15px]">
-              <img className="h-full w-full" src="/images/logo-footer.svg" />
-              <div className="flex flex-col">
-                <div className="flex gap-[5px]">
-                  <Link className="text-[16px] leading-[22px]" href={"/"}>
-                    {`${t("footer.privacy-policy")}`}
-                  </Link>
-                  <span> | </span>
-                  <Link className="text-[16px] leading-[22px]" href={"/"}>
-                    {`${t("footer.legal-notice")}`}
-                  </Link>
-                </div>
+          <div className="pt-[50px] lg:pt-[0px] col-span-3 flex flex-col gap-[15px]">
+            <img className="h-full w-full" src="/images/logo-footer.svg" />
+            <div className="flex flex-col">
+              <div className="flex gap-[5px]">
                 <Link className="text-[16px] leading-[22px]" href={"/"}>
-                  {`${t("footer.cookies-policy")}`}
+                  {`${t("footer.privacy-policy")}`}
+                </Link>
+                <span> | </span>
+                <Link className="text-[16px] leading-[22px]" href={"/"}>
+                  {`${t("footer.legal-notice")}`}
                 </Link>
               </div>
+              <Link className="text-[16px] leading-[22px]" href={"/"}>
+                {`${t("footer.cookies-policy")}`}
+              </Link>
             </div>
           </div>
         </div>

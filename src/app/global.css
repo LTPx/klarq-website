@@ -71,10 +71,14 @@ body.hide-native-cursor * {
   max-width: 100%;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none !important;
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE y Edge */
+  scrollbar-width: none;     /* Firefox */
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 .designer-description {
   p {
     font-size: 18px;
