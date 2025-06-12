@@ -20,6 +20,9 @@
   },
   "footer": {
     "title": "Contact us:",
+    "social_architecture": "@klarq.arch",
+    "social_decor": "@klarq.decor",
+    "social_development": "@klarq.dev",
     "follow": "Follow us on Instagram:",
     "architecture": "Architecture",
     "decor": "Decor",

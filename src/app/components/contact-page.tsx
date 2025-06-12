@@ -138,15 +138,15 @@ function ContactPage({ contact_information }: Props) {
           <div className="flex flex-col justify-center items-center gap-[15px]">
             <div className="flex gap-[10px]">
               <HoverButton href="https://instagram.com">
-                {t("footer.architecture")}
+                {t("footer.social_architecture")}
               </HoverButton>
               <HoverButton href="https://instagram.com">
-                {t("footer.decor")}
+                {t("footer.social_decor")}
               </HoverButton>
             </div>
             <div>
               <HoverButton href="https://instagram.com">
-                {t("footer.development")}
+                {t("footer.social_development")}
               </HoverButton>
             </div>
           </div>

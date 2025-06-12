@@ -47,13 +47,13 @@ async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
           </div>
           <div className="flex gap-[15px]">
             <HoverButton href="https://instagram.com">
-              {t("footer.architecture")}
+              {t("footer.social_architecture")}
             </HoverButton>
             <HoverButton href="https://instagram.com">
-              {t("footer.decor")}
+              {t("footer.social_decor")}
             </HoverButton>
             <HoverButton href="https://instagram.com">
-              {t("footer.development")}
+              {t("footer.social_development")}
             </HoverButton>
           </div>
         </div>

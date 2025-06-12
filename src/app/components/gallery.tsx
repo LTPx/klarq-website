@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { PublicationsWp } from "../_interfaces/wordpress-components";
 import { getProxyImageUrl } from "@/utils/image_proxy";
+import Link from "next/link";
 
 interface GalleryProps {
   publication: PublicationsWp[];
@@ -260,9 +261,20 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
         style={{ minHeight: "54px" }}
       >
         <div className="w-[250px] lg:w-auto">
-          <h2 className=" uppercase text-[16px] leading-[22px]">
-            {publication[selectedIndex % baseLength]?.title}
-          </h2>
+          {publication[selectedIndex % baseLength]?.url ? (
+            <Link
+              target="_blank"
+              href={publication[selectedIndex % baseLength]?.url}
+            >
+              <h2 className=" uppercase text-[16px] leading-[22px]">
+                {publication[selectedIndex % baseLength]?.title}
+              </h2>
+            </Link>
+          ) : (
+            <h2 className=" uppercase text-[16px] leading-[22px]">
+              {publication[selectedIndex % baseLength]?.title}
+            </h2>
+          )}
           <p className="uppercase text-[16px] leading-[22px]">
             {publication[selectedIndex % baseLength]?.sub_title}
           </p>

@@ -3,10 +3,10 @@
     "title": "Hello world!"
   },
   "header": {
-    "architecture": "Arquitectura",
-    "decor": "Decoración",
-    "development": "Desarrollo",
-    "shop": "Comercio"
+    "architecture": "Architecture",
+    "decor": "Decor",
+    "development": "Development",
+    "shop": "Shop"
   },
   "menu": {
     "publications": "Publicaciones",
@@ -22,6 +22,9 @@
     "title": "Contacta con nosotros:",
     "follow": "Síguenos en Instagram:",
     "architecture": "Arquitectura",
+    "social_architecture": "@klarq.arch",
+    "social_decor": "@klarq.decor",
+    "social_development": "@klarq.dev",
     "decor": "Decoración",
     "development": "Desarrollo",
     "cookies-policy": "Política de cookies",

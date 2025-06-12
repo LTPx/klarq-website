@@ -75,40 +75,40 @@ export function DesktopMenu(props: Props) {
                   className="h-[33px] text-[16px] leading-[15px]"
                   href="https://instagram.com"
                 >
-                  {t("footer.architecture")}
+                  {t("footer.social_architecture")}
                 </HoverFillButton>
                 <HoverFillButton
                   className="h-[33px] text-[16px] leading-[15px]"
                   href="https://instagram.com"
                 >
-                  {t("footer.decor")}
+                  {t("footer.social_decor")}
                 </HoverFillButton>
               </div>
               <HoverFillButton
                 className="hidden lg:flex h-[33px] text-[16px] leading-[15px]"
                 href="https://instagram.com"
               >
-                {t("footer.architecture")}
+                {t("footer.social_architecture")}
               </HoverFillButton>
               <HoverFillButton
                 className="hidden lg:flex h-[33px] text-[16px] leading-[15px]"
                 href="https://instagram.com"
               >
-                {t("footer.decor")}
+                {t("footer.social_decor")}
               </HoverFillButton>
               <div className="flex justify-center lg:hidden">
                 <HoverFillButton
                   className="h-[33px] text-[16px] leading-[15px]"
                   href="https://instagram.com"
                 >
-                  {t("footer.development")}
+                  {t("footer.social_development")}
                 </HoverFillButton>
               </div>
               <HoverFillButton
                 className="hidden lg:flex h-[33px] text-[16px] leading-[15px]"
                 href="https://instagram.com"
               >
-                {t("footer.development")}
+                {t("footer.social_development")}
               </HoverFillButton>
             </div>
           </div>

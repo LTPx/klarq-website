@@ -29,7 +29,7 @@ export function Footer() {
     (pathname === "/es/architecture" && !isMobile) ||
     (pathname === "/es/development" && !isMobile) ||
     pathname === "/en/architecture" ||
-    pathname === "/es/decor" && !isMobile && !isExpandedReady
+    (pathname === "/es/decor" && !isMobile && !isExpandedReady);
 
   if (noShowFooter) {
     return null;
@@ -40,16 +40,16 @@ export function Footer() {
       <footer
         className={`flex flex-col lg:gap-[35px] bg-gray pt-[20px] lg:pt-[50px] px-[15px] lg:px-[40px] pb-[50px]`}
       >
-        <label className="hidden lg:block text-[26px] leading-[24px] lg:leading-[45px]">
-          {`${t("footer.title")}`}
-        </label>
-        <label className="text-[26px] leading-[24px] lg:leading-[45px]">
-          Contacta <br/>
+        <label className="lg:hidden hidden text-[26px] leading-[24px] lg:leading-[45px]">
+          Contacta <br />
           con nosotros:
         </label>
-        <div className="pt-[24px] lg:pt-[0px] grid grid-rows gap-[7px] lg:gap-[0px] lg:grid-cols-3">
-          <div className="col-span-1">
+        <div className="pt-[24px] lg:pt-[0px] grid grid-rows gap-[7px] lg:gap-[0px] lg:grid-cols-10">
+          <div className="col-span-3">
             <div className="flex flex-col">
+              <label className="hidden lg:block pb-[35px] text-[26px] leading-[24px] lg:leading-[45px]">
+                {`${t("footer.title")}`}
+              </label>
               <p className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px]">
                 C/ Vicent Serra i Orvay, 49
                 <br className="hidden lg:block" />
@@ -96,29 +96,25 @@ export function Footer() {
               </HoverFillButton>
             </div>
           </div>
-          <div className="hidden lg:flex col-span-1  flex-col justify-end gap-[40px]">
+          <div className="hidden lg:flex col-span-4  flex-col justify-end gap-[40px]">
             <span className="text-[16px] leading-[22px]">
               {`${t("footer.follow")}`}
             </span>
             <div className="flex gap-[15px]">
               <HoverFillButton href="https://instagram.com">
-                {t("footer.architecture")}
+                {t("footer.social_architecture")}
               </HoverFillButton>
               <HoverFillButton href="https://instagram.com">
-                {t("footer.decor")}
+                {t("footer.social_decor")}
               </HoverFillButton>
               <HoverFillButton href="https://instagram.com">
-                {t("footer.development")}
+                {t("footer.social_development")}
               </HoverFillButton>
             </div>
           </div>
-          <div className="pt-[50px] lg:pt-[0px] col-span-1 lg:grid grid-cols-5">
-            <div className="col-span-1"></div>
+          <div className="pt-[50px] lg:pt-[0px] col-span-3 flex justify-end">
             <div className="col-span-3 flex flex-col justify-end gap-[15px]">
-              <img
-                className="h-[30px] w-[166.18px]"
-                src="/images/logo-footer.svg"
-              />
+              <img className="h-full w-full" src="/images/logo-footer.svg" />
               <div className="flex flex-col">
                 <div className="flex gap-[5px]">
                   <Link className="text-[16px] leading-[22px]" href={"/"}>
@@ -134,7 +130,6 @@ export function Footer() {
                 </Link>
               </div>
             </div>
-            <div className="col-span-1"></div>
           </div>
         </div>
       </footer>
