@@ -99,6 +99,31 @@ function DecorPage({ decor_information }: Props) {
     };
   }, [isExpanded, isMobile]);
 
+  useEffect(() => {
+    if (!isExpanded || isMobile) return;
+
+    let lastScrollY = window.scrollY;
+
+    function onScroll() {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY <= 50 && currentScrollY < lastScrollY) {
+        setIsExpanded(false);
+        setProgress(1);
+        document.body.style.overflow = "hidden";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      lastScrollY = currentScrollY;
+    }
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [isExpanded, isMobile]);
+
   const projectKeys = [
     "kitchen_projects",
     "rooms_projects",

@@ -26,6 +26,7 @@ function DevelopmentPage({ projects, information }: Props) {
   const [allowScroll, setAllowScroll] = useState(false);
   const ignoreNextScroll = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
+  const firstProjectRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -53,6 +54,10 @@ function DevelopmentPage({ projects, information }: Props) {
       },
       { threshold: 0.6 }
     );
+
+    if (firstProjectRef.current) {
+      observer.observe(firstProjectRef.current);
+    }
 
     sectionRefs.current.forEach((ref) => {
       if (ref) observer.observe(ref);
@@ -141,6 +146,24 @@ function DevelopmentPage({ projects, information }: Props) {
     };
   }, [isExpanded, isMobile]);
 
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || !isExpanded || isMobile) return;
+
+    const handleScrollUpToTop = () => {
+      if (container.scrollTop <= 0) {
+        setIsExpanded(false);
+        setProgress(1);
+        setAllowScroll(false);
+        document.body.style.overflow = "hidden";
+      }
+    };
+    container.addEventListener("scroll", handleScrollUpToTop);
+    return () => {
+      container.removeEventListener("scroll", handleScrollUpToTop);
+    };
+  }, [isExpanded, isMobile]);
+
   const restProjectsMarginTop = isExpanded ? "-50vh" : "0";
 
   return (
@@ -168,19 +191,19 @@ function DevelopmentPage({ projects, information }: Props) {
             </div>
           </div>
         )}
-
-        <CoverDynamic
-          img={getProxyImageUrl(
-            firstProject.project.acf.development_projects.cover_project.url
-          )}
-          information={information}
-          labelTitle="Development"
-          linkSlug={`/development/${firstProject.project.slug}`}
-          progress={progress}
-          isMobile={isMobile}
-          title={firstProject.project.acf.development_projects.title_project}
-        />
-
+        <div ref={firstProjectRef} data-index={0}>
+          <CoverDynamic
+            img={getProxyImageUrl(
+              firstProject.project.acf.development_projects.cover_project.url
+            )}
+            information={information}
+            labelTitle="Development"
+            linkSlug={`/development/${firstProject.project.slug}`}
+            progress={progress}
+            isMobile={isMobile}
+            title={firstProject.project.acf.development_projects.title_project}
+          />
+        </div>
         <div
           className="lg:block flex flex-col gap-[3px]"
           style={
