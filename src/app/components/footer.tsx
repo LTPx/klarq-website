@@ -29,7 +29,7 @@ export function Footer() {
     (pathname === "/es/architecture" && !isMobile) ||
     (pathname === "/es/development" && !isMobile) ||
     pathname === "/en/architecture" ||
-    (pathname === "/es/decor" && !isExpandedReady);
+    pathname === "/es/decor" && !isMobile && !isExpandedReady
 
   if (noShowFooter) {
     return null;
@@ -40,8 +40,12 @@ export function Footer() {
       <footer
         className={`flex flex-col lg:gap-[35px] bg-gray pt-[20px] lg:pt-[50px] px-[15px] lg:px-[40px] pb-[50px]`}
       >
-        <label className="text-[26px] leading-[24px] lg:leading-[45px]">
+        <label className="hidden lg:block text-[26px] leading-[24px] lg:leading-[45px]">
           {`${t("footer.title")}`}
+        </label>
+        <label className="text-[26px] leading-[24px] lg:leading-[45px]">
+          Contacta <br/>
+          con nosotros:
         </label>
         <div className="pt-[24px] lg:pt-[0px] grid grid-rows gap-[7px] lg:gap-[0px] lg:grid-cols-3">
           <div className="col-span-1">

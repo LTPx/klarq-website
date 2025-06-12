@@ -4,18 +4,20 @@ import { ImageAcf } from "../_interfaces/wordpress-page";
 import GalleryImagesScroll from "./gallery-images-scroll";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
   title: string;
   date?: string;
   description: string;
   images: ImageAcf[];
-  // url?: string;
 }
 
 function DecorProjects(props: Props) {
   const { title, description, images, date } = props;
+
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     AOS.init({
@@ -26,6 +28,8 @@ function DecorProjects(props: Props) {
     });
   }, []);
 
+  const toggleExpanded = () => setIsExpanded(!isExpanded);
+
   return (
     <div className="DecorProjects w-full">
       <GalleryImagesScroll
@@ -34,16 +38,38 @@ function DecorProjects(props: Props) {
         images={images}
       />
       <div className="grid gap-[30px] lg:gap-[0px] grid-cols-1 lg:grid-cols-2 pt-[25px]">
-        <div className="flex pr-[15px] lg:pr-[0px] lg:flex-col lg:justify-start justify-between flex-row">
-          {/* <Link href={url || ""}> */}
-          <h2 className="text-[18px] leading-[22px]">{title}</h2>
-          {/* </Link> */}
-          <span className="text-[18px] leading-[22px]">{date}</span>
+        <div className="flex pr-[15px] lg:pr-[0px] flex-col lg:justify-start justify-between flex-row">
+          <div className="flex items-center justify-between w-full">
+            <h2 className="text-[16px] lg:text-[18px] leading-[22px]">{title}</h2>
+            <button
+              onClick={toggleExpanded}
+              className="lg:hidden text-[24px] font-bold"
+              aria-label="Toggle Description"
+            >
+              {isExpanded ? "−" : "+"}
+            </button>
+          </div>
+          <span className="text-[16px] lg:text-[18px] leading-[22px]">{date}</span>
         </div>
         <div
-          className="designer-description pr-[15px] lg:pr-[50px]"
+          className="hidden lg:block designer-description pr-[15px] lg:pr-[50px]"
           dangerouslySetInnerHTML={{ __html: description }}
         />
+        <div className="lg:hidden col-span-1">
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                key="mobile-description"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="designer-description pr-[15px] pt-2"
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

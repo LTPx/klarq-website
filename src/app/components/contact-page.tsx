@@ -2,20 +2,28 @@
 
 import { useEffect, useRef, useState } from "react";
 import CoverDynamic from "./cover-dynamic";
-import { DecorPageWp } from "../_interfaces/wordpress-components";
+import {
+  ContactPageWp,
+  DecorPageWp,
+} from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import CoverDynamicMobile from "./cover-mobile";
+import HoverButton from "./hover-fill-btn";
+import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
 
 interface Props {
-  decor_information: DecorPageWp;
+  contact_information: ContactPageWp;
 }
 
-function DecorPage({ decor_information }: Props) {
+function ContactPage({ contact_information }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const t = useTranslations();
 
   useEffect(() => {
     AOS.init({
@@ -99,71 +107,53 @@ function DecorPage({ decor_information }: Props) {
     };
   }, [isExpanded, isMobile]);
 
-  const projectKeys = [
-    "kitchen_projects",
-    "rooms_projects",
-    "furniture_projects",
-    "textiles_projects",
-    "materials_projects",
-  ] as const;
-
-  const categories: CategoryWithProjects[] = projectKeys
-    .map((key) => {
-      const projectData = decor_information.page_content[key];
-      if (!projectData?.category?.name) return null;
-
-      const allProjects = Array.isArray(projectData.category_project)
-        ? projectData.category_project
-            .map((categoryProject) => categoryProject.project_category || [])
-            .flat()
-        : [];
-
-      const introduction = Array.isArray(projectData.category_introduction)
-        ? projectData.category_introduction
-        : [];
-
-      return {
-        name: projectData.category.name,
-        projects: allProjects,
-        introduction,
-      } as CategoryWithProjects;
-    })
-    .filter((item): item is CategoryWithProjects => item !== null);
-
-  const restProjectsMarginTop = isExpanded ? "-50vh" : "0";
-
   return (
-    <div>
-      <div className="DecorPage">
-        <CoverDynamic
-          img={getProxyImageUrl(decor_information.cover.url)}
-          information={decor_information.information}
-          labelTitle="Decor"
-          progress={progress}
-          isMobile={isMobile}
-        />
-      </div>
-      {isExpanded && (
-        <section
-          className="pt-[60px] pb-[100px] lg:py-[200px]"
-          style={
-            isMobile
-              ? {
-                  marginTop: restProjectsMarginTop,
-                  transition: "margin-top 0.5s ease",
-                }
-              : {}
-          }
-        >
-          <CallToAction
-            categories={categories}
-            title={decor_information.page_content.title_banner}
-            defaultProjects={decor_information.page_content.projects_decor}
+    <>
+      <Link className="cursor-pointer" href="/">
+        <div className="cursor-pointer fixed top-[10px] left-[15px] z-[1000]">
+          <label className="uppercase tracking-[-0.02em] font-zoom cursor-pointer text-[38px] leading-[38px]">
+            KLARQ <br /> Contact
+          </label>
+        </div>
+      </Link>
+      <CoverDynamicMobile
+        img={getProxyImageUrl(contact_information.cover.url)}
+        labelTitle={"CONTACTO"}
+        progress={progress}
+      >
+        <div className="w-full relative bg-green lg:w-1/2 h-full flex flex-col gap-[16px] justify-center items-center">
+          {/* <div className="bg-green w-full" style={{ minHeight: 87 }} /> */}
+          <div
+            className="contact-information"
+            dangerouslySetInnerHTML={{
+              __html: contact_information.description,
+            }}
           />
-        </section>
-      )}
-    </div>
+          <div className="flex flex-col">
+            <br />
+            <p className="text-center text-[16px] leading-[22px] ">
+              Síguenos en Instagram:
+            </p>
+          </div>
+          <div className="flex flex-col justify-center items-center gap-[15px]">
+            <div className="flex gap-[10px]">
+              <HoverButton href="https://instagram.com">
+                {t("footer.architecture")}
+              </HoverButton>
+              <HoverButton href="https://instagram.com">
+                {t("footer.decor")}
+              </HoverButton>
+            </div>
+            <div>
+              <HoverButton href="https://instagram.com">
+                {t("footer.development")}
+              </HoverButton>
+            </div>
+          </div>
+        </div>
+      </CoverDynamicMobile>
+    </>
   );
 }
 
-export default DecorPage;
+export default ContactPage;

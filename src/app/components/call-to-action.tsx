@@ -144,7 +144,7 @@ function CallToAction(props: Props) {
           />
         </section>
       ) : (
-        <section className="pt-[200px] pl-[15px] lg:pl-[40px] flex flex-col gap-[180px] pb-[130px]">
+        <section className="pt-[65px] lg:pt-[200px] pl-[15px] lg:pl-[40px] flex flex-col gap-[50px] lg:gap-[180px] lg:pb-[130px]">
           {defaultProjects?.map((decor, index) => (
             <div key={index}>
               <DecorProjects
