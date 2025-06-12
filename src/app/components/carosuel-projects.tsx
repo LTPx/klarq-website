@@ -203,15 +203,15 @@ export function CarouselProjects(props: CarouselProjectsProps) {
   return shouldShowSlider ? (
     <Slider {...settings}>
       {React.Children.map(children, (child, index) => (
-        <div data-aos="fade-up" className="pr-[10px] lg:pr-[15px]" key={index}>
+        <div className="pr-[10px] lg:pr-[15px]" key={index}>
           {child}
         </div>
       ))}
     </Slider>
   ) : (
-    <div className={`grid grid-cols-${slidesNumber} gap-[5px]`}>
+    <div className={`grid grid-cols-3 gap-[5px]`}>
       {React.Children.map(children, (child, index) => (
-        <div data-aos="fade-up" key={index} className="col-span-1">
+        <div  key={index} className="col-span-1">
           {child}
         </div>
       ))}
