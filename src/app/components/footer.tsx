@@ -28,8 +28,7 @@ export function Footer() {
     pathname?.includes("/contact") ||
     (pathname === "/es/architecture" && !isMobile) ||
     (pathname === "/es/development" && !isMobile) ||
-    pathname === "/en/architecture" ||
-    (pathname === "/es/decor" && !isMobile && !isExpandedReady);
+    pathname === "/en/architecture";
 
   if (noShowFooter) {
     return null;
