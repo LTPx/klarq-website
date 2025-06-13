@@ -36,48 +36,44 @@ function ContactPage({ contact_information }: Props) {
   }, []);
 
   useEffect(() => {
-    function onWheel(e: WheelEvent) {
-      if (isMobile) return;
-
-      e.preventDefault();
-      setProgress((prev) => {
-        let next = prev + e.deltaY * 0.001;
-        return Math.min(1, Math.max(0, next));
-      });
-    }
-
-    const handleMobileScroll = (e: WheelEvent | TouchEvent) => {
+    let touchStartY = 0;
+  
+    const onTouchStart = (e: TouchEvent) => {
       if (!isMobile) return;
-
+      touchStartY = e.touches[0].clientY;
+    };
+  
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isMobile) return;
+  
       e.preventDefault();
-      const deltaY = (e as WheelEvent).deltaY || 5;
+  
+      const touchCurrentY = e.touches[0].clientY;
+      const deltaY = touchStartY - touchCurrentY; // positivo si se desliza hacia arriba
+  
       setProgress((prev) => {
         let next = prev + deltaY * 0.005;
-        return Math.min(1, Math.max(0, next));
+        if (next > 1) next = 1;
+        if (next < 0) next = 0;
+        return next;
       });
+  
+      touchStartY = touchCurrentY; // actualizar para el próximo movimiento
     };
-
+  
     if (isMobile) {
-      window.addEventListener("wheel", handleMobileScroll, { passive: false });
-      window.addEventListener("touchmove", handleMobileScroll, {
-        passive: false,
-      });
-    } else {
-      window.addEventListener("wheel", onWheel, { passive: false });
+      window.addEventListener("touchstart", onTouchStart, { passive: false });
+      window.addEventListener("touchmove", onTouchMove, { passive: false });
     }
-
-    document.body.style.overflow = "hidden";
-
+  
     return () => {
       if (isMobile) {
-        window.removeEventListener("wheel", handleMobileScroll);
-        window.removeEventListener("touchmove", handleMobileScroll);
-      } else {
-        window.removeEventListener("wheel", onWheel);
+        window.removeEventListener("touchstart", onTouchStart);
+        window.removeEventListener("touchmove", onTouchMove);
       }
-      document.body.style.overflow = "";
     };
   }, [isMobile]);
+  
 
   return (
     <>
