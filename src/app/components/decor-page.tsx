@@ -18,6 +18,10 @@ function DecorPage({ decor_information }: Props) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     AOS.init({
       duration: 1000,
       easing: "ease-out",

@@ -1,12 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import CoverDynamic from "./cover-dynamic";
-import {
-  ContactPageWp,
-  DecorPageWp,
-} from "../_interfaces/wordpress-components";
-import CallToAction, { CategoryWithProjects } from "./call-to-action";
+import { useEffect, useState } from "react";
+import { ContactPageWp } from "../_interfaces/wordpress-components";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -20,7 +15,6 @@ interface Props {
 }
 
 function ContactPage({ contact_information }: Props) {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const t = useTranslations();
@@ -42,20 +36,12 @@ function ContactPage({ contact_information }: Props) {
   }, []);
 
   useEffect(() => {
-    let releaseTimeout: NodeJS.Timeout;
-
     function onWheel(e: WheelEvent) {
       if (isMobile) return;
 
       e.preventDefault();
-
       setProgress((prev) => {
         let next = prev + e.deltaY * 0.001;
-
-        if (next >= 1) {
-          setIsExpanded(true);
-          return 1;
-        }
         return Math.min(1, Math.max(0, next));
       });
     }
@@ -65,35 +51,22 @@ function ContactPage({ contact_information }: Props) {
 
       e.preventDefault();
       const deltaY = (e as WheelEvent).deltaY || 5;
-
       setProgress((prev) => {
         let next = prev + deltaY * 0.005;
-
-        if (next >= 1) {
-          setIsExpanded(true);
-          return 1;
-        }
         return Math.min(1, Math.max(0, next));
       });
     };
 
-    if (!isExpanded) {
-      if (isMobile) {
-        window.addEventListener("wheel", handleMobileScroll, {
-          passive: false,
-        });
-        window.addEventListener("touchmove", handleMobileScroll, {
-          passive: false,
-        });
-      } else {
-        window.addEventListener("wheel", onWheel, { passive: false });
-      }
-      document.body.style.overflow = "hidden";
+    if (isMobile) {
+      window.addEventListener("wheel", handleMobileScroll, { passive: false });
+      window.addEventListener("touchmove", handleMobileScroll, {
+        passive: false,
+      });
     } else {
-      releaseTimeout = setTimeout(() => {
-        document.body.style.overflow = "";
-      }, 700);
+      window.addEventListener("wheel", onWheel, { passive: false });
     }
+
+    document.body.style.overflow = "hidden";
 
     return () => {
       if (isMobile) {
@@ -102,10 +75,9 @@ function ContactPage({ contact_information }: Props) {
       } else {
         window.removeEventListener("wheel", onWheel);
       }
-      clearTimeout(releaseTimeout);
       document.body.style.overflow = "";
     };
-  }, [isExpanded, isMobile]);
+  }, [isMobile]);
 
   return (
     <>
