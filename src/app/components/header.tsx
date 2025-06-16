@@ -63,7 +63,7 @@ export function Header({
       <img
         className="cursor-pointer"
         onClick={handleContactClick}
-        src={showMenu ? "/images/close-menu.svg" : "/images/logo-menu.svg"}
+        src={showMenu ? "/images/close-header-menu.svg" : "/images/logo-menu.svg"}
         alt={showMenu ? "Cerrar menú" : "Abrir menú"}
       />
 

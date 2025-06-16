@@ -28,7 +28,7 @@ export default function HoverFillButton({
       href={href}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setHovered(false)}
-      className={`relative group overflow-hidden inline-flex items-center capitalize lg:text-[16px] lg:leading-[15px] rounded-[50px] border border-black border-[0.75px] lg:h-[33px] px-[20px] text-black ${className}`}
+      className={`relative group overflow-hidden inline-flex items-center lg:text-[16px] lg:leading-[15px] rounded-[50px] border border-black border-[0.75px] lg:h-[33px] px-[20px] text-black ${className}`}
     >
       <span
         className={`absolute inset-0 rounded-[50px] bg-black z-0 transition-transform duration-700 ease-in-out ${
