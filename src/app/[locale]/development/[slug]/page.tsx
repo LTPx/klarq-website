@@ -28,10 +28,12 @@ export async function generateMetadata({
       title: seo_title,
       description: seo_desc,
       alternates: {
-        canonical: seo_canonical || `${origin}/${locale}`,
+        canonical: seo_canonical
+          ? seo_canonical
+          : `${origin}/${locale}/development/${slug}`,
         languages: {
-          en: `${origin}/en`,
-          es: `${origin}/es`,
+          en: `${origin}/en/${slug}`,
+          es: `${origin}/es/${slug}`,
         },
       },
       openGraph: {
