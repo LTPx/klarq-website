@@ -17,10 +17,10 @@ export async function generateMetadata({
       title: seo_title,
       description: seo_desc,
       alternates: {
-        canonical: seo_canonical || `${origin}/${locale}`,
+        canonical: seo_canonical || `${origin}/${locale}/decor`,
         languages: {
-          en: `${origin}/en`,
-          es: `${origin}/es`,
+          en: `${origin}/en/decor`,
+          es: `${origin}/es/decor`,
         },
       },
       openGraph: {
