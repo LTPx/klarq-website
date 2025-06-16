@@ -35,10 +35,18 @@ export interface WordPressFrontendPage {
   featured_media: number;
   template: string;
   parent: number;
+  yoast_seo: YoastSeoData;
   yoast_head: string;
   yoast_head_json: YoastHeadJSON;
   _links: Links;
   acf: AcfComponents;
+}
+
+export interface YoastSeoData {
+  seo_title: string,
+  seo_desc: string,
+  seo_keywords: string[],
+  seo_canonical: string
 }
 
 export interface AcfComponents {
