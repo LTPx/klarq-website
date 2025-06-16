@@ -1,6 +1,5 @@
 import { getChildPages, getWordPressCustomPage } from "@/app/_services/api";
-import Cover from "@/app/components/cover-pages";
-import DecorPage from "@/app/components/decor-page";
+import DecorWrapper from "@/app/components/decor-wrapper";
 
 async function Decor(nextParams: { params: { locale: "en" | "es" | "de" } }) {
   const {
@@ -15,13 +14,10 @@ async function Decor(nextParams: { params: { locale: "en" | "es" | "de" } }) {
 
   return (
     <div className="decor">
-      <DecorPage decor_information={decor_information} />
+      <DecorWrapper decor_information={decor_information} />
     </div>
   );
 }
 
 export default Decor;
 
-function isDefined<T>(value: T | undefined): value is T {
-  return value !== undefined;
-}

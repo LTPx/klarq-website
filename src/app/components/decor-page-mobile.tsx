@@ -1,63 +1,50 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
+import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
 import { getProxyImageUrl } from "@/utils/image_proxy";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import DesktopCover from "./cover-desktop";
 
 interface Props {
   decor_information: DecorPageWp;
 }
 
-function DecorPage({ decor_information }: Props) {
-  const [state, setState] = useState({ progress: 0, isExpanded: false });
-  const ticking = useRef(false);
+function DecorPageMobile({ decor_information }: Props) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    AOS.init({ duration: 1000, easing: "ease-out", offset: 80, once: false });
-  }, []);
-
-  useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
 
-    function onWheel(e: WheelEvent) {
+    function handleMobileScroll(e: WheelEvent | TouchEvent) {
       e.preventDefault();
 
-      if (ticking.current) return;
+      const deltaY = (e as WheelEvent).deltaY || 5;
 
-      ticking.current = true;
+      setProgress((prev) => {
+        let next = prev + deltaY * 0.005;
 
-      requestAnimationFrame(() => {
-        setState((prev) => {
-          let progress = Math.max(
-            0,
-            Math.min(1, prev.progress + e.deltaY * 0.0005)
-          );
-
-          return {
-            progress,
-            isExpanded: progress >= 1,
-          };
-        });
-        ticking.current = false;
+        if (next >= 1) {
+          setIsExpanded(true);
+          return 1;
+        }
+        return Math.min(1, Math.max(0, next));
       });
     }
 
-    if (!state.isExpanded) {
-      window.addEventListener("wheel", onWheel, { passive: false });
+    if (!isExpanded) {
+      window.addEventListener("wheel", handleMobileScroll, {
+        passive: false,
+      });
+      window.addEventListener("touchmove", handleMobileScroll, {
+        passive: false,
+      });
       document.body.style.overflow = "hidden";
-
-      return () => {
-        window.removeEventListener("wheel", onWheel);
-        document.body.style.overflow = "";
-      };
     } else {
       releaseTimeout = setTimeout(() => {
         document.body.style.overflow = "";
@@ -65,39 +52,12 @@ function DecorPage({ decor_information }: Props) {
     }
 
     return () => {
+      window.removeEventListener("wheel", handleMobileScroll);
+      window.removeEventListener("touchmove", handleMobileScroll);
       clearTimeout(releaseTimeout);
       document.body.style.overflow = "";
     };
-  }, [state.isExpanded]);
-
-  useEffect(() => {
-    if (!state.isExpanded) return;
-
-    let lastScrollY = window.scrollY;
-
-    function onScroll() {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY <= 50 && currentScrollY < lastScrollY) {
-        setState((prev) => ({
-          progress: 1,
-          isExpanded: false,
-        }));
-
-        document.body.style.overflow = "hidden";
-
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-
-      lastScrollY = currentScrollY;
-    }
-
-    window.addEventListener("scroll", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [state.isExpanded]);
+  }, [isExpanded]);
 
   const projectKeys = [
     "kitchen_projects",
@@ -132,16 +92,15 @@ function DecorPage({ decor_information }: Props) {
 
   return (
     <div>
-      <div className="DecorPage">
-        <DesktopCover
+      <div className="DecorPageMobile">
+        <MobileCover
           img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
           labelTitle="Decor"
-          progress={state.progress}
         />
       </div>
-      {state.isExpanded && (
-        <section className="pt-[60px] pb-[100px] lg:py-[200px]">
+      {isExpanded && (
+        <section className="pt-[60px] pb-[100px]">
           <CallToAction
             categories={categories}
             title={decor_information.page_content.title_banner}
@@ -153,4 +112,4 @@ function DecorPage({ decor_information }: Props) {
   );
 }
 
-export default DecorPage;
+export default DecorPageMobile;
