@@ -45,7 +45,7 @@ function DecorPageMobile({ decor_information }: Props) {
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
-  }, []);
+  }, [isExpanded]);
 
   const projectKeys = [
     "kitchen_projects",
@@ -78,23 +78,35 @@ function DecorPageMobile({ decor_information }: Props) {
     })
     .filter((item): item is CategoryWithProjects => item !== null);
 
+  const marginTop = isExpanded ? "0" : "85vh";
+
   return (
     <div>
-      <div className="relative DecorPageMobile">
+      <div className="DecorPageMobile">
         <MobileCover
-          img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
           labelTitle="Decor"
           progress={progress}
         />
       </div>
-        <section className="pt-[60px] pb-[100px]">
+      <div
+        style={{
+          marginTop: marginTop,
+          transition: "margin-top 0.5s ease",
+        }}
+      >
+        <img
+          src={getProxyImageUrl(decor_information.cover.url)}
+          className="h-50vh w-full object-cover"
+        />
+        <div className="pt-[60px] pb-[100px]">
           <CallToAction
             categories={categories}
             title={decor_information.page_content.title_banner}
             defaultProjects={decor_information.page_content.projects_decor}
           />
-        </section>
+        </div>
+      </div>
     </div>
   );
 }
