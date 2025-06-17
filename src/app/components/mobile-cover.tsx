@@ -4,23 +4,32 @@ import { motion } from "framer-motion";
 import { Link } from "@/navigation";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import { InformationWp } from "../_interfaces/wordpress-components";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface Props {
   information: InformationWp;
   labelTitle: string;
   title?: string;
   progress: number;
+  img: string;
 }
 
 export default function MobileCover({
+  img,
   information,
   labelTitle,
   title,
   progress,
 }: Props) {
-  
+  const [locked, setLocked] = useState(false);
+
+  useEffect(() => {
+    if (progress >= 0.5 && !locked) {
+      setLocked(true);
+    }
+  }, [progress, locked]);
   return (
+    <div className="relative w-full h-[100vh] bg-white overflow-hidden">
       <motion.div
         animate={{
           y: `-${progress * 100}%`,
@@ -41,5 +50,16 @@ export default function MobileCover({
           dangerouslySetInnerHTML={{ __html: information.description }}
         />
       </motion.div>
+      <motion.img
+        animate={{ y: locked ? "-100%" : "0%" }}
+        transition={{ ease: "easeInOut", duration: 0.6 }}
+        src={img}
+        alt="architecture-cover"
+        className="absolute bottom-0 left-0 w-full h-[50vh] object-cover z-0"
+        style={{
+          filter: "brightness(0.8)",
+        }}
+      />
+    </div>
   );
 }

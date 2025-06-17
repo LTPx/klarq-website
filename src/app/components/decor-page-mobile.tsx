@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
@@ -15,16 +15,13 @@ function DecorPageMobile({ decor_information }: Props) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    let touchStartY = 0;
+    let releaseTimeout: NodeJS.Timeout;
 
-    const onTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-    };
+    const handleScroll = (e: WheelEvent | TouchEvent) => {
+      if (isExpanded) return;
 
-    const onTouchMove = (e: TouchEvent) => {
       e.preventDefault();
-      const touchCurrentY = e.touches[0].clientY;
-      const deltaY = touchStartY - touchCurrentY;
+      const deltaY = (e as WheelEvent).deltaY || 5;
 
       setProgress((prev) => {
         let next = prev + deltaY * 0.005;
@@ -32,18 +29,25 @@ function DecorPageMobile({ decor_information }: Props) {
           setIsExpanded(true);
           return 1;
         }
-        return Math.max(0, Math.min(1, next));
+        return Math.min(1, Math.max(0, next));
       });
-
-      touchStartY = touchCurrentY;
     };
 
-    window.addEventListener("touchstart", onTouchStart, { passive: false });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("wheel", handleScroll, { passive: false });
+    window.addEventListener("touchmove", handleScroll, { passive: false });
+    document.body.style.overflow = "hidden";
+
+    if (isExpanded) {
+      releaseTimeout = setTimeout(() => {
+        document.body.style.overflow = "";
+      }, 700);
+    }
 
     return () => {
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("touchmove", handleScroll);
+      document.body.style.overflow = "";
+      clearTimeout(releaseTimeout);
     };
   }, [isExpanded]);
 
@@ -78,12 +82,13 @@ function DecorPageMobile({ decor_information }: Props) {
     })
     .filter((item): item is CategoryWithProjects => item !== null);
 
-  const marginTop = isExpanded ? "0" : "85vh";
+  const marginTop = isExpanded ? "-50vh" : "0";
 
   return (
     <div>
       <div className="DecorPageMobile">
         <MobileCover
+          img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
           labelTitle="Decor"
           progress={progress}
@@ -95,10 +100,6 @@ function DecorPageMobile({ decor_information }: Props) {
           transition: "margin-top 0.5s ease",
         }}
       >
-        <img
-          src={getProxyImageUrl(decor_information.cover.url)}
-          className="h-50vh w-full object-cover"
-        />
         <div className="pt-[60px] pb-[100px]">
           <CallToAction
             categories={categories}
