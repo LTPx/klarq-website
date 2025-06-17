@@ -11,49 +11,22 @@ interface Props {
   information: InformationWp;
   labelTitle: string;
   title?: string;
+  progress: number;
 }
 
-export default function MobileCover({ img, information, labelTitle, title }: Props) {
-  const [locked, setLocked] = React.useState(false);
-
-  React.useEffect(() => {
-    if (locked) return;
-    if (typeof window === "undefined") return;
-
-    setLocked(true);
-  }, [locked]);
-
+export default function MobileCover({
+  img,
+  information,
+  labelTitle,
+  title,
+  progress,
+}: Props) {
+  
   return (
     <div className="relative w-full h-[100vh] bg-white overflow-hidden">
-      <motion.img
-        animate={{ y: locked ? "-100%" : "0%" }}
-        transition={{ ease: "easeInOut", duration: 0.6 }}
-        src={img}
-        alt="architecture-cover"
-        className="absolute bottom-0 left-0 w-full h-[50vh] object-cover z-0"
-        style={{ filter: "brightness(0.8)" }}
-      />
-      <motion.div
-        animate={{ y: locked ? "-100%" : "0%" }}
-        transition={{ ease: "easeInOut", duration: 0.6 }}
-        className="absolute bottom-0 left-0 w-full h-[50vh] flex justify-center items-center z-20 px-4"
-      >
-        <h2 className="uppercase text-white text-center text-[14px] leading-[22px] tracking-[-0.02em]">
-          {title}
-        </h2>
-      </motion.div>
-      <Link className="cursor-pointer" href={"/"}>
-        <div className="cursor-pointer fixed top-[10px] left-[15px] mix-blend-difference text-white z-[1000]">
-          <label
-            className="uppercase tracking-[-0.02em] font-zoom cursor-pointer text-[38px] leading-[38px]"
-          >
-            KLARQ <br /> {labelTitle}
-          </label>
-        </div>
-      </Link>
       <motion.div
         animate={{
-          y: locked ? "-100%" : "0%",
+          y: `-${progress * 100}%`,
         }}
         transition={{ ease: "easeInOut", duration: 0.6 }}
         className="absolute flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[calc(100dvh-150px)] z-20 bg-white"

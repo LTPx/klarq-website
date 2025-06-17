@@ -19,31 +19,6 @@ const CoverDynamicMobile = ({
   progress,
   children,
 }: Props) => {
-  const titleMobileRef = useRef<HTMLLabelElement>(null);
-  const [titleMobileHeight, setTitleMobileHeight] = useState(0);
-
-  useEffect(() => {
-    const waitForFonts = async () => {
-      await document.fonts.ready;
-      requestAnimationFrame(() => {
-        if (titleMobileRef.current) {
-          setTitleMobileHeight(titleMobileRef.current.offsetHeight);
-        }
-      });
-    };
-    waitForFonts();
-  }, [labelTitle]);
-
-  useEffect(() => {
-    if (!titleMobileRef.current) return;
-    const observer = new ResizeObserver(() => {
-      if (titleMobileRef.current) {
-        setTitleMobileHeight(titleMobileRef.current.offsetHeight);
-      }
-    });
-    observer.observe(titleMobileRef.current);
-    return () => observer.disconnect();
-  }, [labelTitle]);
 
   return (
     <div className="relative w-full h-[100vh] bg-white overflow-hidden">

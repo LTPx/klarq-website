@@ -15,49 +15,37 @@ function DecorPageMobile({ decor_information }: Props) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    let touchStartY = 0;
 
-  useEffect(() => {
-    let releaseTimeout: NodeJS.Timeout;
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
 
-    function handleMobileScroll(e: WheelEvent | TouchEvent) {
+    const onTouchMove = (e: TouchEvent) => {
       e.preventDefault();
-
-      const deltaY = (e as WheelEvent).deltaY || 5;
+      const touchCurrentY = e.touches[0].clientY;
+      const deltaY = touchStartY - touchCurrentY;
 
       setProgress((prev) => {
         let next = prev + deltaY * 0.005;
-
         if (next >= 1) {
           setIsExpanded(true);
           return 1;
         }
-        return Math.min(1, Math.max(0, next));
+        return Math.max(0, Math.min(1, next));
       });
-    }
 
-    if (!isExpanded) {
-      window.addEventListener("wheel", handleMobileScroll, {
-        passive: false,
-      });
-      window.addEventListener("touchmove", handleMobileScroll, {
-        passive: false,
-      });
-      document.body.style.overflow = "hidden";
-    } else {
-      releaseTimeout = setTimeout(() => {
-        document.body.style.overflow = "";
-      }, 700);
-    }
+      touchStartY = touchCurrentY;
+    };
+
+    window.addEventListener("touchstart", onTouchStart, { passive: false });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
 
     return () => {
-      window.removeEventListener("wheel", handleMobileScroll);
-      window.removeEventListener("touchmove", handleMobileScroll);
-      clearTimeout(releaseTimeout);
-      document.body.style.overflow = "";
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
     };
-  }, [isExpanded]);
+  }, []);
 
   const projectKeys = [
     "kitchen_projects",
@@ -92,14 +80,14 @@ function DecorPageMobile({ decor_information }: Props) {
 
   return (
     <div>
-      <div className="DecorPageMobile">
+      <div className="relative DecorPageMobile">
         <MobileCover
           img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
           labelTitle="Decor"
+          progress={progress}
         />
       </div>
-      {isExpanded && (
         <section className="pt-[60px] pb-[100px]">
           <CallToAction
             categories={categories}
@@ -107,7 +95,6 @@ function DecorPageMobile({ decor_information }: Props) {
             defaultProjects={decor_information.page_content.projects_decor}
           />
         </section>
-      )}
     </div>
   );
 }

@@ -39,7 +39,7 @@ export function Footer() {
       <footer
         className={`flex flex-col lg:gap-[35px] bg-gray pt-[20px] lg:pt-[50px] px-[15px] lg:px-[40px] pb-[50px]`}
       >
-        <label className="lg:hidden hidden text-[26px] leading-[24px] lg:leading-[45px]">
+        <label className="lg:hidden text-[26px] leading-[24px] lg:leading-[45px]">
           Contacta <br />
           con nosotros:
         </label>
@@ -58,10 +58,11 @@ export function Footer() {
                 href={`mailto:info@klarq.eu`}
                 className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px]"
               >
-                info@klarq.eu
+                info@klarq.eu{" "}
+                <span className="lg:hidden">| +34 656 362 863</span>
               </Link>
               <Link
-                className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px] "
+                className="hidden lg:block text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px] "
                 href={`tel:+34656362863`}
               >
                 <p className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px] ">
