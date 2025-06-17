@@ -82,6 +82,11 @@ async function Decor(nextParams: { params: { locale: "en" | "es" | "de" } }) {
 
   return (
     <div className="decor">
+      <h1 className="sr-only">
+        {locale === "es"
+          ? "Decoración de Interiores: Creando espacios cálidos y funcionales"
+          : "Interior Design: Creating Warm and Functional Spaces"}
+      </h1>
       <DecorWrapper decor_information={decor_information} />
     </div>
   );

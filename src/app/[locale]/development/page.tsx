@@ -105,6 +105,16 @@ async function Development(nextParams: {
 
   return (
     <div className="architecture">
+      <h1 className="sr-only">
+        {locale === "es"
+          ? "Desarrollo Inmobiliario: Proyectos Sostenibles y Eficientes"
+          : "Real Estate Development: Sustainable and Efficient Projects"}
+      </h1>
+      {selectedProjects.map((project, index) => (
+        <h2 key={index} className="sr-only">
+          {project.title}
+        </h2>
+      ))}
       <DevelopmentPage
         information={development_information.information}
         projects={selectedProjects}

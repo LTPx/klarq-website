@@ -84,7 +84,14 @@ async function Publications(nextParams: {
   const { publications_information } = acf;
 
   return (
-    <PublicationsPage publications_information={publications_information} />
+    <>
+      <h1 className="sr-only">
+        {locale === "es"
+          ? "Arquitectos Passivhaus: Transformando espacios a través del Diseño e Interiorismo"
+          : "Passivhaus Architects: Transforming Spaces Through Design and Interior Design"}
+      </h1>
+      <PublicationsPage publications_information={publications_information} />
+    </>
   );
 }
 

@@ -266,9 +266,9 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
               target="_blank"
               href={publication[selectedIndex % baseLength]?.url}
             >
-              <h2 className=" uppercase text-[16px] leading-[22px]">
+              <span className=" uppercase text-[16px] leading-[22px]">
                 {publication[selectedIndex % baseLength]?.title}
-              </h2>
+              </span>
             </Link>
           ) : (
             <h2 className=" uppercase text-[16px] leading-[22px]">

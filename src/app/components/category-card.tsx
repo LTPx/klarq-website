@@ -48,9 +48,9 @@ function CategoryCard({
         className="w-full h-full object-cover transition-all duration-500 ease-in-out"
       />
       <div className="absolute inset-0 bg-black/20 z-[50]" />
-      <h1 className="font-zoom absolute left-[15px] lg:left-[50px] top-[10px] lg:top-[45px] text-white text-[18px] leading-[22px] tracking-[-0.02em] z-[100] flex items-center gap-2">
+      <label className="font-zoom absolute left-[15px] lg:left-[50px] top-[10px] lg:top-[45px] text-white text-[18px] leading-[22px] tracking-[-0.02em] z-[100] flex items-center gap-2">
         {title}
-      </h1>
+      </label>
       {isMobile && (
         <button
           onClick={(e) => {

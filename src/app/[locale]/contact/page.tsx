@@ -87,6 +87,11 @@ async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
       <div className="lg:hidden">
         <ContactPage contact_information={contact_information} />
       </div>
+      <h1 className="sr-only">
+        {locale === "es"
+          ? "Contáctanos: Arquitectos en Ibiza y Mallorca"
+          : "Contact us: Architects in Ibiza and Mallorca"}
+      </h1>
       <div className="hidden lg:flex lg:h-[calc(100dvh-50px)]">
         <Link className="cursor-pointer" href={"/"}>
           <div className="cursor-pointer fixed top-[40px] left-[35px] z-[1000]">

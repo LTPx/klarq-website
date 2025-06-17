@@ -71,7 +71,7 @@ export async function generateMetadata({
 }
 
 export default async function Page(nextParams: {
-  params: { locale: "en" | "es" | "de" };
+  params: { locale: "en" | "es" };
 }) {
   const {
     params: { locale },
@@ -82,5 +82,5 @@ export default async function Page(nextParams: {
   const { acf } = data;
   const { home_information } = acf;
 
-  return <Home homeInformation={home_information} />;
+  return <Home locale={locale} homeInformation={home_information} />;
 }

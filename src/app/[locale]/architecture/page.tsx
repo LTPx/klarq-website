@@ -104,6 +104,16 @@ async function Architecture(nextParams: {
 
   return (
     <div className="architecture">
+      <h1 className="sr-only">
+        {locale === "es"
+          ? "Innovación y sostenibilidad: Proyectos de Arquitectura Passivhaus"
+          : "Innovation and sustainability: Passivhaus architecture projects"}
+      </h1>
+      {selectedProjects.map((project, index) => (
+        <h2 key={index} className="sr-only">
+          {project.title}
+        </h2>
+      ))}
       <ArchitecturePage
         information={architecture_information.information}
         projects={selectedProjects}

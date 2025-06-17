@@ -185,9 +185,9 @@ function ArchitecturePage({ projects, information }: Props) {
                 isExpanded ? "opacity-100" : "opacity-0"
               }`}
             >
-              <h1 className="text-[18px] leading-[22px] tracking-[-0.02em]">
+              <span className="text-[18px] leading-[22px] tracking-[-0.02em]">
                 {currentTitle || firstProject.title}, {currentDate}
-              </h1>
+              </span>
             </div>
           </div>
         )}
@@ -242,9 +242,9 @@ function ArchitecturePage({ projects, information }: Props) {
                 <div className="absolute inset-0 bg-black/20 z-10" />
                 {isMobile && (
                   <div className="absolute inset-0 flex justify-center items-center z-20 px-4">
-                    <h2 className="uppercase text-white text-center text-[14px] leading-[22px] tracking-[-0.02em]">
+                    <span className="uppercase text-white text-center text-[14px] leading-[22px] tracking-[-0.02em]">
                       {item.title}
-                    </h2>
+                    </span>
                   </div>
                 )}
               </div>
