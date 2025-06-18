@@ -25,7 +25,6 @@ function DecorPageMobile({ decor_information }: Props) {
 
     const handleTouchMove = (e: TouchEvent) => {
       if (isExpanded) return;
-      e.preventDefault();
 
       const currentY = e.touches[0].clientY;
       const deltaY = startY - currentY;
@@ -38,13 +37,10 @@ function DecorPageMobile({ decor_information }: Props) {
         }
         return Math.min(1, Math.max(0, next));
       });
-
-      // No actualizar startY aquí => permite acumulación correcta
     };
 
     const handleWheel = (e: WheelEvent) => {
       if (isExpanded) return;
-      e.preventDefault();
 
       const deltaY = e.deltaY || 5;
 
@@ -122,7 +118,7 @@ function DecorPageMobile({ decor_information }: Props) {
     })
     .filter((item): item is CategoryWithProjects => item !== null);
 
-  const marginTop = isCoverHidden ? "-50vh" : "0";
+  const marginTop = isCoverHidden ? "-38vh" : "0";
 
   return (
     <div>

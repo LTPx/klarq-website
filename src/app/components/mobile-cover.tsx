@@ -30,13 +30,13 @@ export default function MobileCover({
   }, [progress, locked]);
 
   return (
-    <div className="relative w-full h-[100vh] bg-white">
+    <div className="relative w-full">
       <motion.div
         animate={{
           y: `-${progress * 100}%`,
         }}
         transition={{ ease: "easeInOut", duration: 0.6 }}
-        className="absolute flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[85dvh] z-20 bg-white"
+        className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[85dvh] z-20 bg-white"
       >
         <div className="w-full" style={{ minHeight: 87 }} />
         {information.image?.url && (
@@ -63,7 +63,7 @@ export default function MobileCover({
         transition={{ ease: "easeInOut", duration: 0.6 }}
         src={img}
         alt="architecture-cover"
-        className="absolute bottom-0 left-0 w-full h-[50vh] object-cover z-0"
+        className="absolute bottom-0 left-0 w-full top-[50dvh] h-[50vh] object-cover z-0"
         style={{
           filter: "brightness(0.8)",
         }}
