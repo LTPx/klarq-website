@@ -80,19 +80,19 @@ export function Footer() {
                 className="h-[25px] text-[12px] leading-[12px]"
                 href="https://instagram.com"
               >
-                Instagram
+                {t("footer.social_architecture")}
               </HoverFillButton>
               <HoverFillButton
                 className="h-[25px] text-[12px] leading-[12px]"
                 href="https://instagram.com"
               >
-                Facebook
+                {t("footer.social_decor")}
               </HoverFillButton>
               <HoverFillButton
                 className="h-[25px] text-[12px] leading-[12px]"
                 href="https://instagram.com"
               >
-                YouTube
+                {t("footer.social_development")}
               </HoverFillButton>
             </div>
           </div>
