@@ -28,7 +28,7 @@ export default function MobileCover({
       setLocked(true);
     }
   }, [progress, locked]);
-  
+
   return (
     <div className="relative w-full h-[100vh] bg-white overflow-hidden">
       <motion.div
@@ -44,7 +44,7 @@ export default function MobileCover({
             src={getProxyImageUrl(information.image.url)}
             alt="team"
             className="max-h-[30vh] w-auto max-w-full"
-            />
+          />
         )}
         <div
           className="text-base leading-relaxed text-black"

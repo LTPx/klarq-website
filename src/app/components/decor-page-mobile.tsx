@@ -17,11 +17,35 @@ function DecorPageMobile({ decor_information }: Props) {
 
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
+    let startY = 0;
   
-    const handleScroll = (e: WheelEvent) => {
+    const handleTouchStart = (e: TouchEvent) => {
+      startY = e.touches[0].clientY;
+    };
+  
+    const handleTouchMove = (e: TouchEvent) => {
       if (isExpanded) return;
-  
       e.preventDefault();
+  
+      const currentY = e.touches[0].clientY;
+      const deltaY = startY - currentY; // desplazamiento vertical (positivo al hacer scroll hacia arriba)
+  
+      setProgress((prev) => {
+        let next = prev + deltaY * 0.005;
+        if (next >= 1) {
+          setIsExpanded(true);
+          return 1;
+        }
+        return Math.min(1, Math.max(0, next));
+      });
+  
+      startY = currentY; // actualizar para siguiente movimiento
+    };
+  
+    const handleWheel = (e: WheelEvent) => {
+      if (isExpanded) return;
+      e.preventDefault();
+  
       const deltaY = e.deltaY || 5;
   
       setProgress((prev) => {
@@ -34,7 +58,10 @@ function DecorPageMobile({ decor_information }: Props) {
       });
     };
   
-    window.addEventListener("wheel", handleScroll, { passive: false });
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+  
     document.body.style.overflow = "hidden";
   
     if (isExpanded) {
@@ -44,18 +71,21 @@ function DecorPageMobile({ decor_information }: Props) {
     }
   
     return () => {
-      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
       document.body.style.overflow = "";
       clearTimeout(releaseTimeout);
     };
   }, [isExpanded]);
   
+
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     if (isExpanded) {
       timeout = setTimeout(() => {
         setIsCoverHidden(true);
-      }, 600); // igual a la duración de la animación en MobileCover
+      }, 600);
     } else {
       setIsCoverHidden(false);
     }
@@ -92,7 +122,7 @@ function DecorPageMobile({ decor_information }: Props) {
     })
     .filter((item): item is CategoryWithProjects => item !== null);
 
-const marginTop = isCoverHidden ? "-50vh" : "0";
+  const marginTop = isCoverHidden ? "-50vh" : "0";
 
   return (
     <div>
