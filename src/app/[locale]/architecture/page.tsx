@@ -1,5 +1,7 @@
 import { getChildPages, getWordPressCustomPage } from "@/app/_services/api";
+import ArchitectureDesktop from "@/app/components/architecture-desktop";
 import ArchitecturePage from "@/app/components/architecture-information-page";
+import ArchitectureWrapper from "@/app/components/architecture-wrapper";
 import { Metadata } from "next";
 
 export async function generateMetadata({
@@ -114,7 +116,7 @@ async function Architecture(nextParams: {
           {project.title}
         </h2>
       ))}
-      <ArchitecturePage
+      <ArchitectureWrapper
         information={architecture_information.information}
         projects={selectedProjects}
       />

@@ -1,6 +1,5 @@
 import { getChildPages, getWordPressCustomPage } from "@/app/_services/api";
-import ArchitecturePage from "@/app/components/architecture-information-page";
-import DevelopmentPage from "@/app/components/development-page";
+import DevelopmentWrapper from "@/app/components/development-wrapper";
 import { Metadata } from "next";
 
 export async function generateMetadata({
@@ -115,7 +114,7 @@ async function Development(nextParams: {
           {project.title}
         </h2>
       ))}
-      <DevelopmentPage
+      <DevelopmentWrapper
         information={development_information.information}
         projects={selectedProjects}
       />

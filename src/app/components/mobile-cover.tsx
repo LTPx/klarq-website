@@ -4,7 +4,7 @@ import { animate, motion, useMotionValue } from "framer-motion";
 import { Link } from "@/navigation";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import { InformationWp } from "../_interfaces/wordpress-components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
   information: InformationWp;
@@ -12,6 +12,7 @@ interface Props {
   title?: string;
   progress: number;
   img: string;
+  linkSlug?: string;
 }
 
 export default function MobileCover({
@@ -20,8 +21,10 @@ export default function MobileCover({
   labelTitle,
   title,
   progress,
+  linkSlug,
 }: Props) {
   const [locked, setLocked] = useState(false);
+  const titleMobileRef = useRef<HTMLLabelElement>(null);
 
   useEffect(() => {
     if (progress >= 1 && !locked) {
@@ -57,6 +60,34 @@ export default function MobileCover({
           dangerouslySetInnerHTML={{ __html: information.description }}
         />
       </motion.div>
+      {title && (
+        <motion.div
+          animate={{ y: locked ? "-100%" : "0%" }}
+          transition={{ ease: "easeInOut", duration: 0.6 }}
+          className="absolute left-0 w-full flex justify-center items-center z-20 px-4"
+          style={{
+            top: "calc(var(--vh, 1vh) * 50)",
+            height: "calc(var(--vh, 1vh) * 50)",
+          }}
+        >
+          {linkSlug ? (
+            <Link
+              className="flex items-center justify-center h-full w-full"
+              href={linkSlug}
+            >
+              <h2 className="uppercase text-white text-center text-[14px] leading-[22px] tracking-[-0.02em]">
+                {title}
+              </h2>
+            </Link>
+          ) : (
+            <div className="flex items-center justify-center h-full w-full">
+              <h2 className="uppercase text-white text-center text-[14px] leading-[22px] tracking-[-0.02em]">
+                {title}
+              </h2>
+            </div>
+          )}
+        </motion.div>
+      )}
       <Link href={"/"}>
         <div className="cursor-pointer fixed top-[10px] left-[15px] mix-blend-difference text-white z-[1000]">
           <label className="uppercase tracking-[-0.02em] font-zoom cursor-pointer text-[38px] leading-[38px]">
