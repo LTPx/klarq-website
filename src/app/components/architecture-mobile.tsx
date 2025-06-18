@@ -145,7 +145,8 @@ function ArchitecturePageMobile({ projects, information }: Props) {
           <Link
             key={item.project.id}
             href={`/architecture/${item.project.slug}`}
-            className={`block relative transition-opacity duration-500 h-[50dvh]`}
+            className={`block relative transition-opacity duration-500`}
+            style={{ height: "calc(var(--vh, 1vh) * 50)" }}
           >
             <div
               ref={(el) => {
