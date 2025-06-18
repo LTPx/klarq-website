@@ -27,7 +27,6 @@ function ArchitecturePage({ projects, information }: Props) {
   const ignoreNextScroll = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
   const firstProjectRef = useRef<HTMLDivElement | null>(null);
-  const [locked, setLocked] = useState(false);
 
   const [firstProject, restProjects] = useMemo(() => {
     return [projects[0], projects.slice(1)];
@@ -89,7 +88,7 @@ function ArchitecturePage({ projects, information }: Props) {
 
       setProgress((prev) => {
         let next = prev + e.deltaY * 0.001;
-        if (next >= 1) {
+        if (next >= 0.7) {
           setIsExpanded(true);
           ignoreNextScroll.current = true;
           return 1;
@@ -105,7 +104,7 @@ function ArchitecturePage({ projects, information }: Props) {
 
       setProgress((prev) => {
         let next = prev + deltaY * 0.005;
-        if (next >= 1) {
+        if (next >= 0.7) {
           setIsExpanded(true);
           return 1;
         }
@@ -165,14 +164,7 @@ function ArchitecturePage({ projects, information }: Props) {
     };
   }, [isExpanded, isMobile]);
 
-  useEffect(() => {
-    if (progress >= 1 && !locked) {
-      const timeout = setTimeout(() => setLocked(true), 300);
-      return () => clearTimeout(timeout);
-    }
-  }, [progress, locked]);
-
-  const restProjectsMarginTop = locked ? "-50vh" : "0";
+  const restProjectsMarginTop = isExpanded ? "-50vh" : "0";
 
   return (
     <>
@@ -208,8 +200,6 @@ function ArchitecturePage({ projects, information }: Props) {
             labelTitle="Architecture"
             linkSlug={`/architecture/${firstProject.project.slug}`}
             progress={progress}
-            locked={locked}
-            setLocked={setLocked}
             isMobile={isMobile}
             title={firstProject.project.acf.architecture_projects.title_project}
           />

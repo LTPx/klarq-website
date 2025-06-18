@@ -27,7 +27,6 @@ function DevelopmentPage({ projects, information }: Props) {
   const ignoreNextScroll = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
   const firstProjectRef = useRef<HTMLDivElement | null>(null);
-  const [locked, setLocked] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -165,13 +164,6 @@ function DevelopmentPage({ projects, information }: Props) {
     };
   }, [isExpanded, isMobile]);
 
-  useEffect(() => {
-    if (progress >= 1 && !locked) {
-      const timeout = setTimeout(() => setLocked(true), 300);
-      return () => clearTimeout(timeout);
-    }
-  }, [progress, locked]);
-
   const restProjectsMarginTop = isExpanded ? "-50vh" : "0";
 
   return (
@@ -210,8 +202,6 @@ function DevelopmentPage({ projects, information }: Props) {
             progress={progress}
             isMobile={isMobile}
             title={firstProject.project.acf.development_projects.title_project}
-            locked={locked}
-            setLocked={setLocked}
           />
         </div>
         <div
