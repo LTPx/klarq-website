@@ -13,16 +13,17 @@ interface Props {
 function DecorPageMobile({ decor_information }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isCoverHidden, setIsCoverHidden] = useState(false);
 
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
-
-    const handleScroll = (e: WheelEvent | TouchEvent) => {
+  
+    const handleScroll = (e: WheelEvent) => {
       if (isExpanded) return;
-
+  
       e.preventDefault();
-      const deltaY = (e as WheelEvent).deltaY || 5;
-
+      const deltaY = e.deltaY || 5;
+  
       setProgress((prev) => {
         let next = prev + deltaY * 0.005;
         if (next >= 1) {
@@ -32,25 +33,34 @@ function DecorPageMobile({ decor_information }: Props) {
         return Math.min(1, Math.max(0, next));
       });
     };
-
+  
     window.addEventListener("wheel", handleScroll, { passive: false });
-    window.addEventListener("touchmove", handleScroll, { passive: false });
     document.body.style.overflow = "hidden";
-
+  
     if (isExpanded) {
       releaseTimeout = setTimeout(() => {
         document.body.style.overflow = "";
       }, 700);
     }
-
+  
     return () => {
       window.removeEventListener("wheel", handleScroll);
-      window.removeEventListener("touchmove", handleScroll);
       document.body.style.overflow = "";
       clearTimeout(releaseTimeout);
     };
   }, [isExpanded]);
-
+  
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (isExpanded) {
+      timeout = setTimeout(() => {
+        setIsCoverHidden(true);
+      }, 600); // igual a la duración de la animación en MobileCover
+    } else {
+      setIsCoverHidden(false);
+    }
+    return () => clearTimeout(timeout);
+  }, [isExpanded]);
   const projectKeys = [
     "kitchen_projects",
     "rooms_projects",
@@ -82,7 +92,7 @@ function DecorPageMobile({ decor_information }: Props) {
     })
     .filter((item): item is CategoryWithProjects => item !== null);
 
-  const marginTop = isExpanded ? "-50vh" : "0";
+const marginTop = isCoverHidden ? "-50vh" : "0";
 
   return (
     <div>

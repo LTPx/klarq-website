@@ -158,7 +158,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
                 <img
                   src={getProxyImageUrl(information.image.url)}
                   alt="team"
-                  className="w-[180px] h-auto rounded"
+                  className="max-h-[30vh] w-auto max-w-full"
                 />
               )}
               <div

@@ -24,10 +24,11 @@ export default function MobileCover({
   const [locked, setLocked] = useState(false);
 
   useEffect(() => {
-    if (progress >= 0.5 && !locked) {
+    if (progress >= 1 && !locked) {
       setLocked(true);
     }
   }, [progress, locked]);
+  
   return (
     <div className="relative w-full h-[100vh] bg-white overflow-hidden">
       <motion.div
