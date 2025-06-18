@@ -153,7 +153,7 @@ function DecorPageMobile({ decor_information }: Props) {
       <div
         style={{
           marginTop,
-          transition: "margin-top 0.5s ease",
+          // transition: "margin-top 0.5s ease",
         }}
       >
         <div className="pt-[60px] pb-[100px]">
