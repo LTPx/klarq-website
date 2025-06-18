@@ -133,12 +133,12 @@ function DecorPageMobile({ decor_information }: Props) {
     })
     .filter((item): item is CategoryWithProjects => item !== null);
 
-    useEffect(() => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
-    }, [])
-  
-    const marginTop = isCoverHidden ? "calc(var(--vh, 1vh) * -38)" : "0vh";
+  useEffect(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }, []);
+
+  const marginTop = isCoverHidden ? "calc(var(--vh, 1vh) * -38)" : "0";
 
   return (
     <div>
