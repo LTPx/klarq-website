@@ -19,6 +19,9 @@ function DecorPageMobile({ decor_information }: Props) {
     let releaseTimeout: NodeJS.Timeout;
     let startY = 0;
 
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(max, Math.max(min, value));
+
     const handleTouchStart = (e: TouchEvent) => {
       startY = e.touches[0].clientY;
     };
@@ -29,13 +32,16 @@ function DecorPageMobile({ decor_information }: Props) {
       const currentY = e.touches[0].clientY;
       const deltaY = startY - currentY;
 
+      // Clampear el deltaY para evitar saltos grandes
+      const clampedDeltaY = clamp(deltaY, -50, 50);
+
       setProgress((prev) => {
-        const next = prev + deltaY * 0.005;
+        const next = prev + clampedDeltaY * 0.005;
         if (next >= 1) {
           setIsExpanded(true);
           return 1;
         }
-        return Math.min(1, Math.max(0, next));
+        return clamp(next, 0, 1);
       });
     };
 
@@ -43,14 +49,15 @@ function DecorPageMobile({ decor_information }: Props) {
       if (isExpanded) return;
 
       const deltaY = e.deltaY || 5;
+      const clampedDeltaY = clamp(deltaY, -50, 50);
 
       setProgress((prev) => {
-        const next = prev + deltaY * 0.005;
+        const next = prev + clampedDeltaY * 0.005;
         if (next >= 1) {
           setIsExpanded(true);
           return 1;
         }
-        return Math.min(1, Math.max(0, next));
+        return clamp(next, 0, 1);
       });
     };
 
