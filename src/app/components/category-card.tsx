@@ -70,7 +70,7 @@ function CategoryCard({
       )}
       {description && (
         <div
-          className={`absolute left-[15px] lg:left-[50px] bottom-[45px] text-white z-[100] lg:w-[428px] transition-opacity duration-500 ease-in-out ${
+          className={`absolute left-[15px] lg:left-[50px] bottom-[15px] lg:bottom-[45px] text-white z-[100] lg:w-[428px] transition-opacity duration-500 ease-in-out ${
             showDescription || isExpandedMobile
               ? "opacity-100"
               : "opacity-0 pointer-events-none"

@@ -70,7 +70,7 @@ export function DesktopMenu(props: Props) {
               "menu.follow"
             )}`}</span>
             <div className="flex flex-col lg:flex-row gap-[15px]">
-              <div className="flex justify-center lg:hidden">
+              <div className="flex gap-[10px] justify-center lg:hidden">
                 <HoverFillButton
                   className="h-[33px] text-[16px] leading-[15px]"
                   href="https://instagram.com"

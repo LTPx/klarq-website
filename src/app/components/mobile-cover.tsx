@@ -42,14 +42,21 @@ export default function MobileCover({
           <img
             src={getProxyImageUrl(information.image.url)}
             alt="team"
-            className="w-[180px] h-auto rounded"
-          />
+            className="max-h-[30vh] w-auto max-w-full"
+            />
         )}
         <div
           className="text-base leading-relaxed text-black"
           dangerouslySetInnerHTML={{ __html: information.description }}
         />
       </motion.div>
+      <Link href={"/"}>
+        <div className="cursor-pointer fixed top-[10px] left-[15px] mix-blend-difference text-white z-[1000]">
+          <label className="uppercase tracking-[-0.02em] font-zoom cursor-pointer text-[38px] leading-[38px]">
+            KLARQ <br /> {labelTitle}
+          </label>
+        </div>
+      </Link>
       <motion.img
         animate={{ y: locked ? "-100%" : "0%" }}
         transition={{ ease: "easeInOut", duration: 0.6 }}

@@ -75,7 +75,7 @@ export function Footer() {
             <span className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px]">
               {`${t("footer.follow")}`}
             </span>
-            <div className="flex gap-[15px]">
+            <div className="flex gap-[6px]">
               <HoverFillButton
                 className="h-[25px] text-[12px] leading-[12px]"
                 href="https://instagram.com"
