@@ -11,12 +11,13 @@ interface Props {
 }
 
 function DecorPageMobile({ decor_information }: Props) {
-  const [progress, setProgress] = useState(0); // progress de 0 a 1
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [isCoverHidden, setIsCoverHidden] = useState(false);
 
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
-    let startY = 0; 
+    let startY = 0;
 
     const clamp = (value: number, min: number, max: number) =>
       Math.min(max, Math.max(min, value));
@@ -25,33 +26,39 @@ function DecorPageMobile({ decor_information }: Props) {
       startY = e.touches[0].clientY;
     };
 
-    const updateProgress = (deltaY: number) => {
-      setProgress((prev) => {
-        const next = prev + deltaY * 0.005;
-
-        if (prev < 0.5) {
-          return clamp(next, 0, 0.5);
-        } else {
-          if (next >= 1) return 1;
-          return clamp(next, 0.5, 1);
-        }
-      });
-    };
-
     const handleTouchMove = (e: TouchEvent) => {
-      if (progress >= 1) return;
+      if (isExpanded) return;
 
       const currentY = e.touches[0].clientY;
       const deltaY = startY - currentY;
+
+      // Clampear el deltaY para evitar saltos grandes
       const clampedDeltaY = clamp(deltaY, -50, 50);
-      updateProgress(clampedDeltaY);
+
+      setProgress((prev) => {
+        const next = prev + clampedDeltaY * 0.005;
+        if (next >= 1) {
+          setIsExpanded(true);
+          return 1;
+        }
+        return clamp(next, 0, 1);
+      });
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (progress >= 1) return;
+      if (isExpanded) return;
 
-      const clampedDeltaY = clamp(e.deltaY, -50, 50);
-      updateProgress(clampedDeltaY);
+      const deltaY = e.deltaY || 5;
+      const clampedDeltaY = clamp(deltaY, -50, 50);
+
+      setProgress((prev) => {
+        const next = prev + clampedDeltaY * 0.005;
+        if (next >= 1) {
+          setIsExpanded(true);
+          return 1;
+        }
+        return clamp(next, 0, 1);
+      });
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
@@ -60,7 +67,7 @@ function DecorPageMobile({ decor_information }: Props) {
 
     document.body.style.overflow = "hidden";
 
-    if (progress >= 1) {
+    if (isExpanded) {
       releaseTimeout = setTimeout(() => {
         document.body.style.overflow = "";
       }, 700);
@@ -73,11 +80,11 @@ function DecorPageMobile({ decor_information }: Props) {
       document.body.style.overflow = "";
       clearTimeout(releaseTimeout);
     };
-  }, [progress]);
+  }, [isExpanded]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    if (progress >= 1) {
+    if (isExpanded) {
       timeout = setTimeout(() => {
         setIsCoverHidden(true);
       }, 600);
@@ -85,7 +92,7 @@ function DecorPageMobile({ decor_information }: Props) {
       setIsCoverHidden(false);
     }
     return () => clearTimeout(timeout);
-  }, [progress]);
+  }, [isExpanded]);
 
   const projectKeys = [
     "kitchen_projects",
@@ -132,7 +139,7 @@ function DecorPageMobile({ decor_information }: Props) {
       </div>
       <div
         style={{
-          marginTop,
+          marginTop: marginTop,
           transition: "margin-top 0.5s ease",
         }}
       >

@@ -29,16 +29,12 @@ export default function MobileCover({
     }
   }, [progress, locked]);
 
-  const yValue = locked
-    ? "-100%"
-    : progress < 0.5
-    ? `-${progress * 100}%`
-    : "-50%";
-
   return (
     <div className="relative w-full">
       <motion.div
-        animate={{ y: yValue }}
+        animate={{
+          y: locked ? "-100%" : progress < 0.5 ? `-${progress * 100}%` : "-50%",
+        }}
         transition={{ ease: "easeInOut", duration: 0.6 }}
         className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[85dvh] z-20 bg-white"
       >
