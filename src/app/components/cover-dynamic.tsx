@@ -15,6 +15,8 @@ interface Props {
   progress: number;
   isMobile: boolean;
   title?: string;
+  locked: boolean;
+  setLocked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CoverDynamic = forwardRef<HTMLDivElement, Props>(
@@ -28,6 +30,8 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
       progress,
       isMobile,
       title,
+      locked,
+      setLocked,
     },
     ref
   ) => {
@@ -101,7 +105,6 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
     const transform = `translateX(${translateX}%)`;
     const widthPercent = 50 + 50 * progress;
     const textTranslateX = 100 * progress;
-    const [locked, setLocked] = useState(false);
 
     useEffect(() => {
       if (progress >= 0.5 && !locked) {
