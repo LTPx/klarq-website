@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
@@ -18,38 +18,38 @@ function DecorPageMobile({ decor_information }: Props) {
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
     let startY = 0;
-  
+
     const handleTouchStart = (e: TouchEvent) => {
       startY = e.touches[0].clientY;
     };
-  
+
     const handleTouchMove = (e: TouchEvent) => {
       if (isExpanded) return;
       e.preventDefault();
-  
+
       const currentY = e.touches[0].clientY;
-      const deltaY = startY - currentY; // desplazamiento vertical (positivo al hacer scroll hacia arriba)
-  
+      const deltaY = startY - currentY;
+
       setProgress((prev) => {
-        let next = prev + deltaY * 0.005;
+        const next = prev + deltaY * 0.005;
         if (next >= 1) {
           setIsExpanded(true);
           return 1;
         }
         return Math.min(1, Math.max(0, next));
       });
-  
-      startY = currentY; // actualizar para siguiente movimiento
+
+      // No actualizar startY aquí => permite acumulación correcta
     };
-  
+
     const handleWheel = (e: WheelEvent) => {
       if (isExpanded) return;
       e.preventDefault();
-  
+
       const deltaY = e.deltaY || 5;
-  
+
       setProgress((prev) => {
-        let next = prev + deltaY * 0.005;
+        const next = prev + deltaY * 0.005;
         if (next >= 1) {
           setIsExpanded(true);
           return 1;
@@ -57,19 +57,19 @@ function DecorPageMobile({ decor_information }: Props) {
         return Math.min(1, Math.max(0, next));
       });
     };
-  
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: false });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
-  
+
     document.body.style.overflow = "hidden";
-  
+
     if (isExpanded) {
       releaseTimeout = setTimeout(() => {
         document.body.style.overflow = "";
       }, 700);
     }
-  
+
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
@@ -78,7 +78,6 @@ function DecorPageMobile({ decor_information }: Props) {
       clearTimeout(releaseTimeout);
     };
   }, [isExpanded]);
-  
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -91,6 +90,7 @@ function DecorPageMobile({ decor_information }: Props) {
     }
     return () => clearTimeout(timeout);
   }, [isExpanded]);
+
   const projectKeys = [
     "kitchen_projects",
     "rooms_projects",

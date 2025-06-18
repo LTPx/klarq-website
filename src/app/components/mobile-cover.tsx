@@ -30,7 +30,7 @@ export default function MobileCover({
   }, [progress, locked]);
 
   return (
-    <div className="relative w-full h-[100vh] bg-white overflow-hidden">
+    <div className="relative w-full h-[100vh] bg-white">
       <motion.div
         animate={{
           y: `-${progress * 100}%`,
