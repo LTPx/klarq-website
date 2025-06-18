@@ -28,6 +28,8 @@ function GalleryImagesScroll({
   const scrollTarget = useRef<number>(0);
   const isScrolling = useRef(false);
 
+  const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
+
   useEffect(() => {
     AOS.init({ duration: aosDuration, once: true, easing: "ease-out-cubic" });
 
@@ -52,6 +54,9 @@ function GalleryImagesScroll({
     };
 
     const onWheel = (e: WheelEvent) => {
+      // Solo en desktop: scroll horizontal con la rueda vertical
+      if (isMobile) return;
+
       e.preventDefault();
 
       const SCROLL_SPEED = 0.3;
@@ -71,12 +76,16 @@ function GalleryImagesScroll({
       }
     };
 
-    container.addEventListener("wheel", onWheel, { passive: false });
+    if (!isMobile) {
+      container.addEventListener("wheel", onWheel, { passive: false });
+    }
 
     return () => {
-      container.removeEventListener("wheel", onWheel);
+      if (!isMobile) {
+        container.removeEventListener("wheel", onWheel);
+      }
     };
-  }, [aosDuration]);
+  }, [aosDuration, isMobile]);
 
   useEffect(() => {
     const container = scrollContainer.current;
