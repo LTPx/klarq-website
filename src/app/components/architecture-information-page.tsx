@@ -88,7 +88,7 @@ function ArchitecturePage({ projects, information }: Props) {
 
       setProgress((prev) => {
         let next = prev + e.deltaY * 0.001;
-        if (next >= 1) {
+        if (next >= 0.7) {
           setIsExpanded(true);
           ignoreNextScroll.current = true;
           return 1;
@@ -104,7 +104,7 @@ function ArchitecturePage({ projects, information }: Props) {
 
       setProgress((prev) => {
         let next = prev + deltaY * 0.005;
-        if (next >= 1) {
+        if (next >= 0.7) {
           setIsExpanded(true);
           return 1;
         }
