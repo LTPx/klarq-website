@@ -29,6 +29,11 @@ export default function MobileCover({
     }
   }, [progress, locked]);
 
+  useEffect(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }, []);
+
   return (
     <div className="relative w-full">
       <motion.div
@@ -36,7 +41,8 @@ export default function MobileCover({
           y: progress === 0 ? "0%" : progress === 0.5 ? "-50%" : "-100%",
         }}
         transition={{ ease: "easeInOut", duration: 0.6 }}
-        className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[90vh] z-20 bg-white"
+        className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full z-20 bg-white"
+        style={{ height: "calc(var(--vh, 1vh) * 90)" }}
       >
         <div className="w-full" style={{ minHeight: 87 }} />
         {information.image?.url && (
