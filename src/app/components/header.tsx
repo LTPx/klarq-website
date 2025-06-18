@@ -63,7 +63,9 @@ export function Header({
       <img
         className="cursor-pointer"
         onClick={handleContactClick}
-        src={showMenu ? "/images/close-header-menu.svg" : "/images/logo-menu.svg"}
+        src={
+          showMenu ? "/images/close-header-menu.svg" : "/images/logo-menu.svg"
+        }
         alt={showMenu ? "Cerrar menú" : "Abrir menú"}
       />
 
@@ -101,8 +103,8 @@ export function Header({
   return (
     <>
       <AnimatePresence>
-        {currentPath === "/" ? (
-          isMobile || (hasScrolled && !isHoveringCard) ? (
+        {currentPath === "/" || (currentPath.includes("decor") && isMobile) ? (
+          hasScrolled && !isHoveringCard ? (
             <motion.header
               className="bg-gray container fixed bottom-0 z-[1002]"
               initial={hasMounted && !isMobile ? { y: 100, opacity: 0 } : false}

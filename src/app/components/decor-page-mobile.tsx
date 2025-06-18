@@ -5,6 +5,7 @@ import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
 import { getProxyImageUrl } from "@/utils/image_proxy";
+import { useScrollStore } from "../store/scroll-store";
 
 interface Props {
   decor_information: DecorPageWp;
@@ -14,6 +15,7 @@ function DecorPageMobile({ decor_information }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isCoverHidden, setIsCoverHidden] = useState(false);
+  const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
 
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
@@ -32,13 +34,13 @@ function DecorPageMobile({ decor_information }: Props) {
       const currentY = e.touches[0].clientY;
       const deltaY = startY - currentY;
 
-      // Clampear el deltaY para evitar saltos grandes
       const clampedDeltaY = clamp(deltaY, -50, 50);
 
       setProgress((prev) => {
         const next = prev + clampedDeltaY * 0.005;
         if (next >= 1) {
           setIsExpanded(true);
+          setHasScrolled(true);
           return 1;
         }
         return clamp(next, 0, 1);
@@ -55,6 +57,7 @@ function DecorPageMobile({ decor_information }: Props) {
         const next = prev + clampedDeltaY * 0.005;
         if (next >= 1) {
           setIsExpanded(true);
+          setHasScrolled(true);
           return 1;
         }
         return clamp(next, 0, 1);

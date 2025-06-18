@@ -36,14 +36,14 @@ export default function MobileCover({
           y: locked ? "-100%" : progress < 0.5 ? `-${progress * 100}%` : "-50%",
         }}
         transition={{ ease: "easeInOut", duration: 0.6 }}
-        className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[85dvh] z-20 bg-white"
+        className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[90dvh] z-20 bg-white"
       >
         <div className="w-full" style={{ minHeight: 87 }} />
         {information.image?.url && (
           <img
             src={getProxyImageUrl(information.image.url)}
             alt="team"
-            className="max-h-[30vh] w-auto max-w-full"
+            className="max-h-[23vh] w-auto max-w-full"
           />
         )}
         <div
