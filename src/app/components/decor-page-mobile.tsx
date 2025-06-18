@@ -138,7 +138,7 @@ function DecorPageMobile({ decor_information }: Props) {
       document.documentElement.style.setProperty("--vh", `${vh}px`);
     }, [])
   
-    const marginTop = isCoverHidden ? "0" : "0";
+    const marginTop = isCoverHidden ? "calc(var(--vh, 1vh) * -38)" : "0vh";
 
   return (
     <div>
@@ -153,7 +153,7 @@ function DecorPageMobile({ decor_information }: Props) {
       <div
         style={{
           marginTop,
-          // transition: "margin-top 0.5s ease",
+          transition: "margin-top 0.5s ease",
         }}
       >
         <div className="pt-[60px] pb-[100px]">

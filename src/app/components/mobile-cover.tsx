@@ -36,7 +36,7 @@ export default function MobileCover({
           y: progress === 0 ? "0%" : progress === 0.5 ? "-50%" : "-100%",
         }}
         transition={{ ease: "easeInOut", duration: 0.6 }}
-        className="absolute flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[1000px] z-20 bg-white"
+        className="absolute flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[90dvh] z-20 bg-white"
       >
         <div className="w-full" style={{ minHeight: 87 }} />
         {information.image?.url && (
@@ -63,7 +63,7 @@ export default function MobileCover({
         transition={{ ease: "easeInOut", duration: 0.6 }}
         src={img}
         alt="architecture-cover"
-        className="absolute bottom-0 left-0 w-full h-[500px] object-cover z-0"
+        className="absolute bottom-0 left-0 w-full top-[50vh] h-[50vh] object-cover z-0"
         style={{
           filter: "brightness(0.8)",
         }}
