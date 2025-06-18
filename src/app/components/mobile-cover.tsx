@@ -63,7 +63,7 @@ export default function MobileCover({
         transition={{ ease: "easeInOut", duration: 0.6 }}
         src={img}
         alt="architecture-cover"
-        className="absolute bottom-0 left-0 w-full top-[50vh] h-[500px] object-cover z-0"
+        className="absolute bottom-0 left-0 w-full h-[500px] object-cover z-0"
         style={{
           filter: "brightness(0.8)",
         }}
