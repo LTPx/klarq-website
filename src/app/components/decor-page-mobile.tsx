@@ -16,7 +16,7 @@ function DecorPageMobile({ decor_information }: Props) {
 
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
-    let startY = 0;
+    let startY = 0; 
 
     const clamp = (value: number, min: number, max: number) =>
       Math.min(max, Math.max(min, value));
