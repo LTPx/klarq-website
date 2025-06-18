@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { animate, motion, useMotionValue } from "framer-motion";
 import { Link } from "@/navigation";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import { InformationWp } from "../_interfaces/wordpress-components";
@@ -33,7 +33,7 @@ export default function MobileCover({
     <div className="relative w-full">
       <motion.div
         animate={{
-          y: locked ? "-100%" : progress < 0.5 ? `-${progress * 100}%` : "-50%",
+          y: progress === 0 ? "0%" : progress === 0.5 ? "-50%" : "-100%",
         }}
         transition={{ ease: "easeInOut", duration: 0.6 }}
         className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full h-[90dvh] z-20 bg-white"

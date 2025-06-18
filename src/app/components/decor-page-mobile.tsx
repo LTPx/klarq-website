@@ -12,56 +12,54 @@ interface Props {
 }
 
 function DecorPageMobile({ decor_information }: Props) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [phase, setPhase] = useState<0 | 1 | 2>(0);
   const [progress, setProgress] = useState(0);
   const [isCoverHidden, setIsCoverHidden] = useState(false);
   const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
 
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
+    let scrollCooldown = false;
     let startY = 0;
+    let phaseTriggered = false;
 
-    const clamp = (value: number, min: number, max: number) =>
-      Math.min(max, Math.max(min, value));
+    const startCooldown = () => {
+      scrollCooldown = true;
+      setTimeout(() => {
+        scrollCooldown = false;
+      }, 1000); // cooldown más largo para evitar múltiples saltos
+    };
+
+    const handleScrollStep = () => {
+      if (phaseTriggered || phase >= 2) return;
+      setPhase((prev) => (prev < 2 ? ((prev + 1) as 0 | 1 | 2) : prev));
+      phaseTriggered = true;
+      startCooldown();
+      setTimeout(() => {
+        phaseTriggered = false;
+      }, 1000);
+    };
 
     const handleTouchStart = (e: TouchEvent) => {
       startY = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (isExpanded) return;
-
+      if (scrollCooldown || phase >= 2) return;
       const currentY = e.touches[0].clientY;
       const deltaY = startY - currentY;
-
-      const clampedDeltaY = clamp(deltaY, -50, 50);
-
-      setProgress((prev) => {
-        const next = prev + clampedDeltaY * 0.005;
-        if (next >= 1) {
-          setIsExpanded(true);
-          setHasScrolled(true);
-          return 1;
-        }
-        return clamp(next, 0, 1);
-      });
+      if (deltaY > 30) {
+        // umbral más alto para scroll hacia arriba
+        handleScrollStep();
+      }
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (isExpanded) return;
-
-      const deltaY = e.deltaY || 5;
-      const clampedDeltaY = clamp(deltaY, -50, 50);
-
-      setProgress((prev) => {
-        const next = prev + clampedDeltaY * 0.005;
-        if (next >= 1) {
-          setIsExpanded(true);
-          setHasScrolled(true);
-          return 1;
-        }
-        return clamp(next, 0, 1);
-      });
+      if (scrollCooldown || phase >= 2) return;
+      if (e.deltaY > 30) {
+        // umbral más alto para scroll hacia abajo
+        handleScrollStep();
+      }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
@@ -70,7 +68,7 @@ function DecorPageMobile({ decor_information }: Props) {
 
     document.body.style.overflow = "hidden";
 
-    if (isExpanded) {
+    if (phase === 2) {
       releaseTimeout = setTimeout(() => {
         document.body.style.overflow = "";
       }, 700);
@@ -83,19 +81,26 @@ function DecorPageMobile({ decor_information }: Props) {
       document.body.style.overflow = "";
       clearTimeout(releaseTimeout);
     };
-  }, [isExpanded]);
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase === 0) setProgress(0);
+    else if (phase === 1) setProgress(0.5);
+    else if (phase === 2) setProgress(1);
+  }, [phase]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    if (isExpanded) {
+    if (phase === 2) {
       timeout = setTimeout(() => {
         setIsCoverHidden(true);
+        setHasScrolled(true);
       }, 600);
     } else {
       setIsCoverHidden(false);
     }
     return () => clearTimeout(timeout);
-  }, [isExpanded]);
+  }, [phase]);
 
   const projectKeys = [
     "kitchen_projects",
@@ -142,7 +147,7 @@ function DecorPageMobile({ decor_information }: Props) {
       </div>
       <div
         style={{
-          marginTop: marginTop,
+          marginTop,
           transition: "margin-top 0.5s ease",
         }}
       >
