@@ -51,7 +51,7 @@ export default function MobileCover({
           <img
             src={getProxyImageUrl(information.image.url)}
             alt="team"
-            className="max-h-[23vh] w-auto max-w-full"
+            className="max-h-[30vh] w-auto max-w-full"
           />
         )}
         <div
