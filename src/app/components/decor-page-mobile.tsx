@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState } from "react";
 import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
@@ -23,15 +23,10 @@ function DecorPageMobile({ decor_information }: Props) {
         setPhase(0);
       }
     };
-  
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [phase]);
-  
-  const lastTouchTime = useRef(0);
-  const COOLDOWN_MS = 300;
-  const startY = useRef(0);
-  const releaseTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -48,61 +43,66 @@ function DecorPageMobile({ decor_information }: Props) {
     setHasScrolled(false);
   }, [setHasScrolled]);
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    startY.current = e.touches[0].clientY;
-  }, []);
-
-  const handleTouchMove = useCallback(
-    (e: React.TouchEvent) => {
-      const now = Date.now();
-      if (now - lastTouchTime.current < COOLDOWN_MS) return;
-
-      const currentY = e.touches[0].clientY;
-      const deltaY = startY.current - currentY;
-
-      if (deltaY > 20 && phase < 2) {
-        setPhase((prev) => (prev + 1) as 0 | 1 | 2);
-        lastTouchTime.current = now;
-        startY.current = currentY;
-      } else if (deltaY < -20 && phase > 0) {
-        setPhase((prev) => (prev - 1) as 0 | 1 | 2);
-        lastTouchTime.current = now;
-        startY.current = currentY;
-      }
-    },
-    [phase]
-  );
-
   useEffect(() => {
-    const setVh = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    let releaseTimeout: NodeJS.Timeout;
+    let scrollCooldown = false;
+    let startY = 0;
+    let phaseTriggered = false;
+
+    const startCooldown = () => {
+      scrollCooldown = true;
+      setTimeout(() => {
+        scrollCooldown = false;
+      }, 1000); // cooldown para evitar múltiples saltos
     };
 
-    setVh();
-    window.addEventListener("resize", setVh);
-    return () => window.removeEventListener("resize", setVh);
-  }, []);
+    const handleScrollStep = () => {
+      if (phaseTriggered || phase >= 2) return;
+      setPhase((prev) => (prev < 2 ? ((prev + 1) as 0 | 1 | 2) : prev));
+      phaseTriggered = true;
+      startCooldown();
+      setTimeout(() => {
+        phaseTriggered = false;
+      }, 1000);
+    };
 
-  useEffect(() => {
+    const handleTouchStart = (e: TouchEvent) => {
+      startY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (scrollCooldown || phase >= 2) return;
+      const currentY = e.touches[0].clientY;
+      const deltaY = startY - currentY;
+      if (deltaY > 30) {
+        // umbral más alto para scroll hacia arriba
+        handleScrollStep();
+      }
+    };
+
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    document.body.style.overflow = "hidden";
+
     if (phase === 2) {
-      if (releaseTimeout.current) clearTimeout(releaseTimeout.current);
-      releaseTimeout.current = setTimeout(() => {
+      releaseTimeout = setTimeout(() => {
         document.body.style.overflow = "";
       }, 700);
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "hidden";
     }
 
     return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
       document.body.style.overflow = "";
-      if (releaseTimeout.current) clearTimeout(releaseTimeout.current);
+      clearTimeout(releaseTimeout);
     };
   }, [phase]);
 
   useEffect(() => {
-    setProgress(phase === 0 ? 0 : phase === 1 ? 0.5 : 1);
+    if (phase === 0) setProgress(0);
+    else if (phase === 1) setProgress(0.5);
+    else if (phase === 2) setProgress(1);
   }, [phase]);
 
   useEffect(() => {
@@ -114,10 +114,9 @@ function DecorPageMobile({ decor_information }: Props) {
       }, 600);
     } else {
       setIsCoverHidden(false);
-      setHasScrolled(false);
     }
     return () => clearTimeout(timeout);
-  }, [phase, setHasScrolled]);
+  }, [phase]);
 
   const projectKeys = [
     "kitchen_projects",
@@ -150,16 +149,16 @@ function DecorPageMobile({ decor_information }: Props) {
     })
     .filter((item): item is CategoryWithProjects => item !== null);
 
+  useEffect(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }, []);
+
   const marginTop = isCoverHidden ? "-39vh" : "calc(var(--vh, 1vh) * 10)";
 
   return (
     <div>
-      <div
-        className="DecorPageMobile"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        style={{ touchAction: "pan-y" }}
-      >
+      <div className="DecorPageMobile">
         <MobileCover
           img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
