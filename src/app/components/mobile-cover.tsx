@@ -1,6 +1,6 @@
 "use client";
 
-import { animate, motion, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "@/navigation";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import { InformationWp } from "../_interfaces/wordpress-components";
@@ -26,11 +26,10 @@ export default function MobileCover({
   const [locked, setLocked] = useState(false);
   const titleMobileRef = useRef<HTMLLabelElement>(null);
 
+  // Actualizamos locked según el valor de progress
   useEffect(() => {
-    if (progress >= 1 && !locked) {
-      setLocked(true);
-    }
-  }, [progress, locked]);
+    setLocked(progress >= 1);
+  }, [progress]);
 
   useEffect(() => {
     const vh = window.innerHeight * 0.01;

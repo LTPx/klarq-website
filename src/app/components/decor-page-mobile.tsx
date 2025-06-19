@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
@@ -17,71 +17,72 @@ function DecorPageMobile({ decor_information }: Props) {
   const [isCoverHidden, setIsCoverHidden] = useState(false);
   const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
 
-  useEffect(() => {
-    let releaseTimeout: NodeJS.Timeout;
-    let scrollCooldown = false;
-    let startY = 0;
-    let phaseTriggered = false;
+  const lastScrollTime = useRef(0);
+  const COOLDOWN_MS = 300;
 
-    const startCooldown = () => {
-      scrollCooldown = true;
-      setTimeout(() => {
-        scrollCooldown = false;
-      }, 1000); // cooldown más largo para evitar múltiples saltos
-    };
+  const startY = useRef(0);
+  const releaseTimeout = useRef<NodeJS.Timeout | null>(null);
 
-    const handleScrollStep = () => {
-      if (phaseTriggered || phase >= 2) return;
-      setPhase((prev) => (prev < 2 ? ((prev + 1) as 0 | 1 | 2) : prev));
-      phaseTriggered = true;
-      startCooldown();
-      setTimeout(() => {
-        phaseTriggered = false;
-      }, 1000);
-    };
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    startY.current = e.touches[0].clientY;
+  }, []);
 
-    const handleTouchStart = (e: TouchEvent) => {
-      startY = e.touches[0].clientY;
-    };
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      const now = Date.now();
+      if (now - lastScrollTime.current < COOLDOWN_MS) return;
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (scrollCooldown || phase >= 2) return;
       const currentY = e.touches[0].clientY;
-      const deltaY = startY - currentY;
-      if (deltaY > 30) {
-        // umbral más alto para scroll hacia arriba
-        handleScrollStep();
-      }
-    };
+      const deltaY = startY.current - currentY;
 
-    const handleWheel = (e: WheelEvent) => {
-      if (scrollCooldown || phase >= 2) return;
-      if (e.deltaY > 30) {
-        // umbral más alto para scroll hacia abajo
-        handleScrollStep();
+      if (deltaY > 20 && phase < 2) {
+        setPhase((prev) => (prev + 1) as 0 | 1 | 2);
+        lastScrollTime.current = now;
+        startY.current = currentY;
+      } else if (deltaY < -20 && phase > 0) {
+        setPhase((prev) => (prev - 1) as 0 | 1 | 2);
+        lastScrollTime.current = now;
+        startY.current = currentY;
       }
-    };
+    },
+    [phase]
+  );
 
+  const handleWheel = useCallback(
+    (e: WheelEvent) => {
+      const now = Date.now();
+      if (now - lastScrollTime.current < COOLDOWN_MS) return;
+
+      if (e.deltaY > 20 && phase < 2) {
+        setPhase((prev) => (prev + 1) as 0 | 1 | 2);
+        lastScrollTime.current = now;
+      } else if (e.deltaY < -20 && phase > 0) {
+        setPhase((prev) => (prev - 1) as 0 | 1 | 2);
+        lastScrollTime.current = now;
+      }
+    },
+    [phase]
+  );
+
+  useEffect(() => {
     window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: false });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-
-    document.body.style.overflow = "hidden";
 
     if (phase === 2) {
-      releaseTimeout = setTimeout(() => {
+      if (releaseTimeout.current) clearTimeout(releaseTimeout.current);
+      releaseTimeout.current = setTimeout(() => {
         document.body.style.overflow = "";
       }, 700);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
       document.body.style.overflow = "";
-      clearTimeout(releaseTimeout);
+      if (releaseTimeout.current) clearTimeout(releaseTimeout.current);
     };
-  }, [phase]);
+  }, [handleWheel, phase]);
 
   useEffect(() => {
     if (phase === 0) setProgress(0);
@@ -98,9 +99,10 @@ function DecorPageMobile({ decor_information }: Props) {
       }, 600);
     } else {
       setIsCoverHidden(false);
+      setHasScrolled(false);
     }
     return () => clearTimeout(timeout);
-  }, [phase]);
+  }, [phase, setHasScrolled]);
 
   const projectKeys = [
     "kitchen_projects",
@@ -142,7 +144,12 @@ function DecorPageMobile({ decor_information }: Props) {
 
   return (
     <div>
-      <div className="DecorPageMobile">
+      <div
+        className="DecorPageMobile"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        style={{ touchAction: "pan-y" }}
+      >
         <MobileCover
           img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
