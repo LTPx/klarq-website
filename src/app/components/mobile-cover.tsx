@@ -40,9 +40,8 @@ export default function MobileCover({
       <motion.div
         animate={{
           y: progress === 0 ? "0%" : progress === 0.5 ? "-50%" : "-100%",
-          opacity: progress === 1 ? 0 : 1,
         }}
-        transition={{ ease: "easeInOut", duration: 0.6 }}
+        transition={{ duration: 1, ease: "easeOut" }}
         className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full z-20 bg-white"
         style={{ height: "calc(var(--vh, 1vh) * 90)" }}
       >
@@ -64,7 +63,7 @@ export default function MobileCover({
       {title && (
         <motion.div
           animate={{ y: locked ? "-100%" : "0%" }}
-          transition={{ ease: "easeInOut", duration: 0.6 }}
+          transition={{ ease: "easeInOut", duration: 1 }}
           className="absolute left-0 w-full flex justify-center items-center z-10 px-4"
           style={{
             top: "calc(var(--vh, 1vh) * 50)",
@@ -98,7 +97,7 @@ export default function MobileCover({
       </Link>
       <motion.img
         animate={{ y: locked ? "-100%" : "0%" }}
-        transition={{ ease: "easeInOut", duration: 0.6 }}
+        transition={{ ease: "easeInOut", duration: 1 }}
         src={img}
         alt="architecture-cover"
         className="absolute bottom-0 left-0 w-full object-cover z-0"

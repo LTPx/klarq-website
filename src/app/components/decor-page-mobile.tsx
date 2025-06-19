@@ -32,16 +32,19 @@ function DecorPageMobile({ decor_information }: Props) {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-
-    setTimeout(() => {
+  
+    const timeout = setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "auto" });
-    }, 0);
-
-    setPhase(0);
-    setProgress(0);
-    setIsCoverHidden(false);
-    setHasScrolled(false);
+  
+      setPhase(0);
+      setProgress(0);
+      setIsCoverHidden(false);
+      setHasScrolled(false);
+    }, 500); // 👈 espera 400ms antes de hacer todo
+  
+    return () => clearTimeout(timeout);
   }, [setHasScrolled]);
+  
 
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
