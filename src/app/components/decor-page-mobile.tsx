@@ -27,9 +27,9 @@ function DecorPageMobile({ decor_information }: Props) {
       window.history.scrollRestoration = "manual";
     }
 
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-    });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }, 0);
 
     setPhase(0);
     setProgress(0);
@@ -45,29 +45,33 @@ function DecorPageMobile({ decor_information }: Props) {
     (e: React.TouchEvent) => {
       const now = Date.now();
       if (now - lastTouchTime.current < COOLDOWN_MS) return;
-  
+
       const currentY = e.touches[0].clientY;
       const deltaY = startY.current - currentY;
-  
-      // Deslizar hacia arriba (scroll hacia abajo)
+
       if (deltaY > 20 && phase < 2) {
         setPhase((prev) => (prev + 1) as 0 | 1 | 2);
         lastTouchTime.current = now;
         startY.current = currentY;
-  
-      // Deslizar hacia abajo (scroll hacia arriba)
-      } else if (deltaY < -20) {
+      } else if (deltaY < -20 && phase > 0) {
+        setPhase((prev) => (prev - 1) as 0 | 1 | 2);
         lastTouchTime.current = now;
         startY.current = currentY;
-  
-        // ⚠️ CAMBIO AQUÍ
-        // Si ya estamos en la parte inicial, forzamos mostrar cover completo
-        setPhase(0);
       }
     },
     [phase]
   );
-  
+
+  useEffect(() => {
+    const setVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+
+    setVh();
+    window.addEventListener("resize", setVh);
+    return () => window.removeEventListener("resize", setVh);
+  }, []);
 
   useEffect(() => {
     if (phase === 2) {
@@ -87,9 +91,7 @@ function DecorPageMobile({ decor_information }: Props) {
   }, [phase]);
 
   useEffect(() => {
-    if (phase === 0) setProgress(0);
-    else if (phase === 1) setProgress(0.5);
-    else if (phase === 2) setProgress(1);
+    setProgress(phase === 0 ? 0 : phase === 1 ? 0.5 : 1);
   }, [phase]);
 
   useEffect(() => {
@@ -136,11 +138,6 @@ function DecorPageMobile({ decor_information }: Props) {
       } as CategoryWithProjects;
     })
     .filter((item): item is CategoryWithProjects => item !== null);
-
-  useEffect(() => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  }, []);
 
   const marginTop = isCoverHidden ? "-39vh" : "calc(var(--vh, 1vh) * 10)";
 
