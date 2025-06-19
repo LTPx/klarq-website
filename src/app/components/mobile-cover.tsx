@@ -40,7 +40,7 @@ export default function MobileCover({
       <motion.div
         animate={{
           y: progress === 0 ? "0%" : progress === 0.5 ? "-50%" : "-100%",
-          opacity: progress === 0 ? 1 : progress === 0.5 ? 0.5 : 0, // 👈 aquí el fade out
+          opacity: progress === 1 ? 0 : 1,
         }}
         transition={{ ease: "easeInOut", duration: 0.6 }}
         className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full z-20 bg-white"
@@ -48,10 +48,12 @@ export default function MobileCover({
       >
         <div className="w-full" style={{ minHeight: 87 }} />
         {information.image?.url && (
-          <img
+          <motion.img
             src={getProxyImageUrl(information.image.url)}
             alt="team"
             className="max-h-[40vh] w-auto max-w-full"
+            animate={{ opacity: progress === 1 ? 0 : 1 }}
+            transition={{ ease: "easeInOut", duration: 0.6 }}
           />
         )}
         <div
