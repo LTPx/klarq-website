@@ -15,22 +15,8 @@ export function Cover(props: Props) {
   const { children, className, media, img } = props;
 
   useEffect(() => {
-    const setVh = () => {
-      const vh = window.visualViewport?.height || window.innerHeight;
-      document.documentElement.style.setProperty("--vh", `${vh * 0.01}px`);
-    };
-
-    setVh();
-
-    window.visualViewport?.addEventListener("resize", setVh);
-    window.visualViewport?.addEventListener("scroll", setVh);
-    window.addEventListener("resize", setVh);
-
-    return () => {
-      window.visualViewport?.removeEventListener("resize", setVh);
-      window.visualViewport?.removeEventListener("scroll", setVh);
-      window.removeEventListener("resize", setVh);
-    };
+    const vh = window.visualViewport?.height || window.innerHeight;
+    document.documentElement.style.setProperty("--vh", `${vh * 0.01}px`);
   }, []);
 
   return (
