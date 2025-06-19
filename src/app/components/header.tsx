@@ -46,6 +46,19 @@ export function Header({
     setIsHoveringCard(false);
   }, [currentPath, setIsHoveringCard]);
 
+  const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
+
+  useEffect(() => {
+    if (
+      isMobile &&
+      ["decor", "architecture", "development"].some((segment) =>
+        currentPath.includes(segment)
+      )
+    ) {
+      setHasScrolled(false);
+    }
+  }, [currentPath, isMobile, setHasScrolled]);
+
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -103,7 +116,11 @@ export function Header({
   return (
     <>
       <AnimatePresence>
-        {currentPath === "/" || (currentPath.includes("decor") && isMobile) ? (
+        {(!isMobile && currentPath === "/") ||
+        (isMobile &&
+          ["decor", "architecture", "development"].some((segment) =>
+            currentPath.includes(segment)
+          )) ? (
           hasScrolled && !isHoveringCard ? (
             <motion.header
               className="bg-gray container fixed bottom-0 z-[1002]"

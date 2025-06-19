@@ -116,7 +116,9 @@ function DevelopmentMobile({ projects, information }: Props) {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, []);
 
-  const marginTop = isCoverHidden ? "calc(var(--vh, 1vh) * -39.6)" : "0";
+  const marginTop = isCoverHidden
+    ? "calc(var(--vh, 1vh) * -39.6)"
+    : "calc(var(--vh, 1vh) * 10)";
 
   return (
     <div>

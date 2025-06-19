@@ -138,7 +138,7 @@ function DecorPageMobile({ decor_information }: Props) {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, []);
 
-  const marginTop = isCoverHidden ? "-39vh" : "0";
+  const marginTop = isCoverHidden ? "-39vh" : "calc(var(--vh, 1vh) * 10)";
 
   return (
     <div>
