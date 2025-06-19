@@ -23,15 +23,21 @@ function DecorPageMobile({ decor_information }: Props) {
   const startY = useRef(0);
   const releaseTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  // Resetea estados y store al montar
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
+  
     setPhase(0);
     setProgress(0);
     setIsCoverHidden(false);
     setHasScrolled(false);
   }, [setHasScrolled]);
-
+  
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     startY.current = e.touches[0].clientY;
   }, []);
