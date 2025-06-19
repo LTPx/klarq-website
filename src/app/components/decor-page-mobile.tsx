@@ -17,6 +17,17 @@ function DecorPageMobile({ decor_information }: Props) {
   const [isCoverHidden, setIsCoverHidden] = useState(false);
   const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0 && phase !== 0) {
+        setPhase(0);
+      }
+    };
+  
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [phase]);
+  
   const lastTouchTime = useRef(0);
   const COOLDOWN_MS = 300;
   const startY = useRef(0);
