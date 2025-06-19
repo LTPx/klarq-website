@@ -116,7 +116,7 @@ function ArchitecturePageMobile({ projects, information }: Props) {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, []);
 
-  const marginTop = isCoverHidden ? "-39.6vh" : "0";
+  const marginTop = isCoverHidden ? "calc(var(--vh, 1vh) * -39.6)" : "0";
 
   return (
     <div>
