@@ -141,7 +141,7 @@ export function DesignersSection({ team }: Props) {
                     className="underline"
                     href={selectedIndex === 0 ? "/decor" : "/architecture"}
                   >
-                    {selectedIndex === 0 ? "Ver Decor" : "Ver Arquitectura"}
+                    {selectedIndex === 0 ? "Ver Decor" : "Ver Architecture"}
                   </Link>
                 </div>
               </div>
