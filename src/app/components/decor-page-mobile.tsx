@@ -169,7 +169,8 @@ function DecorPageMobile({ decor_information }: Props) {
       <div
         style={{
           marginTop,
-          transition: "margin-top 0.5s ease",
+          opacity: isCoverHidden ? 1 : 0,
+          transition: " opacity 0.5s ease",
         }}
       >
         <div className="pt-[60px] pb-[100px]">

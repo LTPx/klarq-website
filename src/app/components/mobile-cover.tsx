@@ -26,7 +26,6 @@ export default function MobileCover({
   const [locked, setLocked] = useState(false);
   const titleMobileRef = useRef<HTMLLabelElement>(null);
 
-  // Actualizamos locked según el valor de progress
   useEffect(() => {
     setLocked(progress >= 1);
   }, [progress]);
@@ -51,7 +50,7 @@ export default function MobileCover({
           <img
             src={getProxyImageUrl(information.image.url)}
             alt="team"
-            className="max-h-[30vh] w-auto max-w-full"
+            className="max-h-[40vh] w-auto max-w-full"
           />
         )}
         <div
