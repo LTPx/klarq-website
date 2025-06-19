@@ -14,37 +14,32 @@ interface Props {
 export function Cover(props: Props) {
   const { children, className, media, img } = props;
 
-  const [height, setHeight] = useState("100vh");
-
   useEffect(() => {
-    const updateHeight = () => {
-      const vh =
-        typeof window !== "undefined" &&
-        window.visualViewport?.height
-          ? window.visualViewport.height
-          : window.innerHeight;
-      setHeight(`${vh - 50}px`);
+    const setVh = () => {
+      const vh = window.visualViewport?.height || window.innerHeight;
+      document.documentElement.style.setProperty("--vh", `${vh * 0.01}px`);
     };
-  
-    updateHeight();
-    window.visualViewport?.addEventListener("resize", updateHeight);
-    window.visualViewport?.addEventListener("scroll", updateHeight);
-    window.addEventListener("resize", updateHeight);
-  
+
+    setVh();
+
+    window.visualViewport?.addEventListener("resize", setVh);
+    window.visualViewport?.addEventListener("scroll", setVh);
+    window.addEventListener("resize", setVh);
+
     return () => {
-      window.visualViewport?.removeEventListener("resize", updateHeight);
-      window.visualViewport?.removeEventListener("scroll", updateHeight);
-      window.removeEventListener("resize", updateHeight);
+      window.visualViewport?.removeEventListener("resize", setVh);
+      window.visualViewport?.removeEventListener("scroll", setVh);
+      window.removeEventListener("resize", setVh);
     };
   }, []);
-  
+
   return (
     <div className={`cover-video-container`}>
       {img && (
         <img
           src={img}
           className={`${className} w-full object-cover`}
-          style={{ height }}
+          style={{ height: `calc(var(--vh, 1vh) * 100 - 50px)` }}
         />
       )}
       {media?.type === "video" && (
@@ -55,7 +50,7 @@ export function Cover(props: Props) {
           muted
           playsInline
           preload="auto"
-          style={{ height }}
+          style={{ height: `calc(var(--vh, 1vh) * 100 - 50px)` }}
         >
           <source src={media.url} type="video/mp4" />
         </video>
@@ -64,7 +59,7 @@ export function Cover(props: Props) {
         <img
           src={getProxyImageUrl(media.url)}
           className={`${className} w-full object-cover`}
-          style={{ height }}
+          style={{ height: `calc(var(--vh, 1vh) * 100 - 50px)` }}
         />
       )}
     </div>
