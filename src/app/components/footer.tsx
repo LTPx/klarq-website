@@ -116,15 +116,24 @@ export function Footer() {
             <img className="h-full w-full" src="/images/logo-footer.svg" />
             <div className="flex flex-col">
               <div className="flex gap-[5px]">
-                <Link className="text-[16px] leading-[22px]" href={"/"}>
+                <Link
+                  className="flex items-center justify-center text-[12px] lg:text-[16px] leading-[16px] lg:leading-[22px]"
+                  href={"/"}
+                >
                   {`${t("footer.privacy-policy")}`}
                 </Link>
                 <span> | </span>
-                <Link className="text-[16px] leading-[22px]" href={"/"}>
+                <Link
+                  className="flex items-center justify-center text-[12px] lg:text-[16px] leading-[16px] lg:leading-[22px]"
+                  href={"/"}
+                >
                   {`${t("footer.legal-notice")}`}
                 </Link>
               </div>
-              <Link className="text-[16px] leading-[22px]" href={"/"}>
+              <Link
+                className="flex items-center text-[12px] lg:text-[16px] leading-[16px] lg:leading-[22px]"
+                href={"/"}
+              >
                 {`${t("footer.cookies-policy")}`}
               </Link>
             </div>

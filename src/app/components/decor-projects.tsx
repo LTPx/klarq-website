@@ -37,10 +37,10 @@ function DecorProjects(props: Props) {
         stagger={false}
         images={images}
       />
-      <div className="grid gap-[30px] lg:gap-[0px] grid-cols-1 lg:grid-cols-2 pt-[25px]">
+      <div className="grid gap-[22px] lg:gap-[0px] grid-cols-1 lg:grid-cols-2 pt-[10px] lg:pt-[25px]">
         <div className="flex pr-[15px] lg:pr-[0px] flex-col lg:justify-start justify-between flex-row">
           <div className="flex items-center justify-between w-full">
-            <h2 className="text-[16px] lg:text-[18px] leading-[22px]">{title}</h2>
+            <h2 className="text-[16px] lg:text-[18px] leading-[22px]">{title} <br className="lg:hidden"/> <span className="lg:hidden">{date}</span></h2>
             <button
               onClick={toggleExpanded}
               className="lg:hidden text-[24px] font-bold"
@@ -49,7 +49,8 @@ function DecorProjects(props: Props) {
               {isExpanded ? "−" : "+"}
             </button>
           </div>
-          <span className="text-[16px] lg:text-[18px] leading-[22px]">{date}</span>
+          <span className="hidden lg:block text-[16px] lg:text-[18px] leading-[22px]">{date}</span>
+          
         </div>
         <div
           className="hidden lg:block designer-description pr-[15px] lg:pr-[50px]"

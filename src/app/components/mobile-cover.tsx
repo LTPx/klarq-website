@@ -89,7 +89,7 @@ export default function MobileCover({
         </motion.div>
       )}
       <Link href={"/"}>
-        <div className="cursor-pointer fixed top-[10px] left-[15px] mix-blend-difference text-white z-[1000]">
+        <div className="cursor-pointer fixed top-[10px] left-[12px] mix-blend-difference text-white z-[1000]">
           <label className="uppercase tracking-[-0.02em] font-zoom cursor-pointer text-[38px] leading-[38px]">
             KLARQ <br /> {labelTitle}
           </label>

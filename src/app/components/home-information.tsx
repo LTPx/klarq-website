@@ -40,7 +40,7 @@ export function HomeInformation(props: Props) {
   }, []);
 
   return (
-    <section className="container md:pt-[5px]">
+    <section className="container pt-[3px] md:pt-[5px]">
       <div className="px-[15px] md:px-[40px] bg-green pt-[25px] md:pt-[45px]">
         {description && (
           <div

@@ -77,7 +77,7 @@ export function DesignersSection({ team }: Props) {
                     : "left",
               }}
             />
-            <span className="relative z-10 transition-colors duration-300">
+            <span className="relative top-[1px] z-10 transition-colors duration-300">
               {member.name.split(" ")[0]}
             </span>
           </button>
@@ -109,10 +109,10 @@ export function DesignersSection({ team }: Props) {
           {selectedMember && (
             <>
               <div>
-                <h3 className="text-[26px] leading-[26px] font-pp_light">
+                <h3 className="text-[26px] leading-[30px] lg:leading-[26px] font-pp_light">
                   {selectedMember.name}
                 </h3>
-                <p className="text-[18px] leading-[30px] font-pp_light">
+                <p className="text-[18px] leading-[26px] lg:leading-[30px] font-pp_light">
                   {selectedMember.profession}
                 </p>
               </div>
