@@ -18,18 +18,26 @@ export function Cover(props: Props) {
 
   useEffect(() => {
     const updateHeight = () => {
-      setHeight(`${window.innerHeight - 50}px`);
+      const vh =
+        typeof window !== "undefined" &&
+        window.visualViewport?.height
+          ? window.visualViewport.height
+          : window.innerHeight;
+      setHeight(`${vh - 50}px`);
     };
+  
     updateHeight();
+    window.visualViewport?.addEventListener("resize", updateHeight);
+    window.visualViewport?.addEventListener("scroll", updateHeight);
     window.addEventListener("resize", updateHeight);
-    window.addEventListener("scroll", updateHeight);
-
+  
     return () => {
+      window.visualViewport?.removeEventListener("resize", updateHeight);
+      window.visualViewport?.removeEventListener("scroll", updateHeight);
       window.removeEventListener("resize", updateHeight);
-      window.removeEventListener("scroll", updateHeight);
     };
   }, []);
-
+  
   return (
     <div className={`cover-video-container`}>
       {img && (

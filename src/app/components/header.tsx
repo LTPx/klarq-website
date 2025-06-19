@@ -113,14 +113,15 @@ export function Header({
     </div>
   );
 
+  const allowedSegments = ["decor", "architecture", "development"];
+  const pathSegments = currentPath.split("/").filter(Boolean);
+  const isAllowedRoute =
+    pathSegments.length === 1 && allowedSegments.includes(pathSegments[0]);
+
   return (
     <>
       <AnimatePresence>
-        {(!isMobile && currentPath === "/") ||
-        (isMobile &&
-          ["decor", "architecture", "development"].some((segment) =>
-            currentPath.includes(segment)
-          )) ? (
+        {(!isMobile && currentPath === "/") || (isMobile && isAllowedRoute) ? (
           hasScrolled && !isHoveringCard ? (
             <motion.header
               className="bg-gray container fixed bottom-0 z-[1002]"

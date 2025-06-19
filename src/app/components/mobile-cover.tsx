@@ -64,7 +64,7 @@ export default function MobileCover({
         <motion.div
           animate={{ y: locked ? "-100%" : "0%" }}
           transition={{ ease: "easeInOut", duration: 0.6 }}
-          className="absolute left-0 w-full flex justify-center items-center z-20 px-4"
+          className="absolute left-0 w-full flex justify-center items-center z-10 px-4"
           style={{
             top: "calc(var(--vh, 1vh) * 50)",
             height: "calc(var(--vh, 1vh) * 50)",
