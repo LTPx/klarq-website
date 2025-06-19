@@ -17,9 +17,8 @@ function DecorPageMobile({ decor_information }: Props) {
   const [isCoverHidden, setIsCoverHidden] = useState(false);
   const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
 
-  const lastScrollTime = useRef(0);
+  const lastTouchTime = useRef(0);
   const COOLDOWN_MS = 300;
-
   const startY = useRef(0);
   const releaseTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -27,17 +26,17 @@ function DecorPageMobile({ decor_information }: Props) {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-  
+
     requestAnimationFrame(() => {
       window.scrollTo(0, 0);
     });
-  
+
     setPhase(0);
     setProgress(0);
     setIsCoverHidden(false);
     setHasScrolled(false);
   }, [setHasScrolled]);
-  
+
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     startY.current = e.touches[0].clientY;
   }, []);
@@ -45,43 +44,32 @@ function DecorPageMobile({ decor_information }: Props) {
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
       const now = Date.now();
-      if (now - lastScrollTime.current < COOLDOWN_MS) return;
-
+      if (now - lastTouchTime.current < COOLDOWN_MS) return;
+  
       const currentY = e.touches[0].clientY;
       const deltaY = startY.current - currentY;
-
+  
+      // Deslizar hacia arriba (scroll hacia abajo)
       if (deltaY > 20 && phase < 2) {
         setPhase((prev) => (prev + 1) as 0 | 1 | 2);
-        lastScrollTime.current = now;
+        lastTouchTime.current = now;
         startY.current = currentY;
-      } else if (deltaY < -20 && phase > 0) {
-        setPhase((prev) => (prev - 1) as 0 | 1 | 2);
-        lastScrollTime.current = now;
+  
+      // Deslizar hacia abajo (scroll hacia arriba)
+      } else if (deltaY < -20) {
+        lastTouchTime.current = now;
         startY.current = currentY;
+  
+        // ⚠️ CAMBIO AQUÍ
+        // Si ya estamos en la parte inicial, forzamos mostrar cover completo
+        setPhase(0);
       }
     },
     [phase]
   );
-
-  const handleWheel = useCallback(
-    (e: WheelEvent) => {
-      const now = Date.now();
-      if (now - lastScrollTime.current < COOLDOWN_MS) return;
-
-      if (e.deltaY > 20 && phase < 2) {
-        setPhase((prev) => (prev + 1) as 0 | 1 | 2);
-        lastScrollTime.current = now;
-      } else if (e.deltaY < -20 && phase > 0) {
-        setPhase((prev) => (prev - 1) as 0 | 1 | 2);
-        lastScrollTime.current = now;
-      }
-    },
-    [phase]
-  );
+  
 
   useEffect(() => {
-    window.addEventListener("wheel", handleWheel, { passive: false });
-
     if (phase === 2) {
       if (releaseTimeout.current) clearTimeout(releaseTimeout.current);
       releaseTimeout.current = setTimeout(() => {
@@ -93,11 +81,10 @@ function DecorPageMobile({ decor_information }: Props) {
     }
 
     return () => {
-      window.removeEventListener("wheel", handleWheel);
       document.body.style.overflow = "";
       if (releaseTimeout.current) clearTimeout(releaseTimeout.current);
     };
-  }, [handleWheel, phase]);
+  }, [phase]);
 
   useEffect(() => {
     if (phase === 0) setProgress(0);
