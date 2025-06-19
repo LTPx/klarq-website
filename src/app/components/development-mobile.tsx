@@ -116,7 +116,7 @@ function DevelopmentMobile({ projects, information }: Props) {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, []);
 
-  const marginTop = isCoverHidden ? "-39.6vh" : "0";
+  const marginTop = isCoverHidden ? "calc(var(--vh, 1vh) * -39.6)" : "0";
 
   return (
     <div>
@@ -145,7 +145,8 @@ function DevelopmentMobile({ projects, information }: Props) {
           <Link
             key={item.project.id}
             href={`/architecture/${item.project.slug}`}
-            className={`block relative transition-opacity duration-500 h-[50dvh]`}
+            className={`block relative transition-opacity duration-500`}
+            style={{ height: "calc(var(--vh, 1vh) * 50)" }}
           >
             <div
               ref={(el) => {
