@@ -25,6 +25,7 @@ function DecorPageMobile({ decor_information }: Props) {
 
   // Resetea estados y store al montar
   useEffect(() => {
+    window.scrollTo(0, 0);
     setPhase(0);
     setProgress(0);
     setIsCoverHidden(false);
