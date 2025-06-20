@@ -124,7 +124,7 @@ function ArchitecturePageMobile({ projects, information }: Props) {
     <div>
       <div className="ArchitecturePageMobile">
         <div ref={firstProjectRef} data-index={0}>
-          <MobileCover
+          {/* <MobileCover
             img={getProxyImageUrl(
               firstProject.project.acf.architecture_projects.cover_project.url
             )}
@@ -133,7 +133,7 @@ function ArchitecturePageMobile({ projects, information }: Props) {
             linkSlug={`/architecture/${firstProject.project.slug}`}
             progress={progress}
             title={firstProject.project.acf.architecture_projects.title_project}
-          />
+          /> */}
         </div>
       </div>
       <div

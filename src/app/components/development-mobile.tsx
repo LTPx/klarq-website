@@ -124,7 +124,7 @@ function DevelopmentMobile({ projects, information }: Props) {
     <div>
       <div className="DevelopmentMobile">
         <div ref={firstProjectRef} data-index={0}>
-          <MobileCover
+          {/* <MobileCover
             img={getProxyImageUrl(
               firstProject.project.acf.development_projects.cover_project.url
             )}
@@ -133,7 +133,7 @@ function DevelopmentMobile({ projects, information }: Props) {
             linkSlug={`/development/${firstProject.project.slug}`}
             progress={progress}
             title={firstProject.project.acf.development_projects.title_project}
-          />
+          /> */}
         </div>
       </div>
       <div
