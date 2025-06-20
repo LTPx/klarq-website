@@ -37,7 +37,7 @@ export function Footer() {
   return (
     <div className="bg-gray">
       <footer
-        className={`flex flex-col lg:gap-[35px] bg-gray pt-[20px] lg:pt-[50px] px-[15px] lg:px-[40px] pb-[50px]`}
+        className={`flex flex-col lg:gap-[35px] bg-gray pt-[20px] lg:pt-[50px] px-[15px] lg:px-[40px] pb-[20px] lg:pb-[50px]`}
       >
         <label className="lg:hidden text-[26px] leading-[24px] lg:leading-[45px]">
           Contacta <br />
