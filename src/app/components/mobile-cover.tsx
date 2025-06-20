@@ -12,18 +12,18 @@ interface Props {
   };
   labelTitle: string;
   title?: string;
-  progress: number;
   linkSlug?: string;
   children?: ReactNode;
+  disableClamp?: boolean; 
 }
 
 export default function MobileCover({
   information,
   labelTitle,
   title,
-  progress,
   linkSlug,
   children,
+  disableClamp = false, 
 }: Props) {
   const { scrollY } = useScroll();
 
@@ -42,8 +42,9 @@ export default function MobileCover({
           </label>
         </div>
       </Link>
+
       <div
-        className="relative flex flex-col justify-between items-center px-[15px] py-[10px]  w-full bg-white z-10"
+        className="relative flex flex-col justify-between items-center px-[15px] py-[10px] w-full bg-white z-10"
         style={{ height: "calc(var(--vh, 1vh) * 90)" }}
       >
         <div className="w-full" style={{ minHeight: 87 }} />
@@ -55,7 +56,7 @@ export default function MobileCover({
           />
         )}
         <div
-          className="custom-line-clamp-4 text-cover text-base leading-relaxed text-black"
+          className={`${!disableClamp ? "custom-line-clamp-4" : ""} text-cover text-base leading-relaxed text-black`}
           dangerouslySetInnerHTML={{ __html: information.description }}
         />
       </div>
@@ -65,8 +66,6 @@ export default function MobileCover({
         style={{
           bottom: 0,
           translateY,
-          filter: "brightness(0.8)",
-          // backgroundColor: "transparent",
         }}
       >
         {children}
