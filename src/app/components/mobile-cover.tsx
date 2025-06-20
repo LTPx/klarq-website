@@ -1,97 +1,39 @@
 "use client";
 
-import { motion } from "framer-motion";
+import React, { ReactNode } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "@/navigation";
-import { getProxyImageUrl } from "@/utils/image_proxy";
-import { InformationWp } from "../_interfaces/wordpress-components";
-import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
-  information: InformationWp;
+  information: {
+    image?: { url: string };
+    description: string;
+  };
   labelTitle: string;
   title?: string;
   progress: number;
-  img: string;
   linkSlug?: string;
+  children?: ReactNode;
 }
 
 export default function MobileCover({
-  img,
   information,
   labelTitle,
   title,
   progress,
   linkSlug,
+  children,
 }: Props) {
-  const [locked, setLocked] = useState(false);
-  const titleMobileRef = useRef<HTMLLabelElement>(null);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    setLocked(progress >= 1);
-  }, [progress]);
-
-  useEffect(() => {
-    setLocked(false);
-  }, []);
-
-  useEffect(() => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  }, []);
+  const translateY = useTransform(
+    scrollY,
+    [0, 300],
+    [0, -window.innerHeight * 0.5]
+  );
 
   return (
     <div className="relative w-full">
-      <motion.div
-        animate={{
-          y: progress === 0 ? "0%" : progress === 0.5 ? "-50%" : "-100%",
-        }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full z-20 bg-white overflow-hidden"
-        style={{ height: "calc(var(--vh, 1vh) * 90)" }}
-      >
-        <div className="w-full" style={{ minHeight: 87 }} />
-        {information.image?.url && (
-          <motion.img
-            src={getProxyImageUrl(information.image.url)}
-            alt="team"
-            className="mobile-cover-image w-auto max-w-full"
-            animate={{ opacity: progress === 1 ? 0 : 1 }}
-            transition={{ ease: "easeInOut", duration: 0.6 }}
-          />
-        )}
-        <div
-          className="custom-line-clamp-4 text-cover text-base leading-relaxed text-black"
-          dangerouslySetInnerHTML={{ __html: information.description }}
-        />
-      </motion.div>
-      {title && (
-        <motion.div
-          animate={{ y: locked ? "-100%" : "0%" }}
-          transition={{ ease: "easeInOut", duration: 1 }}
-          className="absolute left-0 w-full flex justify-center items-center z-10 px-4"
-          style={{
-            top: "calc(var(--vh, 1vh) * 50)",
-            height: "calc(var(--vh, 1vh) * 50)",
-          }}
-        >
-          {linkSlug ? (
-            <Link
-              className="flex items-center justify-center h-full w-full"
-              href={linkSlug}
-            >
-              <h2 className="uppercase text-white text-center text-[14px] leading-[22px] tracking-[-0.02em]">
-                {title}
-              </h2>
-            </Link>
-          ) : (
-            <div className="flex items-center justify-center h-full w-full">
-              <h2 className="uppercase text-white text-center text-[14px] leading-[22px] tracking-[-0.02em]">
-                {title}
-              </h2>
-            </div>
-          )}
-        </motion.div>
-      )}
       <Link href={"/"}>
         <div className="cursor-pointer fixed top-[10px] left-[12px] mix-blend-difference text-white z-[1000]">
           <label className="uppercase tracking-[-0.02em] font-zoom cursor-pointer text-[38px] leading-[38px]">
@@ -99,18 +41,35 @@ export default function MobileCover({
           </label>
         </div>
       </Link>
-      <motion.img
-        animate={{ y: locked ? "-100%" : "0%" }}
-        transition={{ ease: "easeInOut", duration: 1 }}
-        src={img}
-        alt="architecture-cover"
-        className="absolute bottom-0 left-0 w-full object-cover z-0"
+      <div
+        className="relative flex flex-col justify-between items-center px-[15px] py-[10px]  w-full bg-white z-10"
+        style={{ height: "calc(var(--vh, 1vh) * 90)" }}
+      >
+        <div className="w-full" style={{ minHeight: 87 }} />
+        {information.image?.url && (
+          <img
+            src={information.image.url}
+            alt="team"
+            className="mobile-cover-image w-auto max-w-full"
+          />
+        )}
+        <div
+          className="custom-line-clamp-4 text-cover text-base leading-relaxed text-black"
+          dangerouslySetInnerHTML={{ __html: information.description }}
+        />
+      </div>
+
+      <motion.div
+        className="relative w-full z-20"
         style={{
-          top: "calc(var(--vh, 1vh) * 50)",
-          height: "calc(var(--vh, 1vh) * 50)",
+          bottom: 0,
+          translateY,
           filter: "brightness(0.8)",
+          // backgroundColor: "transparent",
         }}
-      />
+      >
+        {children}
+      </motion.div>
     </div>
   );
 }

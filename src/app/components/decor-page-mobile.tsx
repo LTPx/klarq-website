@@ -37,20 +37,20 @@ function DecorPageMobile({ decor_information }: Props) {
   }, []);
 
   useEffect(() => {
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
     }
   }, []);
-  
+
   useEffect(() => {
     const forceScrollTop = () => {
       window.scrollTo(0, 0);
       setTimeout(() => window.scrollTo(0, 0), 50);
       setTimeout(() => window.scrollTo(0, 0), 150);
     };
-  
+
     forceScrollTop();
-  
+
     setPhase(0);
     setProgress(0);
     setIsCoverHidden(false);
@@ -97,7 +97,7 @@ function DecorPageMobile({ decor_information }: Props) {
     window.addEventListener("touchstart", handleTouchStart, { passive: false });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
 
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
 
     if (phase === 2) {
       releaseTimeout = setTimeout(() => {
@@ -169,26 +169,24 @@ function DecorPageMobile({ decor_information }: Props) {
     <div>
       <div className="DecorPageMobile">
         <MobileCover
-          img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
           labelTitle="Decor"
           progress={progress}
-        />
-      </div>
-      <div
-        style={{
-          marginTop,
-          opacity: isCoverHidden ? 1 : 0,
-          transition: "opacity 1s ease",
-        }}
-      >
-        <div className="pt-[60px] pb-[100px]">
-          <CallToAction
-            categories={categories}
-            title={decor_information.page_content.title_banner}
-            defaultProjects={decor_information.page_content.projects_decor}
-          />
-        </div>
+        >
+          <div>
+            <img
+              src={getProxyImageUrl(decor_information.cover.url)}
+              className="h-[50vh] w-full object-cover"
+            />
+            <div className="pt-[60px] pb-[100px] mb-[-45vh]">
+              <CallToAction
+                categories={categories}
+                title={decor_information.page_content.title_banner}
+                defaultProjects={decor_information.page_content.projects_decor}
+              />
+            </div>
+          </div>
+        </MobileCover>
       </div>
     </div>
   );
