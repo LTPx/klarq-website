@@ -182,6 +182,13 @@ body.hide-native-cursor * {
 
 @media (max-width: 768px) {
 
+  .custom-line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 7; /* número de líneas a mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .mobile-cover-image {
     max-height: calc(var(--vh, 1vh) * 45);
   }
