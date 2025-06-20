@@ -88,7 +88,7 @@ function DecorPageMobile({ decor_information }: Props) {
       if (scrollCooldown || phase >= 2) return;
       const currentY = e.touches[0].clientY;
       const deltaY = startY - currentY;
-      if (deltaY > 30) {
+      if (deltaY > 15) {
         handleScrollStep();
       }
     };
