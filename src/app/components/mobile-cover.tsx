@@ -54,14 +54,13 @@ export default function MobileCover({
           <motion.img
             src={getProxyImageUrl(information.image.url)}
             alt="team"
-            className="w-auto max-w-full"
-            style={{ maxHeight: "calc(var(--vh, 1vh) * 40)" }}
+            className="mobile-cover-image w-auto max-w-full"
             animate={{ opacity: progress === 1 ? 0 : 1 }}
             transition={{ ease: "easeInOut", duration: 0.6 }}
           />
         )}
         <div
-          className="text-base leading-relaxed text-black"
+          className="text-cover text-base leading-relaxed text-black"
           dangerouslySetInnerHTML={{ __html: information.description }}
         />
       </motion.div>
