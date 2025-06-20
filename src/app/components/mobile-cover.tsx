@@ -34,9 +34,20 @@ export default function MobileCover({
     setLocked(false);
   }, []);
 
+  // useEffect(() => {
+  //   const vh = window.innerHeight * 0.01;
+  //   document.documentElement.style.setProperty("--vh", `${vh}px`);
+  // }, []);
+
   useEffect(() => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
+    const setVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+  
+    setVh();
+    window.addEventListener("resize", setVh);
+    return () => window.removeEventListener("resize", setVh);
   }, []);
 
   return (
@@ -54,7 +65,8 @@ export default function MobileCover({
           <motion.img
             src={getProxyImageUrl(information.image.url)}
             alt="team"
-            className="max-h-[40vh] w-auto max-w-full"
+            className="w-auto max-w-full"
+            style={{ maxHeight: "calc(var(--vh, 1vh) * 40)" }}
             animate={{ opacity: progress === 1 ? 0 : 1 }}
             transition={{ ease: "easeInOut", duration: 0.6 }}
           />
