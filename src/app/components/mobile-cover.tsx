@@ -3,6 +3,7 @@
 import React, { ReactNode } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "@/navigation";
+import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface Props {
   information: {
@@ -48,7 +49,7 @@ export default function MobileCover({
         <div className="w-full" style={{ minHeight: 87 }} />
         {information.image?.url && (
           <img
-            src={information.image.url}
+            src={getProxyImageUrl(information.image.url)}
             alt="team"
             className="mobile-cover-image w-auto max-w-full"
           />

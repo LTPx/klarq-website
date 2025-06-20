@@ -165,6 +165,11 @@ function DecorPageMobile({ decor_information }: Props) {
 
   const marginTop = isCoverHidden ? "-39vh" : "calc(var(--vh, 1vh) * 10)";
 
+  useEffect(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }, []);
+  
   return (
     <div>
       <div className="DecorPageMobile">
@@ -176,7 +181,10 @@ function DecorPageMobile({ decor_information }: Props) {
           <div>
             <img
               src={getProxyImageUrl(decor_information.cover.url)}
-              className="h-[50vh] w-full object-cover"
+              style={{
+                height: "calc(var(--vh, 1vh) * 50)",
+              }}
+              className="w-full object-cover"
             />
             <div className="pt-[60px] pb-[100px] mb-[-45vh]">
               <CallToAction
