@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import App from "./app";
 import "tailwindcss/tailwind.css";
 import "../global.css";
-import Head from "next/head";
 
 export async function generateMetadata({
   params: { locale },
@@ -21,6 +20,12 @@ export async function generateMetadata({
       siteName: "",
       locale: locale,
     },
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      maximumScale: 1,
+      userScalable: false, // 👈 esto bloquea el zoom
+    },
   };
 }
 
@@ -35,12 +40,6 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-        />
-      </Head>
       <body>
         <NextIntlClientProvider messages={messages}>
           <App locale={locale}>{children}</App>
