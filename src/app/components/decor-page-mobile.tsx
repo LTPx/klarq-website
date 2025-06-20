@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import { useScrollStore } from "../store/scroll-store";
+import { usePathname } from "next/navigation";
 
 interface Props {
   decor_information: DecorPageWp;
@@ -16,6 +17,7 @@ function DecorPageMobile({ decor_information }: Props) {
   const [progress, setProgress] = useState(0);
   const [isCoverHidden, setIsCoverHidden] = useState(false);
   const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,22 +31,17 @@ function DecorPageMobile({ decor_information }: Props) {
   }, [phase]);
 
   useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-  
-    const timeout = setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "auto" });
-  
-      setPhase(0);
-      setProgress(0);
-      setIsCoverHidden(false);
-      setHasScrolled(false);
-    }, 500); // 👈 espera 400ms antes de hacer todo
-  
-    return () => clearTimeout(timeout);
-  }, [setHasScrolled]);
-  
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }, []);
+
+  useEffect(() => {
+    setPhase(0);
+    setProgress(0);
+    setIsCoverHidden(false);
+    setHasScrolled(false);
+    document.body.style.overflow = "";
+  }, [pathname]);
 
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
@@ -56,7 +53,7 @@ function DecorPageMobile({ decor_information }: Props) {
       scrollCooldown = true;
       setTimeout(() => {
         scrollCooldown = false;
-      }, 1000); // cooldown para evitar múltiples saltos
+      }, 1000);
     };
 
     const handleScrollStep = () => {
@@ -78,7 +75,6 @@ function DecorPageMobile({ decor_information }: Props) {
       const currentY = e.touches[0].clientY;
       const deltaY = startY - currentY;
       if (deltaY > 30) {
-        // umbral más alto para scroll hacia arriba
         handleScrollStep();
       }
     };
@@ -152,11 +148,6 @@ function DecorPageMobile({ decor_information }: Props) {
     })
     .filter((item): item is CategoryWithProjects => item !== null);
 
-  useEffect(() => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  }, []);
-
   const marginTop = isCoverHidden ? "-39vh" : "calc(var(--vh, 1vh) * 10)";
 
   return (
@@ -173,7 +164,7 @@ function DecorPageMobile({ decor_information }: Props) {
         style={{
           marginTop,
           opacity: isCoverHidden ? 1 : 0,
-          transition: " opacity 0.5s ease",
+          transition: "opacity 0.5s ease",
         }}
       >
         <div className="pt-[60px] pb-[100px]">
