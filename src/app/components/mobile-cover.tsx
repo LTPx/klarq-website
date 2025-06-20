@@ -29,7 +29,7 @@ export default function MobileCover({
 
   const translateY = useTransform(
     scrollY,
-    [0, 300],
+    [0, 700],
     [0, -window.innerHeight * 0.5]
   );
 
