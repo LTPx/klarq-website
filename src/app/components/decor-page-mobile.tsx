@@ -23,6 +23,7 @@ function DecorPageMobile({ decor_information }: Props) {
     const handleScroll = () => {
       if (window.scrollY === 0 && phase !== 0) {
         setPhase(0);
+        setHasScrolled(false);
       }
     };
 
