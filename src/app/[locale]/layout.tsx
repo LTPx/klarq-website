@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import App from "./app";
 import "tailwindcss/tailwind.css";
 import "../global.css";
+import Head from "next/head";
 
 export async function generateMetadata({
   params: { locale },
@@ -31,9 +32,15 @@ export default async function LocaleLayout({
   params: { locale: "en" | "es" | "de" };
 }) {
   const messages = await getMessages({ locale });
-  
+
   return (
     <html lang={locale}>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+      </Head>
       <body>
         <NextIntlClientProvider messages={messages}>
           <App locale={locale}>{children}</App>
