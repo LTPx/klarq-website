@@ -110,7 +110,10 @@ function ArchitecturePageMobile({ projects, information }: Props) {
                   </div>
                 </Link>
               </div>
-              <div className="flex flex-col gap-[3px] mb-[-50vh]">
+              <div
+               className="flex flex-col gap-[3px]"
+               style={{ marginBottom: "calc(var(--vh, 1vh) * -50)" }}
+               >
                 {restProjects.map((item, index) => (
                   <Link
                     key={item.project.id}
