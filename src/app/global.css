@@ -183,7 +183,7 @@ body.hide-native-cursor * {
 @media (max-width: 768px) {
 
   .mobile-cover-image {
-    max-height: calc(var(--vh, 1vh) * 40);
+    max-height: calc(var(--vh, 1vh) * 45);
   }
 
   .text-cover {
