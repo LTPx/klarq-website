@@ -88,7 +88,11 @@ function CallToAction(props: Props) {
   return (
     <div>
       <div className="px-[15px] lg:px-[0px] flex flex-col gap-[60px] lg:gap-[45px] justify-center items-center">
-   
+        <div
+          // data-aos="fade-up"
+          className="call-title"
+          dangerouslySetInnerHTML={{ __html: mergeParagraphs(title, isMobile) }}
+        />
         <div
           className="flex flex-wrap justify-center lg:flex-row gap-[15px]"
           data-aos="fade-up"
