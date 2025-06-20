@@ -46,7 +46,7 @@ export default function MobileCover({
           y: progress === 0 ? "0%" : progress === 0.5 ? "-50%" : "-100%",
         }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full z-20 bg-white"
+        className="relative flex flex-col justify-between items-center px-[15px] py-[10px] top-0 left-0 w-full z-20 bg-white overflow-hidden"
         style={{ height: "calc(var(--vh, 1vh) * 90)" }}
       >
         <div className="w-full" style={{ minHeight: 87 }} />
@@ -60,7 +60,7 @@ export default function MobileCover({
           />
         )}
         <div
-          className="text-cover text-base leading-relaxed text-black"
+          className="custom-line-clamp-4 text-cover text-base leading-relaxed text-black"
           dangerouslySetInnerHTML={{ __html: information.description }}
         />
       </motion.div>

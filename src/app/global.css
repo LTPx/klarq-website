@@ -277,6 +277,17 @@ body.hide-native-cursor * {
 
 @media (max-width: 375px) and (max-height: 667px) {
   .mobile-cover-image {
-    max-height: calc(var(--vh, 1vh) * 40);
+    max-height: calc(var(--vh, 1vh) * 50);
   }
+
+  .custom-line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* número de líneas a mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* .text-cover {
+    padding-top: 15px;
+  } */
 }
