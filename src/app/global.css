@@ -258,3 +258,20 @@ body.hide-native-cursor * {
   width: auto; /* mismo ancho para evitar layout shift */
   height: 365px;
 }
+
+
+@media (max-width: 375px) and (max-height: 667px) {
+   
+  .call-title {
+    p {
+      font-size: 50px;
+      line-height: 37px;
+      text-align: center;
+    }
+    div {
+      font-size: 50px;
+      line-height: 37px;
+      text-align: center;
+    }
+  }
+}
