@@ -7,6 +7,7 @@ import { getProxyImageUrl } from "@/utils/image_proxy";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import DesktopCover from "./cover-desktop";
+import { usePathname } from "next/navigation";
 
 interface Props {
   decor_information: DecorPageWp;
@@ -16,8 +17,22 @@ function DecorPage({ decor_information }: Props) {
   const [state, setState] = useState({ progress: 0, isExpanded: false });
   const ticking = useRef(false);
 
+  const pathname = usePathname();
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const forceScrollTop = () => {
+      window.scrollTo(0, 0);
+      setTimeout(() => window.scrollTo(0, 0), 50);
+      setTimeout(() => window.scrollTo(0, 0), 150);
+    };
+
+    forceScrollTop();
+  }, [pathname]);
+
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
   }, []);
 
   useEffect(() => {

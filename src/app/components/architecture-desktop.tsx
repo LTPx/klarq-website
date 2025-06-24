@@ -5,7 +5,7 @@ import { getProxyImageUrl } from "@/utils/image_proxy";
 import DesktopCover from "./cover-desktop";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
-import { Link } from "@/navigation";
+import { Link, usePathname } from "@/navigation";
 
 interface Props {
   projects: {
@@ -24,6 +24,23 @@ function ArchitectureDesktop({ projects, information }: Props) {
   const [state, setState] = useState({ progress: 0, isExpanded: false });
   const ticking = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const forceScrollTop = () => {
+      window.scrollTo(0, 0);
+      setTimeout(() => window.scrollTo(0, 0), 50);
+      setTimeout(() => window.scrollTo(0, 0), 150);
+    };
+
+    forceScrollTop();
+  }, [pathname]);
+
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
 
   const [firstProject, restProjects] = useMemo(() => {
     return [projects[0], projects.slice(1)];

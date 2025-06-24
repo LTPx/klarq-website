@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 type CarouselProjectsProps = {
   className?: string;
@@ -11,81 +13,21 @@ type CarouselProjectsProps = {
   slidesToScroll?: number;
   slidesNumber: number;
   hideArrows?: boolean;
-  useDefaultArrows?: boolean;
 };
-
-function SampleDefaultNextArrow(props: any) {
-  const { className, style, onClick, disabled } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#B77F1E",
-        height: "44px",
-        zIndex: 500,
-        width: "44px",
-        cursor: disabled && "default",
-        opacity: disabled ? 0.5 : 1,
-      }}
-      onClick={onClick}
-    >
-      <img
-        src="/images/right-arrow-white.svg"
-        style={{
-          ...style,
-          width: "24px",
-          height: "24px",
-        }}
-      />
-    </div>
-  );
-}
-
-function SampleDefaultPrevArrow(props: any) {
-  const { className, style, onClick, disabled } = props;
-  return (
-    <div
-      className={`${className} ${disabled ? "opacity-100" : ""}`}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#B77F1E",
-        height: "44px",
-        zIndex: 500,
-        width: "44px",
-        cursor: disabled && "default",
-        opacity: disabled ? 0.5 : 1,
-      }}
-      onClick={onClick}
-    >
-      <img
-        src="/images/left-arrow-white.svg"
-        style={{
-          ...style,
-          width: "24px",
-          height: "24px",
-        }}
-      />
-    </div>
-  );
-}
 
 function SampleNextArrow(props: any) {
   const { className, style, onClick, disabled } = props;
   return (
-    <div className="absolute bottom-[-35px] lg:bottom-[-40px] right-0">
+    <div className="absolute top-[-55px] right-0">
       <img
-        src="/images/icons/arrow-right.svg"
+        src="/images/right.svg"
         className={`${className} ${disabled ? "opacity-0" : ""}`}
         style={{
           ...style,
-          right: "10px",
+          // top: "-633.2px",
+          right: "0px",
           position: "relative",
-          width: "45px",
+          width: "22px",
           zIndex: 500,
           cursor: disabled && "default",
         }}
@@ -98,15 +40,14 @@ function SampleNextArrow(props: any) {
 function SamplePrevArrow(props: any) {
   const { className, style, onClick, disabled } = props;
   return (
-    <div className="absolute bottom-[-35px] lg:bottom-[-40px] left-0">
+    <div className="absolute top-[-54.5px] right-[5px]">
       <img
-        src="/images/icons/arrow-left.svg"
+        src="/images/left.svg"
         className={`${className} ${disabled ? "opacity-0" : ""}`}
         style={{
           ...style,
-          left: "0px",
           position: "relative",
-          width: "45px",
+          width: "22px",
           zIndex: 500,
           cursor: disabled && "default",
         }}
@@ -117,13 +58,7 @@ function SamplePrevArrow(props: any) {
 }
 
 export function CarouselProjects(props: CarouselProjectsProps) {
-  const {
-    children,
-    slidesToScroll,
-    slidesNumber,
-    hideArrows,
-    useDefaultArrows,
-  } = props;
+  const { children, slidesToScroll, slidesNumber, hideArrows } = props;
   const [isMobile, setIsMobile] = useState(false);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
@@ -169,16 +104,8 @@ export function CarouselProjects(props: CarouselProjectsProps) {
     ...(hideArrows
       ? {}
       : {
-          nextArrow: useDefaultArrows ? (
-            <SampleDefaultNextArrow disabled={isNextDisabled} />
-          ) : (
-            <SampleNextArrow disabled={isNextDisabled} />
-          ),
-          prevArrow: useDefaultArrows ? (
-            <SampleDefaultPrevArrow disabled={isPrevDisabled} />
-          ) : (
-            <SamplePrevArrow disabled={isPrevDisabled} />
-          ),
+          nextArrow: <SampleNextArrow disabled={isNextDisabled} />,
+          prevArrow: <SamplePrevArrow disabled={isPrevDisabled} />,
         }),
     responsive: [
       {
@@ -211,7 +138,7 @@ export function CarouselProjects(props: CarouselProjectsProps) {
   ) : (
     <div className={`grid grid-cols-3 gap-[5px]`}>
       {React.Children.map(children, (child, index) => (
-        <div  key={index} className="col-span-1">
+        <div key={index} className="col-span-1">
           {child}
         </div>
       ))}
