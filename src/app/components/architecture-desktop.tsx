@@ -155,7 +155,7 @@ function ArchitectureDesktop({ projects, information }: Props) {
             state.isExpanded ? "opacity-100" : "opacity-0"
           }`}
         >
-          <span className="text-[18px] leading-[22px] tracking-[-0.02em]">
+          <span className="uppercase text-[18px] leading-[22px] tracking-[-0.02em]">
             {currentTitle || firstProject.title}, {currentDate}
           </span>
         </div>
