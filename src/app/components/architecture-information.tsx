@@ -32,7 +32,7 @@ function ArchitectureInformation(props: Props) {
           className="flex lg:flex-col lg:justify-start justify-between"
           data-aos="fade-up"
         >
-          <h2 className="text-[16px] leading-[22px] lg:text-[35px] lg:leading-[46px]">
+          <h2 className="uppercase lg:normal-case text-[16px] leading-[22px] lg:text-[35px] lg:leading-[46px]">
             {title}
           </h2>
           <span className="text-[16px] leading-[22px] lg:text-[18px] lg:leading-[26px] tracking-[-0.03em]">
