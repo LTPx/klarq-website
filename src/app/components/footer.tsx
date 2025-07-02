@@ -40,8 +40,8 @@ export function Footer() {
         className={`flex flex-col lg:gap-[35px] bg-gray pt-[20px] lg:pt-[50px] px-[15px] lg:px-[40px] pb-[20px] lg:pb-[50px]`}
       >
         <label className="lg:hidden text-[26px] leading-[24px] lg:leading-[45px]">
-          Contacta <br />
-          con nosotros:
+          Nos encantaría <br />
+          conocerte
         </label>
         <div className="pt-[24px] lg:pt-[0px] grid grid-rows gap-[7px] lg:gap-[0px] lg:grid-cols-10">
           <div className="col-span-3">
