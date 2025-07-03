@@ -8,6 +8,10 @@
     "development": "Development",
     "shop": "Shop"
   },
+  "home": {
+    "see_decor": "Ver Decor",
+    "see_architecture": "Ver Architecture"
+  },
   "menu": {
     "publications": "Publicaciones",
     "contact": "Contacto",

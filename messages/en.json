@@ -2,6 +2,10 @@
   "HomePage": {
     "title": "Hello world!"
   },
+  "home": {
+    "see_decor": "View Decor",
+    "see_architecture": "View Architecture"
+  },
   "header": {
     "architecture": "Architecture",
     "decor": "Decor",

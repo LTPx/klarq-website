@@ -4,6 +4,8 @@ import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import HoverFillButton from "./hover-btn";
+import { useLocale } from "next-intl";
+import LanguageSelector from "./selector";
 
 interface Props {
   showContact: boolean;
@@ -14,6 +16,7 @@ export function DesktopMenu(props: Props) {
   const { showContact, setShowContact } = props;
 
   const t = useTranslations();
+  const locale = useLocale();
   const pathname = usePathname();
 
   return (
@@ -60,10 +63,7 @@ export function DesktopMenu(props: Props) {
               className="text-center text-[30px] leading-[37px] lg:text-[40px] lg:leading-[60px]"
               onClick={() => setShowContact(false)}
             >{`${t("menu.contact")}`}</Link>
-            <Link
-              href={""}
-              className="text-center text-[30px] leading-[37px] lg:text-[40px] lg:leading-[60px]"
-            >{`${t("menu.spanish")}`}</Link>
+            <LanguageSelector />
           </div>
           <div className="flex flex-col items-center gap-[15px]">
             <span className="text-center text-[16px] leading-[22px]">{`${t(

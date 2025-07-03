@@ -17,22 +17,28 @@ export function SliderBrand(props: Props) {
     return (
       <div className="relative h-[90px] flex justify-center items-center">
         <div className="flex flex-col gap-[10px] justify-center items-center h-full">
-          <p className="text-[26px] leading-[52px]">
-            {brands[0].title}
-          </p>
+          <p className="text-[26px] leading-[52px]">{brands[0].title}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`relative h-[90px] flex justify-center items-center ${className}`}>
+    <div
+      className={`relative h-[90px] flex justify-center items-center ${className}`}
+    >
       <Marquee gradient={false} speed={speed} pauseOnHover={true}>
-        {brands.map((brand, index) => (
-          <span key={index} className="text-[26px] leading-[52px] whitespace-nowrap">
-            {brand.title}<span className="px-4">|</span>
-          </span>
-        ))}
+        {[...Array(3)]
+          .flatMap(() => brands)
+          .map((brand, index) => (
+            <span
+              key={`${brand.title}-${index}`}
+              className="text-[26px] leading-[52px] whitespace-nowrap"
+            >
+              {brand.title}
+              <span className="px-4">|</span>
+            </span>
+          ))}
       </Marquee>
     </div>
   );

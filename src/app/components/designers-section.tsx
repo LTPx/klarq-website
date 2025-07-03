@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Link } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 interface TeamMember {
   name: string;
@@ -21,6 +22,7 @@ interface Props {
 
 export function DesignersSection({ team }: Props) {
   const members = [team.first_team_member, team.second_team_member];
+  const t = useTranslations();
 
   const [fixedIndex, setFixedIndex] = useState<number | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -141,7 +143,9 @@ export function DesignersSection({ team }: Props) {
                     className="underline"
                     href={selectedIndex === 0 ? "/decor" : "/architecture"}
                   >
-                    {selectedIndex === 0 ? "Ver Decor" : "Ver Architecture"}
+                    {selectedIndex === 0
+                      ? `${t("home.see_decor")}`
+                      : `${t("home.see_architecture")}`}
                   </Link>
                 </div>
               </div>
