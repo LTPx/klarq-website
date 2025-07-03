@@ -33,7 +33,7 @@ function ArchitectureInformation(props: Props) {
           data-aos="fade-up"
         >
           <h2 className="uppercase lg:normal-case text-[16px] leading-[22px] lg:text-[35px] lg:leading-[46px]">
-            {title}
+            {toTitleCase(title)}
           </h2>
           <span className="text-[16px] leading-[22px] lg:text-[18px] lg:leading-[26px] tracking-[-0.03em]">
             {date}
@@ -56,3 +56,12 @@ function ArchitectureInformation(props: Props) {
 }
 
 export default ArchitectureInformation;
+
+function toTitleCase(str: string) {
+  if (!str) return "";
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
