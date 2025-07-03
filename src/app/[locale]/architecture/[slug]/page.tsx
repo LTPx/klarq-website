@@ -6,6 +6,7 @@ import ProjectCard from "@/app/components/project-card";
 import { Link } from "@/navigation";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({
   params: { locale, slug },
@@ -83,6 +84,8 @@ async function ArchitectureSlugPage(nextParams: {
     params: { locale, slug },
   } = nextParams;
 
+  const t = await getTranslations();
+
   const data = await getProjectChildBySlug(slug, locale);
   const page = "architecture";
   const parentSlug =
@@ -129,7 +132,7 @@ async function ArchitectureSlugPage(nextParams: {
       <section className="flex flex-col gap-[40px] pt-[150px] px-[15px] lg:px-[40px] pb-[40px]">
         <div data-aos="fade-up" className="flex flex-col gap-[8px]">
           <div className="border-[1px] border-t-black "></div>
-          <span className="text-[18px] leading-[28px]">More projects</span>
+          <span className="text-[18px] leading-[28px]">{t("home.more")}</span>
         </div>
         <CarouselProjects slidesNumber={3}>
           {allProjects

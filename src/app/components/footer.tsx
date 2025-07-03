@@ -23,12 +23,14 @@ export function Footer() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const noShowFooter =
-    pathname?.includes("/publications") ||
-    pathname?.includes("/contact") ||
-    (pathname === "/es/architecture" && !isMobile) ||
-    (pathname === "/es/development" && !isMobile) ||
-    pathname === "/en/architecture";
+const noShowFooter =
+  pathname?.includes("/publications") ||
+  pathname?.includes("/contact") ||
+  ((!isMobile && pathname === "/es/architecture") ||
+    (!isMobile && pathname === "/es/development") ||
+    (!isMobile && pathname === "/en/architecture") ||
+    (!isMobile && pathname === "/en/development"));
+
 
   if (noShowFooter) {
     return null;

@@ -6,6 +6,7 @@ import ProjectCard from "@/app/components/project-card";
 import { Link } from "@/navigation";
 import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({
   params: { locale, slug },
@@ -20,7 +21,6 @@ export async function generateMetadata({
       : "english-pages";
   const page = await getChildDevelopmentPage(slug, locale, parentSlug);
   const origin = "https://klarq.eu";
-  console.log(page);
   if (page) {
     const { yoast_seo } = page;
     const { seo_title, seo_desc, seo_keywords, seo_canonical } = yoast_seo;
@@ -96,7 +96,7 @@ async function DevelopmentSlugPage(nextParams: {
       : "english-pages";
   const page = "development";
   const data = await getChildDevelopmentPage(slug, locale, parentSlug);
-
+  const t = await getTranslations();
   const allProjects = await getChildPages(page, locale, parentSlug);
 
   const { acf } = data;
@@ -135,7 +135,7 @@ async function DevelopmentSlugPage(nextParams: {
       <section className="flex flex-col gap-[40px] pt-[150px] px-[15px] lg:px-[40px] pb-[40px]">
         <div className="flex flex-col gap-[8px]">
           <div className="border-[1px] border-t-black "></div>
-          <span className="text-[18px] leading-[28px]">More projects</span>
+          <span className="text-[18px] leading-[28px]">{t("home.more")}</span>
         </div>
         <CarouselProjects slidesNumber={3}>
           {allProjects

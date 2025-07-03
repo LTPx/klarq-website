@@ -10,13 +10,14 @@
   },
   "home": {
     "see_decor": "Ver Decor",
-    "see_architecture": "Ver Architecture"
+    "see_architecture": "Ver Architecture",
+    "more": "Más proyectos"
   },
   "menu": {
     "publications": "Publicaciones",
     "contact": "Contacto",
     "spanish": "Español",
-    "english": "English",
+    "english": "Inglés",
     "follow": "Síguenos en Instagram:",
     "architecture": "Arquitectura",
     "decor": "Decoración",

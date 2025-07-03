@@ -13,7 +13,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const page = await getWordPressCustomPage(locale, "contact");
   const origin = "https://klarq.eu";
-  console.log(page);
   if (page) {
     const { yoast_seo } = page;
     const { seo_title, seo_desc, seo_keywords, seo_canonical } = yoast_seo;

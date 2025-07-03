@@ -27,7 +27,10 @@ function LogoAnimate() {
   const isAllowedRoute =
     pathname === "/es/architecture" ||
     pathname === "/es/decor" ||
-    pathname === "/es/development";
+    pathname === "/es/development" ||
+    pathname === "/en/architecture" ||
+    pathname === "/en/decor" ||
+    pathname === "/en/development";
 
   if (!isAllowedRoute || windowHeight === null || windowWidth === null)
     return null;

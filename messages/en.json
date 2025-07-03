@@ -4,7 +4,8 @@
   },
   "home": {
     "see_decor": "View Decor",
-    "see_architecture": "View Architecture"
+    "see_architecture": "View Architecture",
+    "more": "More projects"
   },
   "header": {
     "architecture": "Architecture",
