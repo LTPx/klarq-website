@@ -6,6 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import GalleryProjects from "./gallery";
 import { Link } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 interface Props {
   publications_information: PublicationsPageWp;
@@ -20,6 +21,7 @@ function PublicationsPage({ publications_information }: Props) {
       once: false,
     });
   }, []);
+  const t = useTranslations();
 
   return (
     <div className="h-[calc(100dvh-50px)] flex justify-center items-center">
@@ -39,7 +41,7 @@ function PublicationsPage({ publications_information }: Props) {
       </Link>
       <div className="hidden lg:block fixed top-[35px] right-[35px]">
         <label className="font-zoom text-[66px] leading-[46px] tracking-[-0.03em] mix-blend-difference">
-          PUBLICACIONES
+          {t("home.publications")}
         </label>
       </div>
       <section className="pt-[80px]">
