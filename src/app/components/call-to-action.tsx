@@ -129,6 +129,16 @@ function CallToAction(props: Props) {
                   >
                     {decodeHtml(category.name)}
                   </span>
+                  {isSelected && (
+                    <img
+                      src="/images/close-tag.svg"
+                      className="ml-[15px] z-10 cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedCategory(null);
+                      }}
+                    />
+                  )}
                 </button>
               </div>
             );
