@@ -20,6 +20,9 @@ export async function generateMetadata({
       siteName: "",
       locale: locale,
     },
+    icons: {
+      icon: "/images/icon-logo.png",
+    },
   };
 }
 
@@ -35,7 +38,10 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
       </head>
       <body>
         <NextIntlClientProvider messages={messages}>
