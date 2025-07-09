@@ -27,7 +27,7 @@ export function SliderBrand(props: Props) {
     <div
       className={`relative h-[90px] flex justify-center items-center ${className}`}
     >
-      <Marquee gradient={false} speed={speed} pauseOnHover={true}>
+      <Marquee gradient={false} speed={speed} pauseOnHover={false}>
         {[...Array(3)]
           .flatMap(() => brands)
           .map((brand, index) => (

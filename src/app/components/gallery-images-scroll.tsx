@@ -16,25 +16,26 @@ interface Props {
   aosDuration?: number;
 }
 
-function GalleryImagesScroll({ 
-  images = [], 
-  imageClassName = "h-[422px] lg:h-[630px]", 
-  animationType = "fade-up", 
-  stagger = true, 
-  baseDelay = 400, 
-  aosDuration = 800 
+function GalleryImagesScroll({
+  images = [],
+  imageClassName = "h-[422px] lg:h-[630px]",
+  animationType = "fade-up",
+  stagger = true,
+  baseDelay = 400,
+  aosDuration = 800,
 }: Props) {
   useEffect(() => {
     AOS.init({ duration: aosDuration, once: true, easing: "ease-out-cubic" });
   }, [aosDuration]);
 
-  if (!images.length) return <p>No hay imágenes para mostrar</p>;
+  if (!images.length) return <p></p>;
 
   return (
     <div className="w-full">
       <div
         className="flex overflow-y-hidden overflow-x-auto scrollbar-hide gap-[3px] lg:gap-[5px] no-scrollbar"
-        style={{ cursor: "grab" }}>
+        style={{ cursor: "grab" }}
+      >
         {images.map((src, index) => (
           <img
             key={index}
