@@ -19,12 +19,14 @@ interface Props {
 function DevelopmentDesktop({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [scrollEffect, setScrollEffect] = useState(false);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const firstProjectRef = useRef<HTMLDivElement | null>(null);
   const [state, setState] = useState({ progress: 0, isExpanded: false });
   const ticking = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const [showTitle, setShowTitle] = useState(false);
 
   useEffect(() => {
     const forceScrollTop = () => {
@@ -94,7 +96,7 @@ function DevelopmentDesktop({ projects, information }: Props) {
             0,
             Math.min(1, prev.progress + e.deltaY * 0.0005)
           );
-
+          setShowTitle(false);
           return {
             progress,
             isExpanded: progress >= 1,
@@ -114,8 +116,9 @@ function DevelopmentDesktop({ projects, information }: Props) {
       };
     } else {
       releaseTimeout = setTimeout(() => {
-        document.body.style.overflow = "";
-      }, 700);
+        setScrollEffect(true);
+      }, 600);
+      setShowTitle(true);
     }
 
     return () => {
@@ -130,12 +133,14 @@ function DevelopmentDesktop({ projects, information }: Props) {
 
     const onScroll = () => {
       if (container.scrollTop <= 0) {
-        setState({
-          progress: 1,
-          isExpanded: false,
-        });
-
-        document.body.style.overflow = "hidden";
+        setTimeout(() => {
+          setState({
+            progress: 1,
+            isExpanded: false,
+          });
+          document.body.style.overflow = "hidden";
+        }, 0);
+        setScrollEffect(false);
       }
     };
 
@@ -149,8 +154,8 @@ function DevelopmentDesktop({ projects, information }: Props) {
   return (
     <div
       ref={scrollContainerRef}
-      className={`relative h-[calc(100dvh-50px)] flex flex-col gap-[3px] ${
-        state.isExpanded
+      className={`relative h-[calc(100vh-50px)] flex flex-col gap-[3px] ${
+        scrollEffect
           ? "overflow-y-scroll snap-y snap-mandatory"
           : "overflow-y-hidden"
       }`}
@@ -169,7 +174,7 @@ function DevelopmentDesktop({ projects, information }: Props) {
       <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
         <div
           className={`text-white transition-opacity duration-700 ease-in-out ${
-            state.isExpanded ? "opacity-100" : "opacity-0"
+            showTitle ? "opacity-100" : "opacity-0"
           }`}
         >
           <span className="uppercase text-[18px] leading-[22px] tracking-[-0.02em]">
@@ -186,7 +191,7 @@ function DevelopmentDesktop({ projects, information }: Props) {
               state.isExpanded
                 ? "snap-start opacity-100 pointer-events-auto"
                 : "opacity-0 pointer-events-none"
-            } h-[calc(100dvh-50px)]`}
+            } h-[calc(100vh-50px)]`}
           >
             <div
               ref={(el) => {

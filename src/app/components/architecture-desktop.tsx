@@ -19,6 +19,8 @@ interface Props {
 function ArchitectureDesktop({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [scrollEffect, setScrollEffect] = useState(false);
+  const [showTitle, setShowTitle] = useState(false);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const firstProjectRef = useRef<HTMLDivElement | null>(null);
   const [state, setState] = useState({ progress: 0, isExpanded: false });
@@ -94,7 +96,7 @@ function ArchitectureDesktop({ projects, information }: Props) {
             0,
             Math.min(1, prev.progress + e.deltaY * 0.0005)
           );
-
+          setShowTitle(false);
           return {
             progress,
             isExpanded: progress >= 1,
@@ -107,15 +109,15 @@ function ArchitectureDesktop({ projects, information }: Props) {
     if (!state.isExpanded) {
       window.addEventListener("wheel", onWheel, { passive: false });
       document.body.style.overflow = "hidden";
-
       return () => {
         window.removeEventListener("wheel", onWheel);
         document.body.style.overflow = "";
       };
     } else {
       releaseTimeout = setTimeout(() => {
-        document.body.style.overflow = "";
-      }, 700);
+        setScrollEffect(true);
+      }, 600);
+      setShowTitle(true);
     }
 
     return () => {
@@ -130,12 +132,14 @@ function ArchitectureDesktop({ projects, information }: Props) {
 
     const onScroll = () => {
       if (container.scrollTop <= 0) {
-        setState({
-          progress: 1,
-          isExpanded: false,
-        });
-
-        document.body.style.overflow = "hidden";
+        setTimeout(() => {
+          setState({
+            progress: 1,
+            isExpanded: false,
+          });
+          document.body.style.overflow = "hidden";
+        }, 700);
+        setScrollEffect(false);
       }
     };
 
@@ -150,7 +154,7 @@ function ArchitectureDesktop({ projects, information }: Props) {
     <div
       ref={scrollContainerRef}
       className={`ArchitecturePage relative h-[calc(100dvh-50px)] flex flex-col gap-[3px] ${
-        state.isExpanded
+        scrollEffect
           ? "overflow-y-scroll snap-y snap-mandatory"
           : "overflow-y-hidden"
       }`}
@@ -169,7 +173,7 @@ function ArchitectureDesktop({ projects, information }: Props) {
       <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
         <div
           className={`text-white transition-opacity duration-700 ease-in-out ${
-            state.isExpanded ? "opacity-100" : "opacity-0"
+            showTitle ? "opacity-100" : "opacity-0"
           }`}
         >
           <span className="uppercase text-[18px] leading-[22px] tracking-[-0.02em]">
