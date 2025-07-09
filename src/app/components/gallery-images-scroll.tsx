@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -24,16 +24,50 @@ function GalleryImagesScroll({
   baseDelay = 400,
   aosDuration = 800,
 }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     AOS.init({ duration: aosDuration, once: true, easing: "ease-out-cubic" });
   }, [aosDuration]);
 
-  if (!images.length) return <p></p>;
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const isDesktop = window.innerWidth >= 1024;
+    if (!isDesktop) return;
+
+    const onWheel = (e: WheelEvent) => {
+      const isScrollable = el.scrollWidth > el.clientWidth;
+      const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
+
+      if (!isScrollable || !isVerticalScroll) return;
+
+      const atStart = el.scrollLeft === 0;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
+      const scrollingUp = e.deltaY < 0;
+      const scrollingDown = e.deltaY > 0;
+
+      if ((atStart && scrollingUp) || (atEnd && scrollingDown)) return;
+
+      e.preventDefault();
+      el.scrollLeft += e.deltaY;
+    };
+
+    el.addEventListener("wheel", onWheel, { passive: false });
+
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+    };
+  }, []);
+
+  if (!images.length) return <p>No images found</p>;
 
   return (
     <div className="w-full">
       <div
-        className="flex overflow-y-hidden overflow-x-auto scrollbar-hide gap-[3px] lg:gap-[5px] no-scrollbar"
+        ref={containerRef}
+        className="flex overflow-y-hidden overflow-x-auto gap-[3px] lg:gap-[5px] no-scrollbar"
         style={{ cursor: "grab" }}
       >
         {images.map((src, index) => (
