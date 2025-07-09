@@ -73,7 +73,7 @@ function ProjectsCategoryDesktop({ projects, introduction }: Props) {
         </div>
       )}
 
-      <div className="space-y-[150px]">
+      <div className="space-y-[150px] mb-[150px]">
         {projects.map((project, index) => {
           const isEven = index % 2 === 0;
 

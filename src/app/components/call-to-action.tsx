@@ -2,7 +2,7 @@
 
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ProjectCategoryItem,
   ProjectDecorWp,
@@ -33,6 +33,8 @@ function CallToAction(props: Props) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoverOrigin, setHoverOrigin] = useState<"left" | "right">("left");
   const [isMobile, setIsMobile] = useState(false);
+
+  const topRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -70,6 +72,20 @@ function CallToAction(props: Props) {
     setHoveredIndex(null);
   };
 
+  const clearCategory = () => {
+    setSelectedCategory(null);
+    setTimeout(() => {
+      topRef.current?.scrollIntoView({ block: "start" });
+    }, 100);
+  };
+
+  const handleCategoryClick = (category: CategoryWithProjects) => {
+    setSelectedCategory(category);
+    setTimeout(() => {
+      topRef.current?.scrollIntoView({ block: "start" });
+    }, 100);
+  };
+
   function mergeParagraphs(html: string, isMobile: boolean): string {
     if (!isMobile) return html;
 
@@ -87,7 +103,10 @@ function CallToAction(props: Props) {
 
   return (
     <div>
-      <div className="px-[15px] lg:px-[0px] flex flex-col gap-[60px] lg:gap-[45px] justify-center items-center">
+      <div
+        ref={topRef}
+        className="px-[15px] lg:px-[0px] flex flex-col gap-[60px] lg:gap-[45px] justify-center items-center"
+      >
         <div
           data-aos="fade-up"
           className="call-title lg:px-[150px]"
@@ -104,8 +123,7 @@ function CallToAction(props: Props) {
             return (
               <div key={i}>
                 <button
-                  key={i}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => handleCategoryClick(category)}
                   onMouseEnter={(e) => handleMouseEnter(e, i)}
                   onMouseLeave={handleMouseLeave}
                   className={`relative uppercase flex items-center text-[12px] leading-[15px] lg:text-[16px] lg:leading-[33px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[25px] overflow-hidden ${
@@ -135,7 +153,7 @@ function CallToAction(props: Props) {
                       className="ml-[15px] z-10 cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setSelectedCategory(null);
+                        clearCategory();
                       }}
                     />
                   )}
@@ -152,6 +170,56 @@ function CallToAction(props: Props) {
             introduction={selectedCategory.introduction}
             projects={selectedCategory.projects}
           />
+          <div
+            className="flex flex-wrap justify-center lg:flex-row gap-[15px]"
+            data-aos="fade-up"
+          >
+            {categories.map((category, i) => {
+              const isSelected = selectedCategory?.name === category.name;
+              const isHovered = hoveredIndex === i;
+
+              return (
+                <div key={i}>
+                  <button
+                    onClick={() => handleCategoryClick(category)}
+                    onMouseEnter={(e) => handleMouseEnter(e, i)}
+                    onMouseLeave={handleMouseLeave}
+                    className={`relative uppercase flex items-center text-[12px] leading-[15px] lg:text-[16px] lg:leading-[33px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[25px] overflow-hidden ${
+                      isSelected ? "bg-[#E5E5E5]" : "bg-transparent"
+                    }`}
+                  >
+                    {!isSelected && (
+                      <span
+                        className={`absolute inset-0 rounded-[50px] bg-[#E5E5E5] z-0 transition-transform duration-700 ease-in-out ${
+                          isHovered ? "scale-x-100" : "scale-x-0"
+                        }`}
+                        style={{
+                          transformOrigin: isHovered ? hoverOrigin : "left",
+                        }}
+                      />
+                    )}
+                    <span
+                      className={`relative top-[1.5px] z-10 transition-colors duration-300 ${
+                        isSelected ? "text-black" : "text-black"
+                      }`}
+                    >
+                      {decodeHtml(category.name)}
+                    </span>
+                    {isSelected && (
+                      <img
+                        src="/images/close-tag.svg"
+                        className="ml-[15px] z-10 cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          clearCategory();
+                        }}
+                      />
+                    )}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </section>
       ) : (
         <section className="pt-[65px] lg:pt-[200px] pl-[15px] lg:pl-[40px] flex flex-col gap-[50px] lg:gap-[180px] lg:pb-[130px]">
