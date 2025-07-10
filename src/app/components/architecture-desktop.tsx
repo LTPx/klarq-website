@@ -20,7 +20,6 @@ function ArchitectureDesktop({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDate, setCurrentDate] = useState("");
   const [scrollEffect, setScrollEffect] = useState(false);
-  const [showTitle, setShowTitle] = useState(false);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const firstProjectRef = useRef<HTMLDivElement | null>(null);
   const [state, setState] = useState({ progress: 0, isExpanded: false });
@@ -96,7 +95,6 @@ function ArchitectureDesktop({ projects, information }: Props) {
             0,
             Math.min(1, prev.progress + e.deltaY * 0.0005)
           );
-          setShowTitle(false);
           return {
             progress,
             isExpanded: progress >= 1,
@@ -117,7 +115,6 @@ function ArchitectureDesktop({ projects, information }: Props) {
       releaseTimeout = setTimeout(() => {
         setScrollEffect(true);
       }, 600);
-      setShowTitle(true);
     }
 
     return () => {
@@ -132,19 +129,15 @@ function ArchitectureDesktop({ projects, information }: Props) {
 
     const onScroll = () => {
       if (container.scrollTop <= 0) {
-        setTimeout(() => {
-          setState({
-            progress: 1,
-            isExpanded: false,
-          });
-          document.body.style.overflow = "hidden";
-        }, 700);
+        setState({
+          progress: 1,
+          isExpanded: false,
+        });
+        document.body.style.overflow = "hidden";
         setScrollEffect(false);
       }
     };
-
     container.addEventListener("scroll", onScroll);
-
     return () => {
       container.removeEventListener("scroll", onScroll);
     };
@@ -173,7 +166,7 @@ function ArchitectureDesktop({ projects, information }: Props) {
       <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
         <div
           className={`text-white transition-opacity duration-700 ease-in-out ${
-            showTitle ? "opacity-100" : "opacity-0"
+            state.progress > 0.5 ? "opacity-100" : "opacity-0"
           }`}
         >
           <span className="uppercase text-[18px] leading-[22px] tracking-[-0.02em]">

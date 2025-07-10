@@ -26,7 +26,6 @@ function DevelopmentDesktop({ projects, information }: Props) {
   const ticking = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const [showTitle, setShowTitle] = useState(false);
 
   useEffect(() => {
     const forceScrollTop = () => {
@@ -96,7 +95,6 @@ function DevelopmentDesktop({ projects, information }: Props) {
             0,
             Math.min(1, prev.progress + e.deltaY * 0.0005)
           );
-          setShowTitle(false);
           return {
             progress,
             isExpanded: progress >= 1,
@@ -118,7 +116,6 @@ function DevelopmentDesktop({ projects, information }: Props) {
       releaseTimeout = setTimeout(() => {
         setScrollEffect(true);
       }, 600);
-      setShowTitle(true);
     }
 
     return () => {
@@ -174,7 +171,7 @@ function DevelopmentDesktop({ projects, information }: Props) {
       <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
         <div
           className={`text-white transition-opacity duration-700 ease-in-out ${
-            showTitle ? "opacity-100" : "opacity-0"
+            state.progress > 0.5 ? "opacity-100" : "opacity-0"
           }`}
         >
           <span className="uppercase text-[18px] leading-[22px] tracking-[-0.02em]">
