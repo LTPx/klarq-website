@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from "react";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
-import { getProxyImageUrl } from "@/utils/image_proxy";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import DesktopCover from "./cover-desktop";
