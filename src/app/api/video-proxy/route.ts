@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import http from "http";
 import https from "https";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<Response> {
   const { searchParams } = new URL(req.url);
   const videoUrl = searchParams.get("url");
 
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   const client = videoUrl.startsWith("https") ? https : http;
   const range = req.headers.get("range") || "";
 
-  return new Promise((resolve) => {
+  return new Promise<Response>((resolve) => {
     const request = client.get(
       videoUrl,
       { headers: { Range: range } },
@@ -31,7 +31,6 @@ export async function GET(req: NextRequest) {
           "Content-Type": contentType,
         };
 
-        // Si es video con Range (streaming)
         if (range) {
           if (headers["content-length"]) {
             responseHeaders["Content-Length"] = headers["content-length"];
