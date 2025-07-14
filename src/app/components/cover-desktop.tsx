@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/navigation";
 import { getProxyImageUrl } from "@/utils/image_proxy";
-import { InformationWp } from "../_interfaces/wordpress-components";
+import {
+  InformationWp,
+  MediaFileWp,
+} from "../_interfaces/wordpress-components";
 
 interface Props {
   className?: string;
@@ -11,6 +14,7 @@ interface Props {
   linkSlug?: string;
   labelTitle: string;
   progress: number;
+  media?: MediaFileWp;
 }
 
 export default function DesktopCover({
@@ -20,6 +24,7 @@ export default function DesktopCover({
   linkSlug,
   labelTitle,
   progress,
+  media,
 }: Props) {
   const labelRef = useRef<HTMLLabelElement>(null);
   const [labelWidth, setLabelWidth] = useState(0);
@@ -93,31 +98,76 @@ export default function DesktopCover({
           className || ""
         }`}
       >
-        <motion.div
-          style={{ width: `${widthPercent}%` }}
-          className="relative h-full overflow-hidden"
-        >
-          {linkSlug ? (
-            <Link href={linkSlug}>
-              <img
-                src={img}
-                alt="architecture-cover"
-                className="cursor-pointer w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
-              />
-              <div className="absolute inset-0 bg-black/20 z-10" />
-            </Link>
-          ) : (
-            <>
-              <img
-                src={img}
-                alt="architecture-cover"
-                className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
-              />
-              <div className="absolute inset-0 bg-black/20 z-10" />
-            </>
-          )}
-        </motion.div>
-
+        {img && (
+          <motion.div
+            style={{ width: `${widthPercent}%` }}
+            className="relative h-full overflow-hidden"
+          >
+            {linkSlug ? (
+              <Link href={linkSlug}>
+                <img
+                  src={img}
+                  alt="architecture-cover"
+                  className="cursor-pointer w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
+                />
+                <div className="absolute inset-0 bg-black/20 z-10" />
+              </Link>
+            ) : (
+              <>
+                <img
+                  src={img}
+                  alt="architecture-cover"
+                  className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
+                />
+                <div className="absolute inset-0 bg-black/20 z-10" />
+              </>
+            )}
+          </motion.div>
+        )}
+        {media?.type === "image" && (
+          <motion.div
+            style={{ width: `${widthPercent}%` }}
+            className="relative h-full overflow-hidden"
+          >
+            {linkSlug ? (
+              <Link href={linkSlug}>
+                <img
+                  src={media.url}
+                  alt="architecture-cover"
+                  className="cursor-pointer w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
+                />
+                <div className="absolute inset-0 bg-black/20 z-10" />
+              </Link>
+            ) : (
+              <>
+                <img
+                  src={media.url}
+                  alt="architecture-cover"
+                  className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
+                />
+                <div className="absolute inset-0 bg-black/20 z-10" />
+              </>
+            )}
+          </motion.div>
+        )}
+        {media?.type === "video" && (
+          <motion.div
+            style={{ width: `${widthPercent}%` }}
+            className="relative h-full overflow-hidden"
+          >
+            <video
+              autoPlay={true}
+              loop={true}
+              muted
+              playsInline
+              preload="auto"
+              className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
+            >
+              <source src={media.url} type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-black/20 z-10" />
+          </motion.div>
+        )}
         <motion.div
           style={{
             transform: `translateX(${textTranslateX}%)`,

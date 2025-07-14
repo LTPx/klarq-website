@@ -25,7 +25,7 @@ export interface DevelopmentPageWp {
 }
 
 export interface DecorPageWp {
-  cover: ImageAcf;
+  cover: MediaFileWp;
   information: InformationWp;
   page_content: DecorContentWp;
 }

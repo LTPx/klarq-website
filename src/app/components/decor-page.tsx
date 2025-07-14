@@ -149,7 +149,8 @@ function DecorPage({ decor_information }: Props) {
     <div>
       <div className="DecorPage">
         <DesktopCover
-          img={getProxyImageUrl(decor_information.cover.url)}
+          media={decor_information.cover}
+          // img={getProxyImageUrl(decor_information.cover.url)}
           information={decor_information.information}
           labelTitle="Decor"
           progress={state.progress}
