@@ -1,7 +1,7 @@
 "use client";
 
 import { getProxyImageUrl } from "@/utils/image_proxy";
-import { ProjectCategoryItem } from "../_interfaces/wordpress-components";
+import { ProjectCategoryItem, ProjectDecorTag } from "../_interfaces/wordpress-components";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 import { useEffect, useState } from "react";
 import AOS from "aos";
@@ -15,6 +15,7 @@ interface IntroductionItem {
 interface Props {
   projects: ProjectCategoryItem[];
   introduction?: IntroductionItem[];
+  projectsOrientation?: ProjectDecorTag[];
 }
 
 function useIsMobile(breakpoint = 1024) {

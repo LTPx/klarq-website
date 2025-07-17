@@ -5,11 +5,13 @@ import "aos/dist/aos.css";
 import { useEffect, useRef, useState } from "react";
 import {
   ProjectCategoryItem,
+  ProjectDecorTag,
   ProjectDecorWp,
 } from "../_interfaces/wordpress-components";
 import ProjectsCategory from "./category-projects";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 import DecorProjects from "./decor-projects";
+import ProjectsDecorTag from "./projects-decor-tag";
 
 export interface CategoryWithProjects {
   name: string;
@@ -18,6 +20,7 @@ export interface CategoryWithProjects {
     image: ImageAcf;
     description: string;
   }[];
+  projectsDecor?: ProjectDecorTag[];
 }
 
 interface Props {
@@ -166,10 +169,13 @@ function CallToAction(props: Props) {
 
       {selectedCategory ? (
         <section>
-          <ProjectsCategory
+          {/* <ProjectsCategory
             introduction={selectedCategory.introduction}
             projects={selectedCategory.projects}
-          />
+          /> */}
+          <div className="px-[40px]">
+            <ProjectsDecorTag projectsOrientation={selectedCategory.projectsDecor || []}/>
+          </div>
           <div
             className="flex flex-wrap justify-center lg:flex-row gap-[15px]"
             data-aos="fade-up"

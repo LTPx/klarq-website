@@ -103,7 +103,35 @@ export interface ProjectsCategoryWp {
   category: CategoryResultWp;
   category_introduction: IntroductionProjectWp[];
   category_project: CategoryProject[];
+  projects_category: ProjectDecorTag[];
 }
+
+export interface ProjectDecorTag {
+  columns: 'one_column' | 'Two_columns';
+  project_grid_1: ProjectGrid1;
+  project_grid_2: ProjectGrid2;
+}
+
+export interface ProjectGrid1 {
+  title: string;
+  orientation_image: 'horizontal' | 'vertical';
+  align_image: 'Center' | 'Right' | 'Left';
+  description: string;
+  image: ImageAcf;
+}
+
+export interface ProjectGrid2 {
+  first_column: ProjectColumn;
+  second_column: ProjectColumn;
+}
+
+export interface ProjectColumn {
+  title: string;
+  image: ImageAcf;
+  description: string;
+  size_image: 'small' | 'big';
+}
+
 
 export interface CategoryProject {
   project_category: ProjectCategoryItem[];

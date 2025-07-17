@@ -131,7 +131,7 @@ function DecorPage({ decor_information }: Props) {
             .map((categoryProject) => categoryProject.project_category || [])
             .flat()
         : [];
-
+      
       const introduction = Array.isArray(projectData.category_introduction)
         ? projectData.category_introduction
         : [];
@@ -140,6 +140,7 @@ function DecorPage({ decor_information }: Props) {
         name: projectData.category.name,
         projects: allProjects,
         introduction,
+        projectsDecor: projectData.projects_category,
       } as CategoryWithProjects;
     })
     .filter((item): item is CategoryWithProjects => item !== null);
