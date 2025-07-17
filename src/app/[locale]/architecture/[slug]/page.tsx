@@ -4,7 +4,7 @@ import CarouselProjects from "@/app/components/carosuel-projects";
 import Cover from "@/app/components/cover-pages";
 import ProjectCard from "@/app/components/project-card";
 import { Link } from "@/navigation";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
@@ -120,7 +120,7 @@ async function ArchitectureSlugPage(nextParams: {
           ARCHITECTURE
         </label>
       </div>
-      <Cover img={getProxyImageUrl(architecture_projects.cover_project.url)} />
+      <Cover img={architecture_projects.cover_project.url} />
       <section className="pt-[15px] lg:pt-[60px]">
         <ArchitectureInformation
           title={architecture_projects.title_project}
@@ -145,9 +145,7 @@ async function ArchitectureSlugPage(nextParams: {
               >
                 <ProjectCard
                   title={project.acf.architecture_projects.title_project}
-                  image={getProxyImageUrl(
-                    project.acf.architecture_projects.cover_project.url
-                  )}
+                  image={project.acf.architecture_projects.cover_project.url}
                 />
               </Link>
             ))}

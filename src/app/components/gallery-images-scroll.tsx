@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 
 interface Props {
@@ -73,7 +73,7 @@ function GalleryImagesScroll({
         {images.map((src, index) => (
           <img
             key={index}
-            src={getProxyImageUrl(src.url)}
+            src={src.url}
             alt={src.alt ?? `image-${index}`}
             loading="lazy"
             className={`object-cover shrink-0 ${imageClassName}`}

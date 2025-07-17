@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import MobileCover from "./mobile-cover";
 import { InformationWp } from "../_interfaces/wordpress-components";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import { useScrollStore } from "../store/scroll-store";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
 import { Link, usePathname } from "@/navigation";
@@ -90,10 +90,10 @@ function ArchitecturePageMobile({ projects, information }: Props) {
                   style={{ height: "calc(var(--vh, 1vh) * 50)" }}
                 >
                   <img
-                    src={getProxyImageUrl(
+                    src={
                       firstProject.project.acf.architecture_projects
                         .cover_project.url
-                    )}
+                    }
                     style={{
                       height: "calc(var(--vh, 1vh) * 50)",
                     }}
@@ -111,9 +111,9 @@ function ArchitecturePageMobile({ projects, information }: Props) {
                 </Link>
               </div>
               <div
-               className="flex flex-col gap-[3px]"
-               style={{ marginBottom: "calc(var(--vh, 1vh) * -50)" }}
-               >
+                className="flex flex-col gap-[3px]"
+                style={{ marginBottom: "calc(var(--vh, 1vh) * -50)" }}
+              >
                 {restProjects.map((item, index) => (
                   <Link
                     key={item.project.id}
@@ -130,10 +130,10 @@ function ArchitecturePageMobile({ projects, information }: Props) {
                     >
                       <img
                         className="bg-[#00000026] object-cover w-full h-full"
-                        src={getProxyImageUrl(
+                        src={
                           item.project.acf.architecture_projects.cover_project
                             .url
-                        )}
+                        }
                         alt={item.title}
                       />
                       <div className="absolute inset-0 bg-black/20 z-10" />

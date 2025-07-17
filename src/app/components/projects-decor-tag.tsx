@@ -1,6 +1,6 @@
 "use client";
 
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import {
   ProjectCategoryItem,
   ProjectDecorTag,
@@ -37,7 +37,7 @@ function ProjectsDecorTag({ projectsOrientation, introduction }: Props) {
             return (
               <div key={index} className="px-[20px] lg:px-0" data-aos="fade-up">
                 <img
-                  src={getProxyImageUrl(image.url)}
+                  src={image.url}
                   alt={image.alt || "Project image"}
                   className={`
                     object-cover h-[300px] lg:h-[670px]
@@ -95,7 +95,7 @@ function ProjectsDecorTag({ projectsOrientation, introduction }: Props) {
                 {[first_column, second_column].map((col, i) => (
                   <div key={i}>
                     <img
-                      src={getProxyImageUrl(col.image.url)}
+                      src={col.image.url}
                       alt={col.image.alt || "Column image"}
                       className={`object-cover ${
                         col.size_image === "small"

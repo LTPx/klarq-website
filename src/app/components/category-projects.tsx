@@ -1,7 +1,10 @@
 "use client";
 
-import { getProxyImageUrl } from "@/utils/image_proxy";
-import { ProjectCategoryItem, ProjectDecorTag } from "../_interfaces/wordpress-components";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
+import {
+  ProjectCategoryItem,
+  ProjectDecorTag,
+} from "../_interfaces/wordpress-components";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 import { useEffect, useState } from "react";
 import AOS from "aos";
@@ -51,7 +54,7 @@ function ProjectsCategoryDesktop({ projects, introduction }: Props) {
                 data-aos="fade-up"
               >
                 <img
-                  src={getProxyImageUrl(intro.image.url)}
+                  src={intro.image.url}
                   alt={intro.image.alt || "Intro image"}
                   className={`
                     object-cover
@@ -84,9 +87,7 @@ function ProjectsCategoryDesktop({ projects, introduction }: Props) {
                 <div className="flex justify-end">
                   <div className="w-3/4 h-[670px] relative">
                     <img
-                      src={getProxyImageUrl(
-                        project.image_with_description.image.url
-                      )}
+                      src={project.image_with_description.image.url}
                       alt={
                         project.image_with_description.image.alt ||
                         "Description image"
@@ -106,7 +107,7 @@ function ProjectsCategoryDesktop({ projects, introduction }: Props) {
                 <div className="pt-[150px]">
                   <div className="w-[672px] mr-auto text-start">
                     <img
-                      src={getProxyImageUrl(project.image_with_title.image.url)}
+                      src={project.image_with_title.image.url}
                       alt={project.image_with_title.image.alt || "Title image"}
                       className="object-cover w-full h-[949px]"
                     />
@@ -140,9 +141,7 @@ function ProjectsCategoryDesktop({ projects, introduction }: Props) {
                 className={`${isEven ? "order-1" : "order-2"} relative mx-auto`}
               >
                 <img
-                  src={getProxyImageUrl(
-                    project.image_with_description.image.url
-                  )}
+                  src={project.image_with_description.image.url}
                   alt={
                     project.image_with_description.image.alt ||
                     "Description image"
@@ -161,7 +160,7 @@ function ProjectsCategoryDesktop({ projects, introduction }: Props) {
 
               <div className={`${isEven ? "order-2" : "order-1"}`}>
                 <img
-                  src={getProxyImageUrl(project.image_with_title.image.url)}
+                  src={project.image_with_title.image.url}
                   alt={project.image_with_title.image.alt || "Title image"}
                   className="object-cover w-full h-[949px]"
                 />
@@ -205,7 +204,7 @@ function ProjectsCategoryMobile({ projects, introduction }: Props) {
                 data-aos="fade-up"
               >
                 <img
-                  src={getProxyImageUrl(intro.image.url)}
+                  src={intro.image.url}
                   alt={intro.image.alt || "Intro image"}
                   className={`object-cover w-full ${mobileHeight}`}
                 />
@@ -229,9 +228,7 @@ function ProjectsCategoryMobile({ projects, introduction }: Props) {
               <div className={""} key={index} data-aos="fade-up">
                 <div className="w-full h-[240px] relative mb-4">
                   <img
-                    src={getProxyImageUrl(
-                      project.image_with_description.image.url
-                    )}
+                    src={project.image_with_description.image.url}
                     alt={
                       project.image_with_description.image.alt ||
                       "Description image"
@@ -249,7 +246,7 @@ function ProjectsCategoryMobile({ projects, introduction }: Props) {
                 <div className="flex justify-end">
                   <div className="w-[75%] h-[360px] relative">
                     <img
-                      src={getProxyImageUrl(project.image_with_title.image.url)}
+                      src={project.image_with_title.image.url}
                       alt={project.image_with_title.image.alt || "Title image"}
                       className="object-cover w-full h-full"
                     />
@@ -281,9 +278,7 @@ function ProjectsCategoryMobile({ projects, introduction }: Props) {
             >
               <div className={`w-[75%] ${isEven ? "self-end" : "self-start"}`}>
                 <img
-                  src={getProxyImageUrl(
-                    project.image_with_description.image.url
-                  )}
+                  src={project.image_with_description.image.url}
                   alt={
                     project.image_with_description.image.alt ||
                     "Description image"
@@ -301,7 +296,7 @@ function ProjectsCategoryMobile({ projects, introduction }: Props) {
 
               <div className="w-full relative">
                 <img
-                  src={getProxyImageUrl(project.image_with_title.image.url)}
+                  src={project.image_with_title.image.url}
                   alt={project.image_with_title.image.alt || "Title image"}
                   className="object-cover w-full h-[422px]"
                 />

@@ -1,1 +1,1 @@
-export const WORDPRESS_API_URL = "http://167.71.1.127/wp-json";
+export const WORDPRESS_API_URL = "https://admin.klarq.eu/wp-json";

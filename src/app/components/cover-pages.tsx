@@ -1,6 +1,6 @@
 "use client";
 
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import { MediaFileWp } from "../_interfaces/wordpress-components";
 import { useEffect, useState } from "react";
 
@@ -43,7 +43,7 @@ export function Cover(props: Props) {
       )}
       {media?.type === "image" && (
         <img
-          src={getProxyImageUrl(media.url)}
+          src={media.url}
           className={`${className} w-full object-cover`}
           style={{ height: `calc(var(--vh, 1vh) * 100 - 50px)` }}
         />

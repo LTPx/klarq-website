@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/navigation";
-import { getProxyImageUrl, getProxyVideoUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl, getProxyVideoUrl } from "@/utils/image_proxy";
 import {
   InformationWp,
   MediaFileWp,
@@ -132,7 +132,7 @@ export default function DesktopCover({
             {linkSlug ? (
               <Link href={linkSlug}>
                 <img
-                  src={getProxyImageUrl(media.url)}
+                  src={media.url}
                   alt="architecture-cover"
                   className="cursor-pointer w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
                 />
@@ -141,7 +141,7 @@ export default function DesktopCover({
             ) : (
               <>
                 <img
-                  src={getProxyImageUrl(media.url)}
+                  src={media.url}
                   alt="architecture-cover"
                   className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
                 />
@@ -163,7 +163,7 @@ export default function DesktopCover({
               preload="auto"
               className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
             >
-              <source src={getProxyVideoUrl(media.url)} type="video/mp4" />
+              <source src={media.url} type="video/mp4" />
             </video>
             <div className="absolute inset-0 bg-black/20 z-10" />
           </motion.div>
@@ -196,7 +196,7 @@ export default function DesktopCover({
               animate={{ opacity: 1 - progress }}
               transition={{ duration: 0.3 }}
               className="h-[372px] w-[260px]"
-              src={getProxyImageUrl(information.image.url)}
+              src={information.image.url}
               alt="team-image"
             />
           )}

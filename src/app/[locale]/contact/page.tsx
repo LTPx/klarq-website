@@ -2,7 +2,7 @@ import { getWordPressCustomPage } from "@/app/_services/api";
 import ContactPage from "@/app/components/contact-page";
 import HoverButton from "@/app/components/hover-fill-btn";
 import { Link } from "@/navigation";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
@@ -131,7 +131,7 @@ async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
         </div>
         <div className="lg:w-1/2 h-full">
           <img
-            src={getProxyImageUrl(contact_information.cover.url)}
+            src={contact_information.cover.url}
             alt="contact"
             className="w-full h-[426px] lg:h-full object-cover"
           />

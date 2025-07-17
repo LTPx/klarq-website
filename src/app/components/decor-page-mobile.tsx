@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import { useScrollStore } from "../store/scroll-store";
 import { usePathname } from "next/navigation";
 
@@ -101,7 +101,7 @@ function DecorPageMobile({ decor_information }: Props) {
         >
           <div className="bg-white">
             <img
-              src={getProxyImageUrl(decor_information.cover.url)}
+              src={decor_information.cover.url}
               style={{
                 height: "calc(var(--vh, 1vh) * 50)",
               }}

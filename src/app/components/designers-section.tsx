@@ -96,7 +96,7 @@ export function DesignersSection({ team }: Props) {
       </div>
       <div className="relative md:w-[535px] min-h-[422px] md:h-[633px]">
         <img
-          src={getProxyImageUrl(team.image_team.url)}
+          src={team.image_team.url}
           alt={team.image_team.alt || "Equipo KLARQ"}
           className={`absolute top-0 left-0 w-full h-[422px] md:h-full object-cover transition-opacity duration-500 ease-in-out ${
             selectedMember ? "opacity-0" : "opacity-100"

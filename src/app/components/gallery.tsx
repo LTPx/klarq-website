@@ -8,7 +8,7 @@ import React, {
   useLayoutEffect,
 } from "react";
 import { PublicationsWp } from "../_interfaces/wordpress-components";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import Link from "next/link";
 
 interface GalleryProps {
@@ -223,7 +223,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
             return (
               <img
                 key={index}
-                src={getProxyImageUrl(pub.image.url)}
+                src={pub.image.url}
                 alt={pub.title}
                 onClick={() => setSelectedIndex(index)}
                 onLoad={() => setImagesLoaded((prev) => prev + 1)}

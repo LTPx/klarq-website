@@ -6,7 +6,7 @@ import CategoryCard from "./category-card";
 import { servicesHome } from "../_interfaces/wordpress-components";
 import { Link } from "@/navigation";
 import { useHoverStore } from "../store/hover-store";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import CustomCursor from "./custom-cursor";
 import { useScrollStore } from "../store/scroll-store";
 import { usePathname } from "next/navigation";
@@ -178,7 +178,7 @@ function HomeAnimation(props: Props) {
                 <CategoryCard
                   description={card.description_service}
                   title={card.title}
-                  imageCategory={getProxyImageUrl(card.image.url)}
+                  imageCategory={card.image.url}
                   showDescription={hoveredIndex === index}
                   anyCardHovering={hoveredIndex !== null}
                   hasScrolled={useScrollStore.getState().hasScrolled}

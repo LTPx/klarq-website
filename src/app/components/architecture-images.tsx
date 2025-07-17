@@ -1,6 +1,6 @@
 "use client";
 
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 
 interface Props {
@@ -37,7 +37,7 @@ function ArchitectureImages({ images = [] }: Props) {
           <div key={index} className={wrapperClass}>
             <img
               data-aos="fade-up"
-              src={getProxyImageUrl(src.url)}
+              src={src.url}
               alt={`Architecture ${index + 1}`}
               className={imageClass}
             />

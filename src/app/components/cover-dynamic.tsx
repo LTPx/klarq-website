@@ -4,7 +4,7 @@ import { useEffect, useRef, forwardRef, useState } from "react";
 import { motion } from "framer-motion";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { Link } from "@/navigation";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface Props {
   className?: string;
@@ -156,7 +156,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
               <div className="w-full" style={{ minHeight: 87 }} />
               {information.image?.url && (
                 <img
-                  src={getProxyImageUrl(information.image.url)}
+                  src={information.image.url}
                   alt="team"
                   className="max-h-[30vh] w-auto max-w-full"
                 />
@@ -248,7 +248,7 @@ const CoverDynamic = forwardRef<HTMLDivElement, Props>(
                     animate={{ opacity: 1 - progress }}
                     transition={{ duration: 0.3 }}
                     className="h-[372px] w-[260px]"
-                    src={getProxyImageUrl(information.image.url)}
+                    src={information.image.url}
                     alt="team-image"
                   />
                 )}

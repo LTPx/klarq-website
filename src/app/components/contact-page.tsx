@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ContactPageWp } from "../_interfaces/wordpress-components";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import CoverDynamicMobile from "./cover-mobile";
@@ -85,7 +85,7 @@ function ContactPage({ contact_information }: Props) {
         </div>
       </Link>
       <CoverDynamicMobile
-        img={getProxyImageUrl(contact_information.cover.url)}
+        img={contact_information.cover.url}
         labelTitle={"CONTACTO"}
         progress={progress}
       >

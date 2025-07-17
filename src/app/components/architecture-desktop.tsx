@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useMemo } from "react";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import DesktopCover from "./cover-desktop";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
@@ -154,9 +154,7 @@ function ArchitectureDesktop({ projects, information }: Props) {
     >
       <div ref={firstProjectRef} data-index={0}>
         <DesktopCover
-          img={getProxyImageUrl(
-            firstProject.project.acf.architecture_projects.cover_project.url
-          )}
+          img={firstProject.project.acf.architecture_projects.cover_project.url}
           information={information}
           labelTitle="Architecture"
           linkSlug={`/architecture/${firstProject.project.slug}`}
@@ -194,9 +192,7 @@ function ArchitectureDesktop({ projects, information }: Props) {
             >
               <img
                 className="bg-[#00000026] object-cover w-full h-full"
-                src={getProxyImageUrl(
-                  item.project.acf.architecture_projects.cover_project.url
-                )}
+                src={item.project.acf.architecture_projects.cover_project.url}
                 alt={item.title}
               />
               <div className="absolute inset-0 bg-black/20 z-10" />

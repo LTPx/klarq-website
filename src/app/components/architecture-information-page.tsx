@@ -5,7 +5,7 @@ import { Link } from "@/navigation";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
 import CoverDynamic from "./cover-dynamic";
 import { InformationWp } from "../_interfaces/wordpress-components";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface Props {
   projects: {
@@ -193,9 +193,9 @@ function ArchitecturePage({ projects, information }: Props) {
         )}
         <div ref={firstProjectRef} data-index={0}>
           <CoverDynamic
-            img={getProxyImageUrl(
+            img={
               firstProject.project.acf.architecture_projects.cover_project.url
-            )}
+            }
             information={information}
             labelTitle="Architecture"
             linkSlug={`/architecture/${firstProject.project.slug}`}
@@ -234,9 +234,7 @@ function ArchitecturePage({ projects, information }: Props) {
               >
                 <img
                   className="bg-[#00000026] object-cover w-full h-full"
-                  src={getProxyImageUrl(
-                    item.project.acf.architecture_projects.cover_project.url
-                  )}
+                  src={item.project.acf.architecture_projects.cover_project.url}
                   alt={item.title}
                 />
                 <div className="absolute inset-0 bg-black/20 z-10" />

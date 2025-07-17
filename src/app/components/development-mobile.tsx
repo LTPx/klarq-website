@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import MobileCover from "./mobile-cover";
 import { InformationWp } from "../_interfaces/wordpress-components";
-import { getProxyImageUrl } from "@/utils/image_proxy";
+// import { getProxyImageUrl } from "@/utils/image_proxy";
 import { useScrollStore } from "../store/scroll-store";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
 import { Link, usePathname } from "@/navigation";
@@ -89,10 +89,10 @@ function DevelopmentMobile({ projects, information }: Props) {
                   style={{ height: "calc(var(--vh, 1vh) * 50)" }}
                 >
                   <img
-                    src={getProxyImageUrl(
+                    src={
                       firstProject.project.acf.development_projects
                         .cover_project.url
-                    )}
+                    }
                     style={{
                       height: "calc(var(--vh, 1vh) * 50)",
                     }}
@@ -129,10 +129,10 @@ function DevelopmentMobile({ projects, information }: Props) {
                     >
                       <img
                         className="bg-[#00000026] object-cover w-full h-full"
-                        src={getProxyImageUrl(
+                        src={
                           item.project.acf.development_projects.cover_project
                             .url
-                        )}
+                        }
                         alt={item.title}
                       />
                       <div className="absolute inset-0 bg-black/20 z-10" />
