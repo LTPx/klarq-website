@@ -105,7 +105,7 @@ function ProjectsDecorTag({ projectsOrientation }: Props) {
                           ? `${
                               i % 2 === 0 ? "ml-auto" : "mr-auto"
                             } w-[239px] lg:w-[397px] flex-col lg:mx-auto`
-                          : "justify-between"
+                          : "flex-col lg:justify-between"
                       }`}
                     >
                       {col.title && (
