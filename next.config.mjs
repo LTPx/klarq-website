@@ -121,11 +121,11 @@ const nextConfig = {
         destination: "/es/architecture",
         permanent: true,
       },
-      {
-        source: "/en/privacy-policy/",
-        destination: "/en",
-        permanent: true,
-      },
+      // {
+      //   source: "/en/privacy-policy/",
+      //   destination: "/en",
+      //   permanent: true,
+      // },
       {
         source: "/objects/banera-ibiza",
         destination: "/es/decor",
@@ -172,7 +172,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/en/blog/page/2/",
+        source: "/en/blog/page/2",
         destination: "/en",
         permanent: true,
       },
@@ -182,37 +182,37 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/en/projects/tres-cantos/",
+        source: "/en/projects/tres-cantos",
         destination: "/en/architecture/tres-cantos",
         permanent: true,
       },
       {
-        source: "/en/sustainable-aesthetics-conference/",
+        source: "/en/sustainable-aesthetics-conference",
         destination: "/en",
         permanent: true,
       },
          {
-        source: "/en/projects/can-miquel/",
+        source: "/en/projects/can-miquel",
         destination: "/en/architecture",
         permanent: true,
       },
       {
-        source: "/en/projects/son-maig/",
+        source: "/en/projects/son-maig",
         destination: "/en/development/son-maig",
         permanent: true,
       },
       {
-        source: "/en/objects/mesa-pc/",
+        source: "/en/objects/mesa-pc",
         destination: "/en/decor",
         permanent: true,
       },
       {
-        source: "/en/objects/lavabo-eva/",
+        source: "/en/objects/lavabo-eva",
         destination: "/en/decor",
         permanent: true,
       },
       {
-        source: "/en/objects/banera-ibiza/",
+        source: "/en/objects/banera-ibiza",
         destination: "/en/decor",
         permanent: true,
       },
@@ -232,12 +232,12 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/en/rehabilitation-of-a-spa/",
+        source: "/en/rehabilitation-of-a-spa",
         destination: "/en/decor",
         permanent: true,
       },
       {
-        source: "/en/our-feature-in-sabato/",
+        source: "/en/our-feature-in-sabato",
         destination: "/en",
         permanent: true,
       },
@@ -247,7 +247,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/en/our-feature-in-sabato/",
+        source: "/en/our-feature-in-sabato",
         destination: "/en",
         permanent: true,
       },
@@ -257,7 +257,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/en/refurbishing-a-borda-in-benasque/",
+        source: "/en/refurbishing-a-borda-in-benasque",
         destination: "/en",
         permanent: true,
       },
@@ -267,7 +267,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/en/cost-difference-sustainable-vs-conventional/",
+        source: "/en/cost-difference-sustainable-vs-conventional",
         destination: "/en",
         permanent: true,
       },
@@ -282,32 +282,32 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/a-parcial-versus-a-global-project/",
+        source: "/a-parcial-versus-a-global-project",
         destination: "/es/architecture",
         permanent: true,
       },
       {
-        source: "/en/pc-table-by-klarq-architecture-atelier/",
+        source: "/en/pc-table-by-klarq-architecture-atelier",
         destination: "/en",
         permanent: true,
       },
       {
-        source: "/en/the-eva-washbasin-designed-by-klarq/",
+        source: "/en/the-eva-washbasin-designed-by-klarq",
         destination: "/en",
         permanent: true,
       },
       {
-        source: "/en/son-maig-a-passive-house-in-mallorca/",
+        source: "/en/son-maig-a-passive-house-in-mallorca",
         destination: "/en/development/son-maig",
         permanent: true,
       },
       {
-        source: "/en/casa-aruma-architecture-and-design-in-mallorca/",
+        source: "/en/casa-aruma-architecture-and-design-in-mallorca",
         destination: "/en/architecture",
         permanent: true,
       },
       {
-        source: "/en/our-latest-publication-in-arquitectura-y-diseno/",
+        source: "/en/our-latest-publication-in-arquitectura-y-diseno",
         destination: "/en/publications",
         permanent: true,
       },
@@ -317,10 +317,21 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/en/ca-na-lola-passivhaus-and-discreet-luxury-in-mallorca/",
+        source: "/en/ca-na-lola-passivhaus-and-discreet-luxury-in-mallorca",
         destination: "/en/architecture/ca-na-lola",
         permanent: true,
       },
+      {
+        source: "/en/projects/lamour",
+        destination: "/en/architecture",
+        permanent: true,
+      },
+      {
+        source: "/en/projects/spa",
+        destination: "/en/decor",
+        permanent: true,
+      },
+      
     ];
   },
 };
