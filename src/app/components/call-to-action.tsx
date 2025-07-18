@@ -8,7 +8,6 @@ import {
   ProjectDecorTag,
   ProjectDecorWp,
 } from "../_interfaces/wordpress-components";
-import ProjectsCategory from "./category-projects";
 import { ImageAcf } from "../_interfaces/wordpress-page";
 import DecorProjects from "./decor-projects";
 import ProjectsDecorTag from "./projects-decor-tag";
@@ -53,7 +52,7 @@ function CallToAction(props: Props) {
       duration: 1000,
       easing: "ease-out",
       offset: 80,
-      once: false,
+      once: true,
     });
   }, []);
 
@@ -82,7 +81,11 @@ function CallToAction(props: Props) {
     }, 100);
   };
 
-  const handleCategoryClick = (category: CategoryWithProjects) => {
+  const handleCategoryClick = (
+    category: CategoryWithProjects,
+    e?: React.MouseEvent
+  ) => {
+    e?.stopPropagation();
     setSelectedCategory(category);
     setTimeout(() => {
       topRef.current?.scrollIntoView({ block: "start" });
@@ -126,7 +129,7 @@ function CallToAction(props: Props) {
             return (
               <div key={i}>
                 <button
-                  onClick={() => handleCategoryClick(category)}
+                  onClick={(e) => handleCategoryClick(category, e)}
                   onMouseEnter={(e) => handleMouseEnter(e, i)}
                   onMouseLeave={handleMouseLeave}
                   className={`relative uppercase flex items-center text-[12px] leading-[15px] lg:text-[16px] lg:leading-[33px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[25px] overflow-hidden ${
@@ -173,8 +176,10 @@ function CallToAction(props: Props) {
             introduction={selectedCategory.introduction}
             projects={selectedCategory.projects}
           /> */}
-          <div className="px-[40px]">
-            <ProjectsDecorTag projectsOrientation={selectedCategory.projectsDecor || []}/>
+          <div className="lg:px-[40px]">
+            <ProjectsDecorTag
+              projectsOrientation={selectedCategory.projectsDecor || []}
+            />
           </div>
           <div
             className="flex flex-wrap justify-center lg:flex-row gap-[15px]"

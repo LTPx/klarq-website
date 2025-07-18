@@ -10,20 +10,14 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-interface IntroductionItem {
-  image: ImageAcf;
-  description: string;
-}
-
 interface Props {
-  introduction?: IntroductionItem[];
   projectsOrientation?: ProjectDecorTag[];
 }
 
-function ProjectsDecorTag({ projectsOrientation, introduction }: Props) {
+function ProjectsDecorTag({ projectsOrientation }: Props) {
   return (
-    <div className="mt-[200px]">
-      <div className="space-y-[150px] mb-[150px]">
+    <div className="mt-[60px] lg:mt-[200px]">
+      <div className="space-y-[80px] lg:space-y-[150px] mb-[150px]">
         {projectsOrientation?.map((project, index) => {
           if (project.columns === "one_column") {
             const {
@@ -40,11 +34,11 @@ function ProjectsDecorTag({ projectsOrientation, introduction }: Props) {
                   src={image.url}
                   alt={image.alt || "Project image"}
                   className={`
-                    object-cover h-[300px] lg:h-[670px]
+                    object-cover lg:h-[670px]
                     ${
                       orientation_image === "horizontal"
-                        ? "w-[948px] "
-                        : "w-[535px]"
+                        ? "h-[240px] w-[948px] "
+                        : "h-[422px] w-full lg:w-[535px]"
                     }
                     ${
                       align_image === "Center"
@@ -61,7 +55,7 @@ function ProjectsDecorTag({ projectsOrientation, introduction }: Props) {
                     ${
                       orientation_image === "horizontal"
                         ? "w-[948px]"
-                        : "w-[535px]"
+                        : "lg:w-[535px]"
                     }
                     ${
                       align_image === "Center"
@@ -89,7 +83,7 @@ function ProjectsDecorTag({ projectsOrientation, introduction }: Props) {
             return (
               <div
                 key={index}
-                className="grid grid-cols-1 lg:grid-cols-2 px-[20px] lg:px-0"
+                className="grid grid-cols-1 gap-[80px] lg:gap-[0px] lg:grid-cols-2 px-[20px] lg:px-0"
                 data-aos="fade-up"
               >
                 {[first_column, second_column].map((col, i) => (
@@ -99,14 +93,16 @@ function ProjectsDecorTag({ projectsOrientation, introduction }: Props) {
                       alt={col.image.alt || "Column image"}
                       className={`object-cover ${
                         col.size_image === "small"
-                          ? "w-[397px] h-[497px] mx-auto"
-                          : "w-full h-[949px]"
+                          ? `w-[239px] lg:w-[397px] h-[360px] lg:h-[497px] ${
+                              i % 2 === 0 ? "ml-auto" : "mr-auto"
+                            } lg:mx-auto`
+                          : "w-full h-[422px] lg:h-[949px]"
                       }`}
                     />
                     <div
                       className={`pt-[25px] flex ${
                         col.size_image === "small"
-                          ? "max-w-[397px] flex-col mx-auto"
+                          ? "lg:max-w-[397px] flex-col lg:mx-auto"
                           : "justify-between"
                       }`}
                     >
@@ -118,7 +114,7 @@ function ProjectsDecorTag({ projectsOrientation, introduction }: Props) {
                       <div
                         className={`${
                           col.size_image === "big" && col.title
-                            ? "ml-[100px]"
+                            ? "lg:ml-[100px]"
                             : ""
                         }`}
                         dangerouslySetInnerHTML={{ __html: col.description }}

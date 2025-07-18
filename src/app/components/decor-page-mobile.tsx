@@ -83,6 +83,7 @@ function DecorPageMobile({ decor_information }: Props) {
         name: projectData.category.name,
         projects: allProjects,
         introduction,
+        projectsDecor: projectData.projects_category,
       } as CategoryWithProjects;
     })
     .filter((item): item is CategoryWithProjects => item !== null);
@@ -100,7 +101,7 @@ function DecorPageMobile({ decor_information }: Props) {
           labelTitle="Decor"
         >
           <div className="bg-white">
-            <img
+            <img 
               src={decor_information.cover.url}
               style={{
                 height: "calc(var(--vh, 1vh) * 50)",
