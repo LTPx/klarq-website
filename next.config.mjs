@@ -217,7 +217,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/en/architecture-studio-ibiza-mallorca/",
+        source: "/en/architecture-studio-ibiza-mallorca",
         destination: "/en",
         permanent: true,
       },
@@ -331,7 +331,11 @@ const nextConfig = {
         destination: "/en/decor",
         permanent: true,
       },
-      
+      {
+        source: "/en/a-parcial-versus-a-global-project",
+        destination: "/en",
+        permanent: true,
+      },
     ];
   },
 };
