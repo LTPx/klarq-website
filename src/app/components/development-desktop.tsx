@@ -181,7 +181,7 @@ function DevelopmentDesktop({ projects, information }: Props) {
         {restProjects.map((item, index) => (
           <Link
             key={item.project.id}
-            href={`/architecture/${item.project.slug}`}
+            href={`/development/${item.project.slug}`}
             className={`block relative transition-opacity duration-500 ${
               state.isExpanded
                 ? "snap-start opacity-100 pointer-events-auto"
