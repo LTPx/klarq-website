@@ -21,13 +21,13 @@ function ArchitectureImages({ images = [] }: Props) {
           imageClass += " w-[240px] h-[360px] lg:w-[395px] lg:h-[500px]";
         } else if (mod === 1) {
           wrapperClass = "";
-          imageClass += " w-full h-[422px] lg:h-[850px]";
+          imageClass += " w-full h-[422px] md:h-[550px] lg:h-[850px]";
         } else if (mod === 2 || mod === 5) {
           wrapperClass = "col-span-1 lg:col-span-2";
-          imageClass += " w-full h-[240px] lg:h-[850px]";
+          imageClass += " w-full h-[240px] md:h-[450px] lg:h-[850px]";
         } else if (mod === 3) {
           wrapperClass = "";
-          imageClass += " w-full h-[422px] lg:h-[850px]";
+          imageClass += " w-full h-[422px] md:h-[550px] lg:h-[850px]";
         } else if (mod === 4) {
           wrapperClass = "flex items-end justify-end";
           imageClass += " w-[240px] h-[360px] lg:w-[395px] lg:h-[500px]";

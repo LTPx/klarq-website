@@ -117,8 +117,7 @@ function HomeAnimation(props: Props) {
       <div className="flex justify-center items-center h-[12dvh] lg:hidden px-[15px]">
         <img className="h-full w-full" src="/images/KLARQ.svg" />
       </div>
-      <div className="md:h-[40dvh]" />
-
+      <div className="lg:h-[40dvh]" />
       <motion.div
         className={`flex ${
           isMobile ? "flex-col" : "lg:flex-row"

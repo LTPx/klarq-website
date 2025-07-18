@@ -37,7 +37,7 @@ function ProjectsDecorTag({ projectsOrientation }: Props) {
                     object-cover lg:h-[670px]
                     ${
                       orientation_image === "horizontal"
-                        ? "h-[240px] w-[948px] "
+                        ? "h-[240px] md:h-[500px] w-[948px] "
                         : "h-[422px] w-full lg:w-[535px]"
                     }
                     ${

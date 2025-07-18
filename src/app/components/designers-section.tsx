@@ -56,7 +56,7 @@ export function DesignersSection({ team }: Props) {
   };
 
   return (
-    <div className="grid grid-row gap-[65px] md:gap-[0px] md:grid-cols-3">
+    <div className="grid grid-row gap-[65px] lg:gap-[0px] lg:grid-cols-3">
       <div className="flex gap-[15px]">
         {members.map((member, index) => (
           <button

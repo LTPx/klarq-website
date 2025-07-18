@@ -15,7 +15,7 @@ function DecorWrapper({ decor_information }: Props) {
 
   useEffect(() => {
     function handleResize() {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 900);
     }
 
     handleResize();
