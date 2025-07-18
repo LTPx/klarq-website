@@ -116,7 +116,7 @@ function DevelopmentMobile({ projects, information }: Props) {
                 {restProjects.map((item, index) => (
                   <Link
                     key={item.project.id}
-                    href={`/architecture/${item.project.slug}`}
+                    href={`/development/${item.project.slug}`}
                     className={`block relative transition-opacity duration-500`}
                     style={{ height: "calc(var(--vh, 1vh) * 50)" }}
                   >
