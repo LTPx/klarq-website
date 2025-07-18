@@ -81,11 +81,7 @@ function CallToAction(props: Props) {
     }, 100);
   };
 
-  const handleCategoryClick = (
-    category: CategoryWithProjects,
-    e?: React.MouseEvent
-  ) => {
-    e?.stopPropagation();
+  const handleCategoryClick = (category: CategoryWithProjects) => {
     setSelectedCategory(category);
     setTimeout(() => {
       topRef.current?.scrollIntoView({ block: "start" });
@@ -129,7 +125,7 @@ function CallToAction(props: Props) {
             return (
               <div key={i}>
                 <button
-                  onClick={(e) => handleCategoryClick(category, e)}
+                  onClick={(e) => handleCategoryClick(category)}
                   onMouseEnter={(e) => handleMouseEnter(e, i)}
                   onMouseLeave={handleMouseLeave}
                   className={`relative uppercase flex items-center text-[12px] leading-[15px] lg:text-[16px] lg:leading-[33px] rounded-[50px] border border-black border-[0.75px] h-[33px] px-[25px] overflow-hidden ${

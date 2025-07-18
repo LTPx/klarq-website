@@ -54,7 +54,7 @@ function ProjectsDecorTag({ projectsOrientation }: Props) {
                     pt-[25px]
                     ${
                       orientation_image === "horizontal"
-                        ? "w-[948px]"
+                        ? "lg:w-[948px]"
                         : "lg:w-[535px]"
                     }
                     ${
@@ -102,7 +102,9 @@ function ProjectsDecorTag({ projectsOrientation }: Props) {
                     <div
                       className={`pt-[25px] flex ${
                         col.size_image === "small"
-                          ? "lg:max-w-[397px] flex-col lg:mx-auto"
+                          ? `${
+                              i % 2 === 0 ? "ml-auto" : "mr-auto"
+                            } w-[239px] lg:max-w-[397px] flex-col lg:mx-auto`
                           : "justify-between"
                       }`}
                     >
