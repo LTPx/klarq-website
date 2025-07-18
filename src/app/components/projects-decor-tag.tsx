@@ -104,7 +104,7 @@ function ProjectsDecorTag({ projectsOrientation }: Props) {
                         col.size_image === "small"
                           ? `${
                               i % 2 === 0 ? "ml-auto" : "mr-auto"
-                            } w-[239px] lg:max-w-[397px] flex-col lg:mx-auto`
+                            } w-[239px] lg:w-[397px] flex-col lg:mx-auto`
                           : "justify-between"
                       }`}
                     >
