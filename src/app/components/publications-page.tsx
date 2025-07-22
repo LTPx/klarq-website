@@ -28,7 +28,7 @@ function PublicationsPage({ publications_information }: Props) {
       <Link className="lg:hidden cursor-pointer" href={"/"}>
         <div className="cursor-pointer fixed top-[10px] left-[15px] mix-blend-difference text-white z-[1000]">
           <label className="uppercase tracking-[-0.02em] font-zoom cursor-pointer text-[38px] leading-[38px]">
-            KLARQ <br /> PUBLICACIONES
+            KLARQ <br /> {`${t("menu.publications")}`}
           </label>
         </div>
       </Link>

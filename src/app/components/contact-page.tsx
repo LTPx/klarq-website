@@ -100,20 +100,20 @@ function ContactPage({ contact_information }: Props) {
           <div className="flex flex-col">
             <br />
             <p className="text-center text-[16px] leading-[22px] ">
-              Síguenos en Instagram:
+              {`${t("footer.follow")}`}
             </p>
           </div>
           <div className="flex flex-col justify-center items-center gap-[15px]">
             <div className="flex gap-[10px]">
-              <HoverButton href="https://instagram.com">
+              <HoverButton href="https://www.instagram.com/klarq.architecture/">
                 {t("footer.social_architecture")}
               </HoverButton>
-              <HoverButton href="https://instagram.com">
+              <HoverButton href="https://www.instagram.com/klarq.decor/">
                 {t("footer.social_decor")}
               </HoverButton>
             </div>
             <div>
-              <HoverButton href="https://instagram.com">
+              <HoverButton href="https://www.instagram.com/klarq.development/">
                 {t("footer.social_development")}
               </HoverButton>
             </div>

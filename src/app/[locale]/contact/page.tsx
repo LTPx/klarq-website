@@ -114,17 +114,17 @@ async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
           <div className="flex flex-col">
             <br />
             <p className="text-center text-[16px] leading-[22px] ">
-              Síguenos en Instagram:
+              {`${t("footer.follow")}`}
             </p>
           </div>
           <div className="flex gap-[15px]">
-            <HoverButton href="https://instagram.com">
+            <HoverButton href="https://www.instagram.com/klarq.architecture/">
               {t("footer.social_architecture")}
             </HoverButton>
-            <HoverButton href="https://instagram.com">
+            <HoverButton href="https://www.instagram.com/klarq.decor/">
               {t("footer.social_decor")}
             </HoverButton>
-            <HoverButton href="https://instagram.com">
+            <HoverButton href="https://www.instagram.com/klarq.development/">
               {t("footer.social_development")}
             </HoverButton>
           </div>

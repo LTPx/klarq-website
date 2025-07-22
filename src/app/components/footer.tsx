@@ -42,8 +42,8 @@ const noShowFooter =
         className={`flex flex-col lg:gap-[35px] bg-gray pt-[20px] lg:pt-[50px] px-[15px] lg:px-[40px] pb-[20px] lg:pb-[50px]`}
       >
         <label className="lg:hidden text-[26px] leading-[24px] lg:leading-[45px]">
-          Nos encantaría <br />
-          conocerte
+          {`${t("footer.title_first")}`} <br />
+          {`${t("footer.title_last")}`}
         </label>
         <div className="pt-[24px] lg:pt-[0px] grid grid-rows gap-[7px] lg:gap-[0px] lg:grid-cols-10">
           <div className="col-span-3">
@@ -80,19 +80,19 @@ const noShowFooter =
             <div className="flex gap-[6px]">
               <HoverFillButton
                 className="h-[25px] text-[12px] leading-[12px]"
-                href="https://instagram.com"
+                href="https://www.instagram.com/klarq.architecture/"
               >
                 {t("footer.social_architecture")}
               </HoverFillButton>
               <HoverFillButton
                 className="h-[25px] text-[12px] leading-[12px]"
-                href="https://instagram.com"
+                href="https://www.instagram.com/klarq.decor/"
               >
                 {t("footer.social_decor")}
               </HoverFillButton>
               <HoverFillButton
                 className="h-[25px] text-[12px] leading-[12px]"
-                href="https://instagram.com"
+                href="https://www.instagram.com/klarq.development/"
               >
                 {t("footer.social_development")}
               </HoverFillButton>
@@ -103,13 +103,13 @@ const noShowFooter =
               {`${t("footer.follow")}`}
             </span>
             <div className="flex gap-[15px]">
-              <HoverFillButton href="https://instagram.com">
+              <HoverFillButton href="https://www.instagram.com/klarq.architecture/">
                 {t("footer.social_architecture")}
               </HoverFillButton>
-              <HoverFillButton href="https://instagram.com">
+              <HoverFillButton href="https://www.instagram.com/klarq.decor/">
                 {t("footer.social_decor")}
               </HoverFillButton>
-              <HoverFillButton href="https://instagram.com">
+              <HoverFillButton href="https://www.instagram.com/klarq.development/">
                 {t("footer.social_development")}
               </HoverFillButton>
             </div>

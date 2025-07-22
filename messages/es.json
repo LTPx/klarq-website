@@ -25,6 +25,8 @@
     "development": "Desarrollo"
   },
   "footer": {
+    "title_first": "Nos encantaría",
+    "title_last": "conocerte",
     "title": "Nos encantaría conocerte",
     "follow": "Síguenos en Instagram:",
     "architecture": "Arquitectura",

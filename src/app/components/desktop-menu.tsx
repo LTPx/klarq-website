@@ -73,40 +73,40 @@ export function DesktopMenu(props: Props) {
               <div className="flex gap-[10px] justify-center lg:hidden">
                 <HoverFillButton
                   className="h-[33px] text-[16px] leading-[15px]"
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/klarq.architecture/"
                 >
                   {t("footer.social_architecture")}
                 </HoverFillButton>
                 <HoverFillButton
                   className="h-[33px] text-[16px] leading-[15px]"
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/klarq.decor/"
                 >
                   {t("footer.social_decor")}
                 </HoverFillButton>
               </div>
               <HoverFillButton
                 className="hidden lg:flex h-[33px] text-[16px] leading-[15px]"
-                href="https://instagram.com"
+                href="https://www.instagram.com/klarq.architecture/"
               >
                 {t("footer.social_architecture")}
               </HoverFillButton>
               <HoverFillButton
                 className="hidden lg:flex h-[33px] text-[16px] leading-[15px]"
-                href="https://instagram.com"
+                href="https://www.instagram.com/klarq.decor/"
               >
                 {t("footer.social_decor")}
               </HoverFillButton>
               <div className="flex justify-center lg:hidden">
                 <HoverFillButton
                   className="h-[33px] text-[16px] leading-[15px]"
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/klarq.development/"
                 >
                   {t("footer.social_development")}
                 </HoverFillButton>
               </div>
               <HoverFillButton
                 className="hidden lg:flex h-[33px] text-[16px] leading-[15px]"
-                href="https://instagram.com"
+                href="https://www.instagram.com/klarq.development/"
               >
                 {t("footer.social_development")}
               </HoverFillButton>
