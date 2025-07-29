@@ -23,14 +23,13 @@ export function Footer() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-const noShowFooter =
-  pathname?.includes("/publications") ||
-  pathname?.includes("/contact") ||
-  ((!isMobile && pathname === "/es/architecture") ||
+  const noShowFooter =
+    pathname?.includes("/publications") ||
+    pathname?.includes("/contact") ||
+    (!isMobile && pathname === "/es/architecture") ||
     (!isMobile && pathname === "/es/development") ||
     (!isMobile && pathname === "/en/architecture") ||
-    (!isMobile && pathname === "/en/development"));
-
+    (!isMobile && pathname === "/en/development");
 
   if (noShowFooter) {
     return null;
@@ -53,9 +52,11 @@ const noShowFooter =
               </label>
               <p className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px]">
                 C/ Vicent Serra i Orvay, 49
+                <span className="inline lg:hidden"> </span>
                 <br className="hidden lg:block" />
                 07800 Ibiza
               </p>
+
               <Link
                 href={`mailto:info@klarq.eu`}
                 className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px]"
