@@ -32,7 +32,6 @@ function DevelopmentTablet({ projects, information }: Props) {
     return [projects[0], projects.slice(1)];
   }, [projects]);
 
-  // Force scroll to top on route change
   useEffect(() => {
     const forceScrollTop = () => {
       window.scrollTo(0, 0);
@@ -49,7 +48,6 @@ function DevelopmentTablet({ projects, information }: Props) {
     }
   }, []);
 
-  // IntersectionObserver para actualizar títulos
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -82,7 +80,6 @@ function DevelopmentTablet({ projects, information }: Props) {
     };
   }, [projects]);
 
-  // Touch handling
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
 
@@ -94,7 +91,7 @@ function DevelopmentTablet({ projects, information }: Props) {
 
     function onTouchMove(e: TouchEvent) {
       if (!isTracking.current || state.isExpanded) return;
-      
+
       e.preventDefault();
 
       if (ticking.current) return;
@@ -121,7 +118,6 @@ function DevelopmentTablet({ projects, information }: Props) {
           };
         });
 
-        // Actualizar startY para el siguiente movimiento
         startY.current = currentY;
         ticking.current = false;
       });
@@ -136,7 +132,7 @@ function DevelopmentTablet({ projects, information }: Props) {
       document.addEventListener("touchmove", onTouchMove, { passive: false });
       document.addEventListener("touchend", onTouchEnd, { passive: true });
       document.body.style.overflow = "hidden";
-      
+
       return () => {
         document.removeEventListener("touchstart", onTouchStart);
         document.removeEventListener("touchmove", onTouchMove);
@@ -155,7 +151,6 @@ function DevelopmentTablet({ projects, information }: Props) {
     };
   }, [state.isExpanded]);
 
-  // Handle scroll back to collapse
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container || !state.isExpanded) return;
@@ -170,7 +165,7 @@ function DevelopmentTablet({ projects, information }: Props) {
         setScrollEffect(false);
       }
     };
-    
+
     container.addEventListener("scroll", onScroll);
     return () => {
       container.removeEventListener("scroll", onScroll);
@@ -186,7 +181,6 @@ function DevelopmentTablet({ projects, information }: Props) {
           : "overflow-y-hidden"
       }`}
     >
-      {/* Primer proyecto */}
       <div ref={firstProjectRef} data-index={0}>
         <DesktopCover
           img={firstProject.project.acf.development_projects.cover_project.url}
@@ -197,7 +191,6 @@ function DevelopmentTablet({ projects, information }: Props) {
         />
       </div>
 
-      {/* Título flotante */}
       <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
         <div
           className={`text-white transition-opacity duration-700 ease-in-out ${
@@ -210,7 +203,6 @@ function DevelopmentTablet({ projects, information }: Props) {
         </div>
       </div>
 
-      {/* Resto de proyectos */}
       <div className="flex flex-col gap-[3px]">
         {restProjects.map((item, index) => (
           <Link
