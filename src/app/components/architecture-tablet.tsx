@@ -111,20 +111,18 @@ function ArchitectureTablet({ projects, information }: Props) {
         const deltaY = startY.current - currentY;
 
         setState((prev) => {
-          // Solo considera el movimiento hacia arriba (deltaY positivo)
-          if (deltaY > 0) {
-            let progress = Math.max(
-              0,
-              Math.min(1, prev.progress + deltaY * 0.0005)
-            );
-            return {
-              progress,
-              isExpanded: progress >= 1,
-            };
-          }
-          return prev;
+          let progress = Math.max(
+            0,
+            Math.min(1, prev.progress + deltaY * 0.002)
+          );
+          return {
+            progress,
+            isExpanded: progress >= 1,
+          };
         });
 
+        // Actualizar startY para el siguiente movimiento
+        startY.current = currentY;
         ticking.current = false;
       });
     }
