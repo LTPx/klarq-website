@@ -86,8 +86,8 @@ export default function DesktopCover({
       >
         <label
           ref={labelRef}
-          className="inline-block align-top font-zoom uppercase text-[66px] tracking-[-0.03em]"
-          style={{ lineHeight: "66px" }}
+          className="inline-block ipad-mini:leading-[50px] leading-[66px] align-top font-zoom uppercase ipad-mini:text-[50px] text-[66px] tracking-[-0.03em]"
+          // style={{ lineHeight: "66px" }}
         >
           {labelTitle}
         </label>
@@ -202,7 +202,7 @@ export default function DesktopCover({
           )}
           <motion.div
             style={{ opacity: 1 - progress }}
-            className={`designer-description ${
+            className={`ipad-mini:line-clamp-5 designer-description ${
               !information?.image?.url ? "pt-[400px]" : ""
             }`}
             dangerouslySetInnerHTML={{ __html: information.description }}

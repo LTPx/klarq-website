@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        'ipad-mini': { 'raw': '(min-width: 768px) and (max-width: 1024px)' },
+      },
       colors: {
         primary: {
           100: "#ffd5eb",

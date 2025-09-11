@@ -35,8 +35,10 @@ function LogoAnimate() {
   if (!isAllowedRoute || windowHeight === null || windowWidth === null)
     return null;
 
+  const isIpadMini = windowWidth >= 768 && windowWidth <= 1024;
+
   const initialHeight = windowHeight * 0.4;
-  const finalHeight = 66;
+  const finalHeight = isIpadMini ? 50 : 66;
   const initialWidth = windowWidth;
   const finalWidth = 322;
 

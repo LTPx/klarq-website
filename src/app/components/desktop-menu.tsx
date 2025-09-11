@@ -25,7 +25,7 @@ export function DesktopMenu(props: Props) {
         showContact ? "translate-y-0" : "translate-y-full"
       }`}
     >
-      <div className="container flex flex-col lg:gap-[110px]">
+      <div className="container flex flex-col ipad-mini:gap-[50px] lg:gap-[110px]">
         <div className="lg:h-[35dvh]">
           <Link href={"/"} onClick={() => setShowContact(false)}>
             <div className="lg:relative absolute top-[10px] px-[15px] lg:px-[40px] pt-[15px] lg:pt-[40px] lg:pb-[30px]">

@@ -113,13 +113,13 @@ async function DevelopmentSlugPage(nextParams: {
       </Link>
       <Link className="hidden lg:block cursor-pointer" href={"/"}>
         <div className="cursor-pointer fixed top-[30px] left-[35px] mix-blend-difference text-white z-[1000]">
-          <label className="font-zoom cursor-pointer text-[66px] leading-[46px] ">
+          <label className="font-zoom cursor-pointer ipad-mini:text-[50px] text-[66px] leading-[46px] ">
             KLARQ
           </label>
         </div>
       </Link>
       <div className="hidden lg:block fixed top-[30px] right-[40px] z-[1000] mix-blend-difference text-white">
-        <label className="font-zoom text-[66px] leading-[46px] tracking-[-0.03em]">
+        <label className="font-zoom ipad-mini:text-[50px] text-[66px] leading-[46px] tracking-[-0.03em]">
           DEVELOPMENT
         </label>
       </div>

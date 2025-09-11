@@ -103,7 +103,7 @@ export function Footer() {
             <span className="text-[16px] leading-[22px]">
               {`${t("footer.follow")}`}
             </span>
-            <div className="flex gap-[15px]">
+            <div className="flex ipad-mini:flex-wrap gap-[15px]">
               <HoverFillButton href="https://www.instagram.com/klarq.architecture/">
                 {t("footer.social_architecture")}
               </HoverFillButton>

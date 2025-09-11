@@ -94,13 +94,13 @@ async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
       <div className="hidden lg:flex lg:h-[calc(100dvh-50px)]">
         <Link className="cursor-pointer" href={"/"}>
           <div className="cursor-pointer fixed top-[40px] left-[35px] z-[1000]">
-            <label className="font-zoom cursor-pointer text-[66px] leading-[46px] ">
+            <label className="font-zoom cursor-pointer ipad-mini:text-[50px] text-[66px] leading-[46px] ">
               KLARQ
             </label>
           </div>
         </Link>
         <div className="fixed top-[40px] right-[40px] z-[1000] mix-blend-difference text-white">
-          <label className="font-zoom text-[66px] leading-[46px] tracking-[-0.03em]">
+          <label className="font-zoom ipad-mini:text-[50px] text-[66px] leading-[46px] tracking-[-0.03em]">
             CONTACT
           </label>
         </div>

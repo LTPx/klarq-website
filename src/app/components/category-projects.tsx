@@ -342,3 +342,4 @@ function ProjectsCategory({ projects, introduction }: Props) {
 }
 
 export default ProjectsCategory;
+

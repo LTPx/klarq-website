@@ -34,13 +34,13 @@ function PublicationsPage({ publications_information }: Props) {
       </Link>
       <Link className="hidden lg:block cursor-pointer" href={"/"}>
         <div className="cursor-pointer fixed top-[35px] left-[35px] z-[1000]">
-          <label className="font-zoom cursor-pointer text-[66px] leading-[46px] ">
+          <label className="font-zoom cursor-pointer ipad-mini:text-[50px] text-[66px] leading-[46px] ">
             KLARQ
           </label>
         </div>
       </Link>
       <div className="hidden lg:block fixed top-[35px] right-[35px]">
-        <label className="font-zoom text-[66px] leading-[46px] tracking-[-0.03em] mix-blend-difference">
+        <label className="font-zoom ipad-mini:text-[50px] text-[66px] leading-[46px] tracking-[-0.03em] mix-blend-difference">
           {t("home.publications")}
         </label>
       </div>
