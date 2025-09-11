@@ -37,35 +37,35 @@ function ContactPage({ contact_information }: Props) {
 
   useEffect(() => {
     let touchStartY = 0;
-  
+
     const onTouchStart = (e: TouchEvent) => {
       if (!isMobile) return;
       touchStartY = e.touches[0].clientY;
     };
-  
+
     const onTouchMove = (e: TouchEvent) => {
       if (!isMobile) return;
-  
+
       e.preventDefault();
-  
+
       const touchCurrentY = e.touches[0].clientY;
       const deltaY = touchStartY - touchCurrentY; // positivo si se desliza hacia arriba
-  
+
       setProgress((prev) => {
         let next = prev + deltaY * 0.005;
         if (next > 1) next = 1;
         if (next < 0) next = 0;
         return next;
       });
-  
+
       touchStartY = touchCurrentY;
     };
-  
+
     if (isMobile) {
       window.addEventListener("touchstart", onTouchStart, { passive: false });
       window.addEventListener("touchmove", onTouchMove, { passive: false });
     }
-  
+
     return () => {
       if (isMobile) {
         window.removeEventListener("touchstart", onTouchStart);
@@ -73,7 +73,6 @@ function ContactPage({ contact_information }: Props) {
       }
     };
   }, [isMobile]);
-  
 
   return (
     <>

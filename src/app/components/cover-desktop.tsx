@@ -195,7 +195,7 @@ export default function DesktopCover({
               initial={{ opacity: 0, y: 0 }}
               animate={{ opacity: 1 - progress }}
               transition={{ duration: 0.3 }}
-              className="h-[372px] w-[260px]"
+              className="lg:h-[330px] lg:w-[240px] xl:h-[372px] xl:w-[260px]"
               src={information.image.url}
               alt="team-image"
             />

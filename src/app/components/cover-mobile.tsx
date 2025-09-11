@@ -19,7 +19,6 @@ const CoverDynamicMobile = ({
   progress,
   children,
 }: Props) => {
-
   return (
     <div className="relative w-full h-[100vh] bg-white overflow-hidden">
       <motion.img
