@@ -29,7 +29,7 @@ function ContactPage({ contact_information }: Props) {
   }, []);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 900);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -58,7 +58,7 @@ function ContactPage({ contact_information }: Props) {
         return next;
       });
   
-      touchStartY = touchCurrentY; // actualizar para el próximo movimiento
+      touchStartY = touchCurrentY;
     };
   
     if (isMobile) {
