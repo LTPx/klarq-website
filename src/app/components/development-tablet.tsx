@@ -15,7 +15,7 @@ interface Props {
   information: InformationWp;
 }
 
-function ArchitectureTablet({ projects, information }: Props) {
+function DevelopmentTablet({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDate, setCurrentDate] = useState("");
   const [scrollEffect, setScrollEffect] = useState(false);
@@ -32,6 +32,7 @@ function ArchitectureTablet({ projects, information }: Props) {
     return [projects[0], projects.slice(1)];
   }, [projects]);
 
+  // Force scroll to top on route change
   useEffect(() => {
     const forceScrollTop = () => {
       window.scrollTo(0, 0);
@@ -48,6 +49,7 @@ function ArchitectureTablet({ projects, information }: Props) {
     }
   }, []);
 
+  // IntersectionObserver para actualizar títulos
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -80,6 +82,7 @@ function ArchitectureTablet({ projects, information }: Props) {
     };
   }, [projects]);
 
+  // Touch handling
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
 
@@ -91,7 +94,7 @@ function ArchitectureTablet({ projects, information }: Props) {
 
     function onTouchMove(e: TouchEvent) {
       if (!isTracking.current || state.isExpanded) return;
-
+      
       e.preventDefault();
 
       if (ticking.current) return;
@@ -118,6 +121,7 @@ function ArchitectureTablet({ projects, information }: Props) {
           };
         });
 
+        // Actualizar startY para el siguiente movimiento
         startY.current = currentY;
         ticking.current = false;
       });
@@ -132,7 +136,7 @@ function ArchitectureTablet({ projects, information }: Props) {
       document.addEventListener("touchmove", onTouchMove, { passive: false });
       document.addEventListener("touchend", onTouchEnd, { passive: true });
       document.body.style.overflow = "hidden";
-
+      
       return () => {
         document.removeEventListener("touchstart", onTouchStart);
         document.removeEventListener("touchmove", onTouchMove);
@@ -151,6 +155,7 @@ function ArchitectureTablet({ projects, information }: Props) {
     };
   }, [state.isExpanded]);
 
+  // Handle scroll back to collapse
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container || !state.isExpanded) return;
@@ -165,7 +170,7 @@ function ArchitectureTablet({ projects, information }: Props) {
         setScrollEffect(false);
       }
     };
-
+    
     container.addEventListener("scroll", onScroll);
     return () => {
       container.removeEventListener("scroll", onScroll);
@@ -175,22 +180,24 @@ function ArchitectureTablet({ projects, information }: Props) {
   return (
     <div
       ref={scrollContainerRef}
-      className={`ArchitecturePage relative h-[calc(100dvh-50px)] flex flex-col gap-[3px] ${
+      className={`DevelopmentPage relative h-[calc(100dvh-50px)] flex flex-col gap-[3px] ${
         scrollEffect
           ? "overflow-y-scroll snap-y snap-mandatory"
           : "overflow-y-hidden"
       }`}
     >
+      {/* Primer proyecto */}
       <div ref={firstProjectRef} data-index={0}>
         <DesktopCover
-          img={firstProject.project.acf.architecture_projects.cover_project.url}
+          img={firstProject.project.acf.development_projects.cover_project.url}
           information={information}
-          labelTitle="Architecture"
-          linkSlug={`/architecture/${firstProject.project.slug}`}
+          labelTitle="Development"
+          linkSlug={`/development/${firstProject.project.slug}`}
           progress={state.progress}
         />
       </div>
 
+      {/* Título flotante */}
       <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
         <div
           className={`text-white transition-opacity duration-700 ease-in-out ${
@@ -203,11 +210,12 @@ function ArchitectureTablet({ projects, information }: Props) {
         </div>
       </div>
 
+      {/* Resto de proyectos */}
       <div className="flex flex-col gap-[3px]">
         {restProjects.map((item, index) => (
           <Link
             key={item.project.id}
-            href={`/architecture/${item.project.slug}`}
+            href={`/development/${item.project.slug}`}
             className={`block relative transition-opacity duration-500 ${
               state.isExpanded
                 ? "snap-start opacity-100 pointer-events-auto"
@@ -223,7 +231,7 @@ function ArchitectureTablet({ projects, information }: Props) {
             >
               <img
                 className="bg-[#00000026] object-cover w-full h-full"
-                src={item.project.acf.architecture_projects.cover_project.url}
+                src={item.project.acf.development_projects.cover_project.url}
                 alt={item.title}
               />
               <div className="absolute inset-0 bg-black/20 z-10" />
@@ -235,4 +243,4 @@ function ArchitectureTablet({ projects, information }: Props) {
   );
 }
 
-export default ArchitectureTablet;
+export default DevelopmentTablet;
