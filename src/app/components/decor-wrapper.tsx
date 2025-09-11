@@ -15,10 +15,12 @@ type DeviceType = "mobile" | "tablet" | "desktop";
 
 function DecorWrapper({ decor_information }: Props) {
   const [device, setDevice] = useState<DeviceType>("desktop");
+  const [key, setKey] = useState(0);
 
   useEffect(() => {
     function handleResize() {
       const width = window.innerWidth;
+
       if (width <= 900) {
         setDevice("mobile");
       } else if (width <= 1200) {
@@ -28,13 +30,19 @@ function DecorWrapper({ decor_information }: Props) {
       }
     }
 
-    handleResize();
+    handleResize(); 
+    
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", () => setKey(prev => prev + 1));
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", () => setKey(prev => prev + 1));
+    };
   }, []);
 
   return (
-    <div>
+    <div key={key}>
       {device === "mobile" && (
         <DecorPageMobile decor_information={decor_information} />
       )}

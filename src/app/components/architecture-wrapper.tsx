@@ -21,7 +21,7 @@ type DeviceType = "mobile" | "tablet" | "desktop";
 
 function ArchitectureWrapper({ projects, information }: Props) {
   const [device, setDevice] = useState<DeviceType>("desktop");
-  const [key, setKey] = useState(0); // fuerza re-render al cambiar orientación
+  const [key, setKey] = useState(0);
 
   useEffect(() => {
     function handleResize() {
@@ -36,9 +36,7 @@ function ArchitectureWrapper({ projects, information }: Props) {
       }
     }
 
-    handleResize(); // set initial device
-
-    // Event listeners
+    handleResize();
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", () => setKey(prev => prev + 1));
 
@@ -48,7 +46,6 @@ function ArchitectureWrapper({ projects, information }: Props) {
     };
   }, []);
 
-  // key fuerza que React vuelva a renderizar al girar la tablet
   return (
     <div key={key}>
       {device === "mobile" && (
