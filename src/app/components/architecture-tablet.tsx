@@ -22,18 +22,34 @@ function ArchitectureTablet({ projects, information }: Props) {
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const firstProjectRef = useRef<HTMLDivElement | null>(null);
   const [state, setState] = useState({ progress: 0, isExpanded: false });
+  const ticking = useRef(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const startY = useRef(0);
+  const isTracking = useRef(false);
   const pathname = usePathname();
 
   const [firstProject, restProjects] = useMemo(() => {
     return [projects[0], projects.slice(1)];
   }, [projects]);
 
+  // Force scroll to top on route change
   useEffect(() => {
-    window.scrollTo(0, 0);
-    setTimeout(() => window.scrollTo(0, 0), 50);
+    const forceScrollTop = () => {
+      window.scrollTo(0, 0);
+      setTimeout(() => window.scrollTo(0, 0), 50);
+      setTimeout(() => window.scrollTo(0, 0), 150);
+    };
+
+    forceScrollTop();
   }, [pathname]);
 
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  // IntersectionObserver para actualizar títulos
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -50,55 +66,129 @@ function ArchitectureTablet({ projects, information }: Props) {
       { threshold: 0.6 }
     );
 
-    if (firstProjectRef.current) observer.observe(firstProjectRef.current);
-    sectionRefs.current.forEach((ref) => ref && observer.observe(ref));
+    if (firstProjectRef.current) {
+      observer.observe(firstProjectRef.current);
+    }
+
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
 
     return () => {
-      sectionRefs.current.forEach((ref) => ref && observer.unobserve(ref));
+      sectionRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
       observer.disconnect();
     };
   }, [projects]);
 
+  // Touch handling
   useEffect(() => {
-    const container = document.body;
+    let releaseTimeout: NodeJS.Timeout;
 
-    const onTouchStart = (e: TouchEvent) => {
-      startY.current = e.touches[0].clientY;
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
+    function onTouchStart(e: TouchEvent) {
       if (state.isExpanded) return;
+      startY.current = e.touches[0].clientY;
+      isTracking.current = true;
+    }
 
-      const deltaY = startY.current - e.touches[0].clientY;
-      let progress = Math.max(0, Math.min(1, state.progress + deltaY * 0.002));
-      setState((prev) => ({ ...prev, progress }));
+    function onTouchMove(e: TouchEvent) {
+      if (!isTracking.current || state.isExpanded) return;
+      
+      e.preventDefault();
 
-      if (progress >= 1) {
-        setState((prev) => ({ ...prev, isExpanded: true }));
+      if (ticking.current) return;
+
+      ticking.current = true;
+
+      requestAnimationFrame(() => {
+        if (!isTracking.current) {
+          ticking.current = false;
+          return;
+        }
+
+        const currentY = e.touches[0].clientY;
+        const deltaY = startY.current - currentY;
+
+        setState((prev) => {
+          // Solo considera el movimiento hacia arriba (deltaY positivo)
+          if (deltaY > 0) {
+            let progress = Math.max(
+              0,
+              Math.min(1, prev.progress + deltaY * 0.0005)
+            );
+            return {
+              progress,
+              isExpanded: progress >= 1,
+            };
+          }
+          return prev;
+        });
+
+        ticking.current = false;
+      });
+    }
+
+    function onTouchEnd() {
+      isTracking.current = false;
+    }
+
+    if (!state.isExpanded) {
+      document.addEventListener("touchstart", onTouchStart, { passive: true });
+      document.addEventListener("touchmove", onTouchMove, { passive: false });
+      document.addEventListener("touchend", onTouchEnd, { passive: true });
+      document.body.style.overflow = "hidden";
+      
+      return () => {
+        document.removeEventListener("touchstart", onTouchStart);
+        document.removeEventListener("touchmove", onTouchMove);
+        document.removeEventListener("touchend", onTouchEnd);
+        document.body.style.overflow = "";
+      };
+    } else {
+      releaseTimeout = setTimeout(() => {
         setScrollEffect(true);
-        container.style.overflowY = "scroll";
-      }
-    };
-
-    container.addEventListener("touchstart", onTouchStart, { passive: true });
-    container.addEventListener("touchmove", onTouchMove, { passive: false });
-    container.style.overflowY = "hidden";
+      }, 600);
+    }
 
     return () => {
-      container.removeEventListener("touchstart", onTouchStart);
-      container.removeEventListener("touchmove", onTouchMove);
-      container.style.overflowY = "";
+      clearTimeout(releaseTimeout);
+      document.body.style.overflow = "";
     };
-  }, [state.isExpanded, state.progress]);
+  }, [state.isExpanded]);
+
+  // Handle scroll back to collapse
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || !state.isExpanded) return;
+
+    const onScroll = () => {
+      if (container.scrollTop <= 0) {
+        setState({
+          progress: 1,
+          isExpanded: false,
+        });
+        document.body.style.overflow = "hidden";
+        setScrollEffect(false);
+      }
+    };
+    
+    container.addEventListener("scroll", onScroll);
+    return () => {
+      container.removeEventListener("scroll", onScroll);
+    };
+  }, [state.isExpanded]);
 
   return (
     <div
+      ref={scrollContainerRef}
       className={`ArchitecturePage relative h-[calc(100dvh-50px)] flex flex-col gap-[3px] ${
         scrollEffect
           ? "overflow-y-scroll snap-y snap-mandatory"
           : "overflow-y-hidden"
       }`}
     >
+      {/* Primer proyecto */}
       <div ref={firstProjectRef} data-index={0}>
         <DesktopCover
           img={firstProject.project.acf.architecture_projects.cover_project.url}
@@ -109,6 +199,7 @@ function ArchitectureTablet({ projects, information }: Props) {
         />
       </div>
 
+      {/* Título flotante */}
       <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
         <div
           className={`text-white transition-opacity duration-700 ease-in-out ${
@@ -121,6 +212,7 @@ function ArchitectureTablet({ projects, information }: Props) {
         </div>
       </div>
 
+      {/* Resto de proyectos */}
       <div className="flex flex-col gap-[3px]">
         {restProjects.map((item, index) => (
           <Link
