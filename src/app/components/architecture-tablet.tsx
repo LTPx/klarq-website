@@ -146,7 +146,7 @@ function ArchitectureTablet({ projects, information }: Props) {
     } else {
       releaseTimeout = setTimeout(() => {
         setScrollEffect(true);
-      }, 600);
+      }, 100); // Reducido de 600ms a 100ms
     }
 
     return () => {
