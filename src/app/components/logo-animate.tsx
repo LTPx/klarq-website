@@ -7,6 +7,7 @@ import { Link } from "@/navigation";
 
 function LogoAnimate() {
   const pathname = usePathname();
+  const isIpad7 = /iPad/.test(navigator.userAgent) && screen.width === 810;
 
   const [windowHeight, setWindowHeight] = useState<number | null>(null);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
@@ -48,7 +49,9 @@ function LogoAnimate() {
         <motion.img
           src="/images/KLARQ.svg"
           alt="KLARQ"
-          className="hidden lg:block px-[40px] object-contain fixed top-[20px] left-0 z-[1000] mix-blend-difference filter invert"
+          className={`hidden lg:block px-[40px] object-contain fixed top-[20px] left-0 z-[1000] ${
+            !isIpad7 ? "mix-blend-difference filter invert" : ""
+          }`}
           initial={{
             y: 0,
             opacity: 1,
