@@ -1,6 +1,6 @@
 "use client";
 
-import { isMobile, isTablet } from "react-device-detect";
+import { useEffect, useState } from "react";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
 
@@ -17,19 +17,37 @@ interface Props {
   information: InformationWp;
 }
 
-function ArchitectureWrapper({ projects, information }: Props) {
-  let device: "mobile" | "tablet" | "desktop" = "desktop";
+type DeviceType = "mobile" | "tablet" | "desktop";
 
-  if (isMobile) {
-    device = "mobile";
-  } else if (isTablet) {
-    device = "tablet";
-  } else {
-    device = "desktop";
-  }
+function ArchitectureWrapper({ projects, information }: Props) {
+  const [device, setDevice] = useState<DeviceType>("desktop");
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    function handleResize() {
+      const width = window.innerWidth;
+
+      if (width <= 915) {
+        setDevice("mobile");
+      } else if (width <= 1200) {
+        setDevice("tablet");
+      } else {
+        setDevice("desktop");
+      }
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", () => setKey(prev => prev + 1));
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", () => setKey(prev => prev + 1));
+    };
+  }, []);
 
   return (
-    <div>
+    <div key={key}>
       {device === "mobile" && (
         <ArchitecturePageMobile projects={projects} information={information} />
       )}
