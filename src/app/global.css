@@ -180,7 +180,7 @@ body.hide-native-cursor * {
 }
 
 
-@media (max-width: 900px) {
+@media (max-width: 915px) {
 
   .custom-line-clamp-4 {
     display: -webkit-box;

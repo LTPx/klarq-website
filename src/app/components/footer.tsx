@@ -16,7 +16,7 @@ export function Footer() {
 
   useEffect(() => {
     function checkMobile() {
-      setIsMobile(window.innerWidth < 900);
+      setIsMobile(window.innerWidth < 915);
     }
     checkMobile();
     window.addEventListener("resize", checkMobile);

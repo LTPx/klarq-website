@@ -27,7 +27,7 @@ function DevelopmentWrapper({ projects, information }: Props) {
     function handleResize() {
       const width = window.innerWidth;
 
-      if (width <= 900) {
+      if (width <= 915) {
         setDevice("mobile");
       } else if (width <= 1200) {
         setDevice("tablet");
