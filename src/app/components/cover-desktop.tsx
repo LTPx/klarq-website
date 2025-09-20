@@ -195,14 +195,14 @@ export default function DesktopCover({
               initial={{ opacity: 0, y: 0 }}
               animate={{ opacity: 1 - progress }}
               transition={{ duration: 0.3 }}
-              className="lg:h-[330px] lg:w-[240px] xl:h-[372px] xl:w-[260px]"
+              className="laptop-13:h-[300px] laptop-13:w-[210px] lg:h-[330px] lg:w-[240px] xl:h-[372px] xl:w-[260px]"
               src={information.image.url}
               alt="team-image"
             />
           )}
           <motion.div
             style={{ opacity: 1 - progress }}
-            className={`ipad-mini:line-clamp-5 designer-description ${
+            className={`laptop-13:line-clamp-4 ipad-mini:line-clamp-5 designer-description ${
               !information?.image?.url ? "pt-[400px]" : ""
             }`}
             dangerouslySetInnerHTML={{ __html: information.description }}

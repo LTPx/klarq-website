@@ -180,11 +180,11 @@ body.hide-native-cursor * {
 }
 
 
-@media (max-width: 915px) {
+@media (max-width: 1023px) {
 
   .custom-line-clamp-4 {
     display: -webkit-box;
-    -webkit-line-clamp: 7; /* número de líneas a mostrar */
+    -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -297,4 +297,7 @@ body.hide-native-cursor * {
   /* .text-cover {
     padding-top: 15px;
   } */
+}
+
+@media (min-width: 1280px) and (max-width: 1439px) {
 }

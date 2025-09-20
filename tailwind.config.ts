@@ -9,7 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        'ipad-mini': { 'raw': '(min-width: 768px) and (max-width: 1200px)' },
+        'ipad-mini': { 'raw': '(min-width: 768px) and (max-width: 1279px)' },
+        'laptop-13': { 'raw': '(min-width: 1280px) and (max-width: 1439px)' },
       },
       colors: {
         primary: {

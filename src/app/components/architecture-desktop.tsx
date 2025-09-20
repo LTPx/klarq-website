@@ -1,7 +1,5 @@
 "use client";
-
 import { useEffect, useState, useRef, useMemo } from "react";
-// import { getProxyImageUrl } from "@/utils/image_proxy";
 import DesktopCover from "./cover-desktop";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
@@ -16,7 +14,7 @@ interface Props {
   information: InformationWp;
 }
 
-function ArchitectureDesktop({ projects, information }: Props) {
+function ArchitectureUnified({ projects, information }: Props) {
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDate, setCurrentDate] = useState("");
   const [scrollEffect, setScrollEffect] = useState(false);
@@ -27,25 +25,19 @@ function ArchitectureDesktop({ projects, information }: Props) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  useEffect(() => {
-    const forceScrollTop = () => {
-      window.scrollTo(0, 0);
-      setTimeout(() => window.scrollTo(0, 0), 50);
-      setTimeout(() => window.scrollTo(0, 0), 150);
-    };
-
-    forceScrollTop();
-  }, [pathname]);
-
-  useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-  }, []);
+  const startY = useRef(0);
+  const isTracking = useRef(false);
 
   const [firstProject, restProjects] = useMemo(() => {
     return [projects[0], projects.slice(1)];
   }, [projects]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -63,62 +55,67 @@ function ArchitectureDesktop({ projects, information }: Props) {
       { threshold: 0.6 }
     );
 
-    if (firstProjectRef.current) {
-      observer.observe(firstProjectRef.current);
-    }
+    if (firstProjectRef.current) observer.observe(firstProjectRef.current);
+    sectionRefs.current.forEach((ref) => ref && observer.observe(ref));
 
-    sectionRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => {
-      sectionRefs.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [projects]);
 
   useEffect(() => {
     let releaseTimeout: NodeJS.Timeout;
 
-    function onWheel(e: WheelEvent) {
-      e.preventDefault();
-
+    function handleProgress(delta: number) {
       if (ticking.current) return;
-
       ticking.current = true;
 
       requestAnimationFrame(() => {
         setState((prev) => {
-          let progress = Math.max(
-            0,
-            Math.min(1, prev.progress + e.deltaY * 0.0005)
-          );
-          return {
-            progress,
-            isExpanded: progress >= 1,
-          };
+          const progress = Math.max(0, Math.min(1, prev.progress + delta));
+          return { progress, isExpanded: progress >= 1 };
         });
         ticking.current = false;
       });
     }
 
+    function onWheel(e: WheelEvent) {
+      if (state.isExpanded) return;
+      e.preventDefault();
+      handleProgress(e.deltaY * 0.0005);
+    }
+
+    function onTouchStart(e: TouchEvent) {
+      if (state.isExpanded) return;
+      startY.current = e.touches[0].clientY;
+      isTracking.current = true;
+    }
+    function onTouchMove(e: TouchEvent) {
+      if (!isTracking.current || state.isExpanded) return;
+      e.preventDefault();
+      const currentY = e.touches[0].clientY;
+      const deltaY = startY.current - currentY;
+      handleProgress(deltaY * 0.002);
+      startY.current = currentY;
+    }
+    function onTouchEnd() {
+      isTracking.current = false;
+    }
+
     if (!state.isExpanded) {
       window.addEventListener("wheel", onWheel, { passive: false });
+      window.addEventListener("touchstart", onTouchStart, { passive: true });
+      window.addEventListener("touchmove", onTouchMove, { passive: false });
+      window.addEventListener("touchend", onTouchEnd, { passive: true });
       document.body.style.overflow = "hidden";
-      return () => {
-        window.removeEventListener("wheel", onWheel);
-        document.body.style.overflow = "";
-      };
     } else {
-      releaseTimeout = setTimeout(() => {
-        setScrollEffect(true);
-      }, 600);
+      releaseTimeout = setTimeout(() => setScrollEffect(true), 400);
     }
 
     return () => {
       clearTimeout(releaseTimeout);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
       document.body.style.overflow = "";
     };
   }, [state.isExpanded]);
@@ -129,18 +126,14 @@ function ArchitectureDesktop({ projects, information }: Props) {
 
     const onScroll = () => {
       if (container.scrollTop <= 0) {
-        setState({
-          progress: 1,
-          isExpanded: false,
-        });
-        document.body.style.overflow = "hidden";
+        setState({ progress: 1, isExpanded: false });
         setScrollEffect(false);
+        document.body.style.overflow = "hidden";
       }
     };
+
     container.addEventListener("scroll", onScroll);
-    return () => {
-      container.removeEventListener("scroll", onScroll);
-    };
+    return () => container.removeEventListener("scroll", onScroll);
   }, [state.isExpanded]);
 
   return (
@@ -161,6 +154,7 @@ function ArchitectureDesktop({ projects, information }: Props) {
           progress={state.progress}
         />
       </div>
+
       <div className="pointer-events-none fixed top-0 left-0 w-full h-full flex justify-center items-center z-20">
         <div
           className={`text-white transition-opacity duration-700 ease-in-out ${
@@ -172,6 +166,7 @@ function ArchitectureDesktop({ projects, information }: Props) {
           </span>
         </div>
       </div>
+
       <div className="flex flex-col gap-[3px]">
         {restProjects.map((item, index) => (
           <Link
@@ -204,4 +199,4 @@ function ArchitectureDesktop({ projects, information }: Props) {
   );
 }
 
-export default ArchitectureDesktop;
+export default ArchitectureUnified;

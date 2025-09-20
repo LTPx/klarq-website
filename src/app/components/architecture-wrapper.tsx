@@ -3,10 +3,8 @@
 import { useEffect, useState } from "react";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
-
-import ArchitectureDesktop from "./architecture-desktop";
-import ArchitectureTablet from "./architecture-tablet";
 import ArchitecturePageMobile from "./architecture-mobile";
+import ArchitectureUnified from "./architecture-desktop";
 
 interface Props {
   projects: {
@@ -17,7 +15,7 @@ interface Props {
   information: InformationWp;
 }
 
-type DeviceType = "mobile" | "tablet" | "desktop";
+type DeviceType = "mobile" | "desktop";
 
 function ArchitectureWrapper({ projects, information }: Props) {
   const [device, setDevice] = useState<DeviceType>("desktop");
@@ -27,10 +25,8 @@ function ArchitectureWrapper({ projects, information }: Props) {
     function handleResize() {
       const width = window.innerWidth;
 
-      if (width <= 915) {
+      if (width <= 1023) {
         setDevice("mobile");
-      } else if (width <= 1200) {
-        setDevice("tablet");
       } else {
         setDevice("desktop");
       }
@@ -48,14 +44,10 @@ function ArchitectureWrapper({ projects, information }: Props) {
 
   return (
     <div key={key}>
-      {device === "mobile" && (
+      {device === "mobile" ? (
         <ArchitecturePageMobile projects={projects} information={information} />
-      )}
-      {device === "tablet" && (
-        <ArchitectureTablet projects={projects} information={information} />
-      )}
-      {device === "desktop" && (
-        <ArchitectureDesktop projects={projects} information={information} />
+      ) : (
+        <ArchitectureUnified projects={projects} information={information} />
       )}
     </div>
   );
