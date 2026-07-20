@@ -4,7 +4,7 @@ import { getChildPages } from "@/app/_services/api";
 type Locale = "es" | "en";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://klarq.netlify.app";
+  const baseUrl = "https://klarq.eu";
 
   const languages: Locale[] = ["es", "en"];
 

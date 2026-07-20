@@ -1,9 +1,14 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Metadata } from "next";
+import Script from "next/script";
 import App from "./app";
+import { DEFAULT_OG_IMAGE } from "@/app/constants";
 import "tailwindcss/tailwind.css";
 import "../global.css";
+
+const DEFAULT_DESCRIPTION =
+  "Estudio de Arquitectura e Interiorismo en Ibiza y Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible.";
 
 export async function generateMetadata({
   params: { locale },
@@ -11,20 +16,49 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   return {
-    title: "klarq",
-    description: "New Site",
+    title: "KLARQ",
+    description: DEFAULT_DESCRIPTION,
     // robots: seoData.robots,
     openGraph: {
-      title: "klarq",
-      description: "New Site",
-      siteName: "",
+      title: "KLARQ",
+      description: DEFAULT_DESCRIPTION,
+      siteName: "KLARQ",
       locale: locale,
+      images: [DEFAULT_OG_IMAGE],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "KLARQ",
+      description: DEFAULT_DESCRIPTION,
+      images: [DEFAULT_OG_IMAGE],
     },
     icons: {
       icon: "/images/icon-logo.png",
     },
   };
 }
+
+const ORGANIZATION_SCHEMA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://klarq.eu/#organization",
+      name: "KLARQ",
+      url: "https://klarq.eu",
+      logo: "https://klarq.eu/images/KLARQ.svg",
+      email: "info@klarq.eu",
+      sameAs: [],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://klarq.eu/#website",
+      url: "https://klarq.eu",
+      name: "KLARQ",
+      publisher: { "@id": "https://klarq.eu/#organization" },
+    },
+  ],
+};
 
 export default async function LocaleLayout({
   children,
@@ -38,37 +72,39 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-        />
-        {/* KLARQ Pixel */}
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '4158171417786538');
-              fbq('track', 'PageView');
-            `,
-          }}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }}
         />
+      </head>
+      <body>
+        {/* KLARQ Pixel — deferred until after hydration so it no longer competes with LCP/hero resources */}
+        <Script id="fb-pixel" strategy="afterInteractive">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '4158171417786538');
+            fbq('track', 'PageView');
+          `}
+        </Script>
+        {/* noscript pixel fallback moved out of <head> and to the end of <body> — an <img> in
+            <head> was being picked up by Next.js's automatic image-preload heuristic and
+            competing with the real hero image for bandwidth. */}
         <noscript>
           <img
             height="1"
             width="1"
             style={{ display: "none" }}
             src="https://www.facebook.com/tr?id=4158171417786538&ev=PageView&noscript=1"
+            alt=""
           />
         </noscript>
-      </head>
-      <body>
         <NextIntlClientProvider messages={messages}>
           <App locale={locale}>{children}</App>
         </NextIntlClientProvider>

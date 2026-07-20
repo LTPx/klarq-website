@@ -38,7 +38,7 @@ function ArchitectureImages({ images = [] }: Props) {
             <img
               data-aos="fade-up"
               src={src.url}
-              alt={`Architecture ${index + 1}`}
+              alt={src.alt || `Architecture ${index + 1}`}
               className={imageClass}
             />
           </div>

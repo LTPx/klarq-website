@@ -9,10 +9,11 @@ interface Props {
   className?: string;
   media?: MediaFileWp;
   img?: string;
+  alt?: string;
 }
 
 export function Cover(props: Props) {
-  const { children, className, media, img } = props;
+  const { children, className, media, img, alt } = props;
 
   useEffect(() => {
     const vh = window.visualViewport?.height || window.innerHeight;
@@ -24,6 +25,7 @@ export function Cover(props: Props) {
       {img && (
         <img
           src={img}
+          alt={alt || ""}
           className={`${className} w-full object-cover`}
           style={{ height: `calc(var(--vh, 1vh) * 100 - 50px)` }}
         />
@@ -44,6 +46,7 @@ export function Cover(props: Props) {
       {media?.type === "image" && (
         <img
           src={media.url}
+          alt={alt || ""}
           className={`${className} w-full object-cover`}
           style={{ height: `calc(var(--vh, 1vh) * 100 - 50px)` }}
         />

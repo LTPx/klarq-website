@@ -32,8 +32,8 @@ export async function generateMetadata({
           ? seo_canonical
           : `${origin}/${locale}/development/${slug}`,
         languages: {
-          en: `${origin}/en/${slug}`,
-          es: `${origin}/es/${slug}`,
+          en: `${origin}/en/development/${slug}`,
+          es: `${origin}/es/development/${slug}`,
         },
       },
       openGraph: {
@@ -42,11 +42,19 @@ export async function generateMetadata({
         type: "website",
         siteName: "KLARQ",
         locale: locale,
+        images: page.acf?.development_projects?.cover_project?.url
+          ? [page.acf.development_projects.cover_project.url]
+          : undefined,
       },
       twitter: {
-        card: "summary",
+        card: page.acf?.development_projects?.cover_project?.url
+          ? "summary_large_image"
+          : "summary",
         title: seo_title,
         description: seo_desc,
+        images: page.acf?.development_projects?.cover_project?.url
+          ? [page.acf.development_projects.cover_project.url]
+          : undefined,
       },
       robots: "index, follow",
     };
@@ -102,8 +110,61 @@ async function DevelopmentSlugPage(nextParams: {
   const { acf } = data;
   const { development_projects } = acf;
 
+  const pageUrl = `https://klarq.eu/${locale}/development/${slug}`;
+  const plainDescription = (development_projects.description_project || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 300);
+
   return (
     <div className="architecture-slug-page relative bg-white overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "CreativeWork",
+                "@id": `${pageUrl}#creativework`,
+                name: development_projects.title_project,
+                description: plainDescription,
+                image: development_projects.cover_project?.url,
+                url: pageUrl,
+                creator: {
+                  "@type": "Organization",
+                  name: "KLARQ",
+                  url: "https://klarq.eu",
+                },
+              },
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Home",
+                    item: `https://klarq.eu/${locale}`,
+                  },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Development",
+                    item: `https://klarq.eu/${locale}/development`,
+                  },
+                  {
+                    "@type": "ListItem",
+                    position: 3,
+                    name: development_projects.title_project,
+                    item: pageUrl,
+                  },
+                ],
+              },
+            ],
+          }),
+        }}
+      />
       <Link className="lg:hidden cursor-pointer" href={"/"}>
         <div className="cursor-pointer fixed top-[10px] left-[15px] mix-blend-difference text-white z-[1000]">
           <label className="uppercase tracking-[-0.02em] font-zoom cursor-pointer text-[38px] leading-[38px]">
@@ -123,7 +184,13 @@ async function DevelopmentSlugPage(nextParams: {
           DEVELOPMENT
         </label>
       </div>
-      <Cover img={development_projects.cover_project.url} />
+      <Cover
+        img={development_projects.cover_project.url}
+        alt={
+          development_projects.cover_project.alt ||
+          development_projects.title_project
+        }
+      />
       <section className="pt-[60px]">
         <ArchitectureInformation
           title={development_projects.title_project}

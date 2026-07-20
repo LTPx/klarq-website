@@ -1,5 +1,6 @@
 import { getChildPages, getWordPressCustomPage } from "@/app/_services/api";
 import DecorWrapper from "@/app/components/decor-wrapper";
+import { DEFAULT_OG_IMAGE } from "@/app/constants";
 import { Metadata } from "next";
 
 export async function generateMetadata({
@@ -29,11 +30,13 @@ export async function generateMetadata({
         type: "website",
         siteName: "KLARQ",
         locale: locale,
+        images: [DEFAULT_OG_IMAGE],
       },
       twitter: {
-        card: "summary",
+        card: "summary_large_image",
         title: seo_title,
         description: seo_desc,
+        images: [DEFAULT_OG_IMAGE],
       },
       robots: "index, follow",
     };
@@ -58,12 +61,14 @@ export async function generateMetadata({
         type: "website",
         siteName: "KLARQ",
         locale: locale,
+        images: [DEFAULT_OG_IMAGE],
       },
       twitter: {
-        card: "summary",
+        card: "summary_large_image",
         title: "KLARQ",
         description:
           "Estudio de Arquitectura en Ibiza y Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible.",
+        images: [DEFAULT_OG_IMAGE],
       },
     };
   }

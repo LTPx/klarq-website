@@ -48,7 +48,7 @@ export async function getChildPages(
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 0,
+        revalidate: 60,
       },
     });
     if (!response.ok) {
@@ -73,7 +73,7 @@ export async function getChildDecorPage(
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 0,
+        revalidate: 60,
       },
     });
     if (!response.ok) {
@@ -99,7 +99,7 @@ export async function getChildDevelopmentPage(
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 0,
+        revalidate: 60,
       },
     });
     if (!response.ok) {
@@ -131,7 +131,7 @@ export async function getProjectChildBySlug(
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 0,
+        revalidate: 60,
       },
     });
     if (!response.ok) {
