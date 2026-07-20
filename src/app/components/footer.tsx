@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import HoverFillButton from "./hover-btn";
 import { useExpandStore } from "../store/expand-store";
+import Faq from "./faq";
 
 export function Footer() {
   const t = useTranslations();
@@ -142,6 +143,7 @@ export function Footer() {
             </div>
           </div>
         </div>
+        <Faq />
       </footer>
       <div className="h-[51px] border-t border-t-black border-t-[0.75px]"></div>
     </div>

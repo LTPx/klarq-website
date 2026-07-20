@@ -38,5 +38,26 @@
     "cookies-policy": "Política de cookies",
     "privacy-policy": "Política de privacidad",
     "legal-notice": "Aviso legal"
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "q1_question": "¿Quién está detrás de KLARQ?",
+    "q1_answer": "KLARQ está dirigido por Kimberley Díaz y Lluís Oliva, arquitecto y presidente de la demarcación de Ibiza y Formentera del COAIB (Col·legi Oficial d'Arquitectes de les Illes Balears).",
+    "q2_question": "¿Dónde trabaja KLARQ?",
+    "q2_answer": "Trabajamos principalmente en Ibiza y Mallorca, aunque también hemos realizado proyectos fuera de las islas, como en Tres Cantos (Madrid) y Benasque.",
+    "q3_question": "¿Cuánto dura un proyecto con KLARQ?",
+    "q3_answer": "Depende del tamaño y el alcance: una reforma suele tardar entre 6 y 12 meses, y la ejecución de una obra nueva entre 18 y 24 meses.",
+    "q4_question": "¿Cómo es el proceso de trabajo?",
+    "q4_answer": "Empezamos siempre con una reunión para entender las necesidades y el objetivo del cliente. Una vez iniciado el proyecto, trabajamos con moodboards para confirmar que vamos en la dirección correcta antes de desarrollar el proyecto completo.",
+    "q5_question": "¿Trabajáis con clientes internacionales?",
+    "q5_answer": "Sí, gran parte de nuestros clientes son europeos que buscan una segunda residencia en Ibiza o Mallorca.",
+    "q6_question": "¿Cuánto cuesta un proyecto con KLARQ?",
+    "q6_answer": "Cada proyecto es diferente y se diseña a medida, por lo que no manejamos precios cerrados. Contáctanos y te daremos una orientación según las características de tu proyecto.",
+    "q7_question": "¿Qué es Passivhaus y por qué lo aplicáis?",
+    "q7_answer": "Passivhaus es un estándar internacional de eficiencia energética que reduce drásticamente la demanda de calefacción y refrigeración de una vivienda mediante aislamiento continuo, ausencia de puentes térmicos y ventilación con recuperación de calor. En proyectos como Ca Na Lola hemos alcanzado una hermeticidad de 0,38 ren/h; en Son Maig aplicamos el estándar Passivhaus Plus.",
+    "q8_question": "¿Hacéis solo arquitectura, o también interiorismo?",
+    "q8_answer": "KLARQ combina tres áreas bajo un mismo equipo: KLARQ architecture (obra nueva, reformas y rehabilitaciones), KLARQ decor (interiorismo, cocinas y mobiliario) y KLARQ development (promociones inmobiliarias).",
+    "q9_question": "¿Cómo empiezo un proyecto con vosotros?",
+    "q9_answer": "Escríbenos a info@klarq.eu o llámanos al +34 656 362 863. Concertaremos una primera reunión para conocer tu proyecto y definir los siguientes pasos."
   }
 }

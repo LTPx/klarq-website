@@ -38,5 +38,26 @@
     "cookies-policy": "Cookies policy",
     "privacy-policy": "Privacy policy",
     "legal-notice": "Legal notice"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "q1_question": "Who is behind KLARQ?",
+    "q1_answer": "KLARQ is led by Kimberley Díaz and Lluís Oliva, architect and president of the Ibiza and Formentera chapter of the COAIB (Official Association of Architects of the Balearic Islands).",
+    "q2_question": "Where does KLARQ work?",
+    "q2_answer": "We work mainly in Ibiza and Mallorca, although we have also completed projects outside the islands, such as in Tres Cantos (Madrid) and Benasque.",
+    "q3_question": "How long does a project with KLARQ take?",
+    "q3_answer": "It depends on the size and scope: a renovation usually takes 6 to 12 months, and new-build construction between 18 and 24 months.",
+    "q4_question": "What does the design process look like?",
+    "q4_answer": "We always start with a meeting to understand the client's needs and goals. Once the project begins, we work with moodboards to confirm we're on the right track before developing the full project.",
+    "q5_question": "Do you work with international clients?",
+    "q5_answer": "Yes, a large part of our clients are European buyers looking for a second home in Ibiza or Mallorca.",
+    "q6_question": "How much does a project with KLARQ cost?",
+    "q6_answer": "Every project is different and designed to measure, so we don't work with fixed prices. Get in touch and we'll give you guidance based on your project's specifics.",
+    "q7_question": "What is Passivhaus and why do you apply it?",
+    "q7_answer": "Passivhaus is an international energy-efficiency standard that drastically reduces a home's heating and cooling demand through continuous insulation, elimination of thermal bridges, and heat-recovery ventilation. At Ca Na Lola we achieved 0.38 ACH airtightness; at Son Maig we applied the Passivhaus Plus standard.",
+    "q8_question": "Do you only do architecture, or interior design too?",
+    "q8_answer": "KLARQ brings together three areas under one team: KLARQ architecture (new builds, renovations and refurbishments), KLARQ decor (interior design, kitchens and furniture) and KLARQ development (real estate developments).",
+    "q9_question": "How do I start a project with you?",
+    "q9_answer": "Email us at info@klarq.eu or call +34 656 362 863. We'll set up an initial meeting to learn about your project and define next steps."
   }
 }
