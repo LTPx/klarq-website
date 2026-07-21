@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface CategoryCardProps {
   title: string;
   description?: string;
@@ -42,10 +44,13 @@ function CategoryCard({
     <div
       className={`relative w-full ${mobileHeight} ${className} transition-all duration-500 ease-in-out`}
     >
-      <img
+      <Image
         src={imageCategory}
         alt={title}
-        className="w-full h-full object-cover transition-all duration-500 ease-in-out"
+        fill
+        sizes="(min-width: 1024px) 34vw, 100vw"
+        priority
+        className="object-cover transition-all duration-500 ease-in-out"
       />
       <div className="absolute inset-0 bg-black/20 z-[50]" />
       <label className="font-zoom absolute left-[15px] lg:left-[20px] xl:left-[50px] top-[10px] lg:top-[45px] text-white text-[18px] leading-[22px] tracking-[-0.02em] z-[100] flex items-center gap-2">
