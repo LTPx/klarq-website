@@ -119,6 +119,19 @@ export default async function LocaleLayout({
             alt=""
           />
         </noscript>
+        {/* Google Analytics (GA4) — deferred until after hydration, same reasoning as the FB pixel */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0XX8458MEZ"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0XX8458MEZ');
+          `}
+        </Script>
         <NextIntlClientProvider messages={messages}>
           <App locale={locale}>{children}</App>
         </NextIntlClientProvider>
