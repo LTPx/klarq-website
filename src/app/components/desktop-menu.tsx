@@ -29,7 +29,7 @@ export function DesktopMenu(props: Props) {
         <div className="lg:h-[35dvh]">
           <Link href={"/"} onClick={() => setShowContact(false)}>
             <div className="lg:relative absolute top-[10px] px-[15px] lg:px-[40px] pt-[15px] lg:pt-[40px] lg:pb-[30px]">
-              <img src="/images/KLARQ.svg" className="h-full w-full" />
+              <img src="/images/KLARQ.svg" alt="KLARQ" className="h-full w-full" />
             </div>
           </Link>
         </div>

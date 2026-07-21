@@ -115,7 +115,7 @@ function HomeAnimation(props: Props) {
         transition={{ duration: 1, ease: "easeOut" }}
       />
       <div className="flex justify-center items-center h-[12dvh] lg:hidden px-[15px]">
-        <img className="h-full w-full" src="/images/KLARQ.svg" />
+        <img className="h-full w-full" src="/images/KLARQ.svg" alt="KLARQ" />
       </div>
       <div className="lg:h-[40dvh]" />
       <motion.div

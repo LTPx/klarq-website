@@ -117,7 +117,7 @@ export function Footer() {
             </div>
           </div>
           <div className="pt-[50px] lg:pt-[0px] col-span-3 flex flex-col gap-[15px]">
-            <img className="h-full w-full" src="/images/logo-footer.svg" />
+            <img className="h-full w-full" src="/images/logo-footer.svg" alt="KLARQ" />
             <div className="flex flex-col">
               <div className="flex gap-[5px]">
                 <Link
