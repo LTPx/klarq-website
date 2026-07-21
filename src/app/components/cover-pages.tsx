@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import { MediaFileWp } from "../_interfaces/wordpress-components";
 import { useEffect, useState } from "react";
@@ -23,12 +24,19 @@ export function Cover(props: Props) {
   return (
     <div className={`cover-video-container`}>
       {img && (
-        <img
-          src={img}
-          alt={alt || ""}
-          className={`${className} w-full object-cover`}
+        <div
+          className={`${className} relative w-full`}
           style={{ height: `calc(var(--vh, 1vh) * 100 - 50px)` }}
-        />
+        >
+          <Image
+            src={img}
+            alt={alt || ""}
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
+          />
+        </div>
       )}
       {media?.type === "video" && (
         <video
@@ -44,12 +52,19 @@ export function Cover(props: Props) {
         </video>
       )}
       {media?.type === "image" && (
-        <img
-          src={media.url}
-          alt={alt || ""}
-          className={`${className} w-full object-cover`}
+        <div
+          className={`${className} relative w-full`}
           style={{ height: `calc(var(--vh, 1vh) * 100 - 50px)` }}
-        />
+        >
+          <Image
+            src={media.url}
+            alt={alt || ""}
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
+          />
+        </div>
       )}
     </div>
   );
