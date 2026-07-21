@@ -6,7 +6,8 @@
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
     "build": "next build",
     "start": "NODE_TLS_REJECT_UNAUTHORIZED=0 next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "indexnow": "node scripts/submit-indexnow.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "5.0.20",

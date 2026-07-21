@@ -109,11 +109,32 @@ async function ArchitectureSlugPage(nextParams: {
   const { architecture_projects } = acf;
 
   const pageUrl = `https://klarq.eu/${locale}/architecture/${slug}`;
-  const plainDescription = (architecture_projects.description_project || "")
+  const rawDescription = architecture_projects.description_project || "";
+  const plainDescription = rawDescription
     .replace(/<[^>]*>/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 300);
+  const photographerMatch = rawDescription.match(
+    /(?:Fotograf[ií]a|Photography)\s*:\s*([^<\r\n]+)/i
+  );
+  const photographerName = photographerMatch?.[1]?.trim();
+
+  const galleryImages = [
+    architecture_projects.cover_project,
+    ...(architecture_projects.images_project || []),
+  ].filter((img): img is NonNullable<typeof img> => Boolean(img?.url));
+
+  const imageObjects = galleryImages.map((img) => ({
+    "@type": "ImageObject",
+    contentUrl: img.url,
+    ...(img.width ? { width: img.width } : {}),
+    ...(img.height ? { height: img.height } : {}),
+    ...(img.alt ? { caption: img.alt } : {}),
+    ...(photographerName
+      ? { creditText: photographerName, creator: { "@type": "Person", name: photographerName } }
+      : {}),
+  }));
 
   return (
     <div className="architecture-slug-page bg-white relative overflow-hidden">
@@ -135,6 +156,7 @@ async function ArchitectureSlugPage(nextParams: {
                   name: "KLARQ",
                   url: "https://klarq.eu",
                 },
+                associatedMedia: imageObjects,
               },
               {
                 "@type": "BreadcrumbList",
