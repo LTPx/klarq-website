@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 import Script from "next/script";
 import App from "./app";
@@ -9,6 +9,16 @@ import "../global.css";
 
 const DEFAULT_DESCRIPTION =
   "Estudio de Arquitectura e Interiorismo en Ibiza y Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible.";
+
+// Route-level ISR config: without this, Next.js treats every page as fully
+// dynamic (Cache-Control: no-store) regardless of individual fetch()
+// revalidate values — this is what actually enables HTTP-level caching.
+// Deliberately NOT using generateStaticParams here: it forces every route to
+// be fetched from the WordPress API at build time, and that host's bot
+// protection intermittently blocks/rate-limits automated build traffic.
+// Without it, Next.js still gets ISR (render-on-first-request, then cached
+// for `revalidate` seconds) — just not pre-rendered at build time.
+export const revalidate = 60;
 
 export async function generateMetadata({
   params: { locale },
@@ -67,6 +77,10 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: "en" | "es" | "de" };
 }) {
+  // Required for next-intl to allow static/ISR rendering instead of forcing
+  // every page to be fully dynamic (see revalidate config above).
+  unstable_setRequestLocale(locale);
+
   const messages = await getMessages({ locale });
 
   return (

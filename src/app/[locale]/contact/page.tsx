@@ -5,7 +5,7 @@ import { Link } from "@/navigation";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import { DEFAULT_OG_IMAGE } from "@/app/constants";
 import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 export async function generateMetadata({
   params: { locale },
@@ -81,6 +81,7 @@ async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
   const {
     params: { locale },
   } = nextParams;
+  unstable_setRequestLocale(locale);
   const t = await getTranslations();
   const data = await getWordPressCustomPage(locale, "contact");
   const { acf } = data;

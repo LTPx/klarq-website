@@ -6,7 +6,7 @@ import ProjectCard from "@/app/components/project-card";
 import { Link } from "@/navigation";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 export async function generateMetadata({
   params: { locale, slug },
@@ -96,6 +96,7 @@ async function DevelopmentSlugPage(nextParams: {
   const {
     params: { locale, slug },
   } = nextParams;
+  unstable_setRequestLocale(locale);
   const parentSlug =
     locale === "es"
       ? "spanish-pages"
