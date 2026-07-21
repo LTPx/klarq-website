@@ -62,11 +62,15 @@ export function Faq() {
                   }`}
                 />
               </button>
-              {isOpen && (
-                <p className="pb-[16px] lg:pb-[20px] text-[13px] leading-[19px] lg:text-[15px] lg:leading-[21px] text-black/70 pr-[24px]">
-                  {item.answer}
-                </p>
-              )}
+              <p
+                className={`overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out pr-[24px] text-[13px] leading-[19px] lg:text-[15px] lg:leading-[21px] text-black/70 ${
+                  isOpen
+                    ? "max-h-[400px] opacity-100 pb-[16px] lg:pb-[20px]"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                {item.answer}
+              </p>
             </div>
           );
         })}
