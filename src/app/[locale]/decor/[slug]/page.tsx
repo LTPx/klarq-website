@@ -1,4 +1,4 @@
-import { getChildDecorPage } from "@/app/_services/api";
+import { getChildDecorPage, getChildPages } from "@/app/_services/api";
 import ArchitectureInformation from "@/app/components/architecture-information";
 import CallToAction from "@/app/components/call-to-action";
 import Cover from "@/app/components/cover-pages";
@@ -8,6 +8,26 @@ import { DEFAULT_OG_IMAGE } from "@/app/constants";
 import { Link } from "@/navigation";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
+
+// See src/app/[locale]/architecture/[slug]/page.tsx for why this exists.
+export async function generateStaticParams({
+  params: { locale },
+}: {
+  params: { locale: "en" | "es" | "de" };
+}) {
+  const parentSlug =
+    locale === "es"
+      ? "spanish-pages"
+      : locale === "de"
+      ? "german-pages"
+      : "english-pages";
+  try {
+    const projects = await getChildPages("decor", locale, parentSlug);
+    return projects.map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
+}
 
 export async function generateMetadata({
   params: { locale, slug },

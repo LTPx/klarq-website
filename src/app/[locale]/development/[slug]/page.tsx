@@ -8,6 +8,26 @@ import { Link } from "@/navigation";
 import { Metadata } from "next";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
+// See src/app/[locale]/architecture/[slug]/page.tsx for why this exists.
+export async function generateStaticParams({
+  params: { locale },
+}: {
+  params: { locale: "en" | "es" | "de" };
+}) {
+  const parentSlug =
+    locale === "es"
+      ? "spanish-pages"
+      : locale === "de"
+      ? "german-pages"
+      : "english-pages";
+  try {
+    const projects = await getChildPages("development", locale, parentSlug);
+    return projects.map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({
   params: { locale, slug },
 }: {

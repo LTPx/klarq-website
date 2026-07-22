@@ -8,7 +8,7 @@ export async function getWordPressPage(
   console.log("url: ", url);
   const response = await fetch(url, {
     next: {
-      revalidate: 0,
+      revalidate: 60,
     },
   });
   const dataJson = await response.json();
@@ -30,7 +30,7 @@ export async function getWordPressCustomPage(
   console.log("url custom page: ", url);
   const response = await fetch(url, {
     next: {
-      revalidate: 0,
+      revalidate: 60,
     },
   });
   const page = await response.json();

@@ -8,6 +8,31 @@ import { Link } from "@/navigation";
 import { Metadata } from "next";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
+// Registers known slugs so this route gets HTTP-level ISR caching instead of
+// being fully dynamic (see src/app/[locale]/layout.tsx comment for why this
+// matters). Falls back to an empty list (dynamicParams stays true, so
+// unlisted/new slugs still render on-demand) if the WP API is unreachable at
+// build time — this endpoint is also called by the architecture listing page
+// during the same build, so it's already proven not to trip bot protection.
+export async function generateStaticParams({
+  params: { locale },
+}: {
+  params: { locale: "en" | "es" | "de" };
+}) {
+  const parentSlug =
+    locale === "es"
+      ? "spanish-pages"
+      : locale === "de"
+      ? "german-pages"
+      : "english-pages";
+  try {
+    const projects = await getChildPages("architecture", locale, parentSlug);
+    return projects.map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({
   params: { locale, slug },
 }: {

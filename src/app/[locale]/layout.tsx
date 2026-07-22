@@ -10,15 +10,20 @@ import "../global.css";
 const DEFAULT_DESCRIPTION =
   "Estudio de Arquitectura e Interiorismo en Ibiza y Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible.";
 
-// Route-level ISR config: without this, Next.js treats every page as fully
-// dynamic (Cache-Control: no-store) regardless of individual fetch()
-// revalidate values — this is what actually enables HTTP-level caching.
-// Deliberately NOT using generateStaticParams here: it forces every route to
-// be fetched from the WordPress API at build time, and that host's bot
-// protection intermittently blocks/rate-limits automated build traffic.
-// Without it, Next.js still gets ISR (render-on-first-request, then cached
-// for `revalidate` seconds) — just not pre-rendered at build time.
+// Route-level ISR config: the revalidate export alone only caches the
+// underlying fetch() calls (Next's Data Cache) — it does NOT make the HTTP
+// response itself cacheable. Confirmed via .next/prerender-manifest.json:
+// without generateStaticParams, App Router dynamic segments never get
+// registered in `dynamicRoutes`, so every response ships
+// `Cache-Control: private, no-cache, no-store` regardless of this value.
+// generateStaticParams for the locale segment only (no WP fetch, can't fail)
+// registers every route nested under [locale] as ISR-eligible, which is what
+// actually flips the response header to `s-maxage=60, stale-while-revalidate`.
 export const revalidate = 60;
+
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "es" }];
+}
 
 export async function generateMetadata({
   params: { locale },
