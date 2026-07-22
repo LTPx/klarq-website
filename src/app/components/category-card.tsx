@@ -48,7 +48,11 @@ function CategoryCard({
         src={imageCategory}
         alt={title}
         fill
-        sizes="(min-width: 1024px) 34vw, 100vw"
+        // Resting width is ~34vw (equal thirds), but the hover interaction in
+        // home-animation.tsx grows the hovered tile's flex-basis up to ~50vw
+        // — sizes must cover that max, or the browser fetches a low-res
+        // srcset candidate that then gets stretched (visible blur on hover).
+        sizes="(min-width: 1024px) 50vw, 100vw"
         priority
         quality={90}
         className="object-cover transition-all duration-500 ease-in-out"
