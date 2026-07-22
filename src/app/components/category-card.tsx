@@ -50,6 +50,7 @@ function CategoryCard({
         fill
         sizes="(min-width: 1024px) 34vw, 100vw"
         priority
+        quality={90}
         className="object-cover transition-all duration-500 ease-in-out"
       />
       <div className="absolute inset-0 bg-black/20 z-[50]" />

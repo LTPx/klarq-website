@@ -34,6 +34,7 @@ export function Cover(props: Props) {
             fill
             sizes="100vw"
             priority
+            quality={90}
             className="object-cover"
           />
         </div>
@@ -62,6 +63,7 @@ export function Cover(props: Props) {
             fill
             sizes="100vw"
             priority
+            quality={90}
             className="object-cover"
           />
         </div>

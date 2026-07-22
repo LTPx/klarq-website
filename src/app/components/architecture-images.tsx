@@ -44,6 +44,7 @@ function ArchitectureImages({ images = [] }: Props) {
               alt={src.alt || `Architecture ${index + 1}`}
               fill
               sizes={sizes}
+              quality={90}
               className="object-cover"
               loading={index < 2 ? undefined : "lazy"}
               priority={index < 2}
