@@ -132,6 +132,18 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
+        {/* Preload the body font: without it, the swap from fallback to
+            "PP Fragment Light" was landing inside Lighthouse's CLS
+            measurement window on every page (0.353, "Poor") once the image
+            optimization work freed up enough bandwidth for the swap to
+            happen earlier in the load — see global.css font-display fix. */}
+        <link
+          rel="preload"
+          href="/fonts/PPFragment-GlareLight.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }}

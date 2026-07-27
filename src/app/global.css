@@ -3,6 +3,7 @@
   src: url('/fonts/PPFragment-GlareLight.ttf') format('truetype');
   font-weight: 300 !important;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -10,6 +11,7 @@
   src: url('/fonts/PPFragment-GlareVariable.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -17,12 +19,13 @@
   src: url('/fonts/Zoom Pro Wide Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "PP Fragment Light";
+  font-family: "PP Fragment Light", sans-serif;
   font-weight: 300 !important;
   background-color: #fff;
   /* background-color: #e5e5e5; */
