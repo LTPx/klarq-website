@@ -144,6 +144,17 @@ export default async function LocaleLayout({
           type="font/ttf"
           crossOrigin="anonymous"
         />
+        {/* Same fix, for the "font-zoom" category-tile titles: without a
+            preload the browser only discovers this font after parsing the
+            CSS that references it (@font-face), forming a 3-hop critical
+            chain — HTML -> CSS -> font, ~1.57s max latency per PSI. */}
+        <link
+          rel="preload"
+          href="/fonts/Zoom Pro Wide Regular.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }}
