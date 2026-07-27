@@ -80,6 +80,8 @@ export function Header({
           showMenu ? "/images/close-header-menu.svg" : "/images/logo-menu.svg"
         }
         alt={showMenu ? "Cerrar menú" : "Abrir menú"}
+        width={showMenu ? 18 : 20}
+        height={showMenu ? 17 : 11}
       />
 
       <div className="hidden lg:flex pl-[30px] justify-between">

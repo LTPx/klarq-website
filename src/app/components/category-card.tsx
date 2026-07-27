@@ -72,7 +72,9 @@ function CategoryCard({
           <img
             src="images/expand.svg"
             alt={title}
-            className={`w-[17.5px] h-[w-[17.5px] transition-transform duration-300 ${
+            width={10}
+            height={10}
+            className={`w-[17.5px] h-[17.5px] transition-transform duration-300 ${
               isExpandedMobile ? "rotate-45" : "rotate-0"
             }`}
           />

@@ -12,6 +12,10 @@ const nextConfig = {
         pathname: "/wp-content/uploads/**",
       },
     ],
+    // WP-uploaded project photos don't change after publish — 1 year instead
+    // of the 7-day default so repeat visits/CDN edges don't re-fetch/re-
+    // transform them (Lighthouse "efficient cache lifetimes" finding).
+    minimumCacheTTL: 31536000,
   },
   async headers() {
     return [
