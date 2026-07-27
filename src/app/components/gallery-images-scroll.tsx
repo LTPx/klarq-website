@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -71,11 +72,22 @@ function GalleryImagesScroll({
         style={{ cursor: "grab" }}
       >
         {images.map((src, index) => (
-          <img
+          <Image
             key={index}
             src={src.url}
             alt={src.alt ?? `image-${index}`}
+            width={src.width}
+            height={src.height}
+            quality={90}
             loading="lazy"
+            // WP's width/height metadata on these items doesn't reliably
+            // match the served file's real aspect ratio (measured render
+            // widths up to 1905px at 1920px viewport didn't line up with a
+            // per-image aspect-ratio calc off that metadata — off by ~4x).
+            // Height is fixed (imageClassName) and width is auto/aspect-
+            // driven and can get near-panoramic, so sizes=100vw is the only
+            // reliably safe bound: never smaller than any image can render.
+            sizes="100vw"
             className={`object-cover shrink-0 ${imageClassName}`}
             data-aos={animationType}
             data-aos-delay={stagger ? index * baseDelay : 0}
