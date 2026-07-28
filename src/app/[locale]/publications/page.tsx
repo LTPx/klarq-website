@@ -1,4 +1,5 @@
 import { getWordPressCustomPage } from "@/app/_services/api";
+import { getPressPublications } from "@/app/_data/press-articles";
 import Cover from "@/app/components/cover-pages";
 import GalleryProjects from "@/app/components/gallery";
 import PublicationsPage from "@/app/components/publications-page";
@@ -87,6 +88,14 @@ async function Publications(nextParams: {
   const data = await getWordPressCustomPage(locale, "publications");
   const { acf } = data;
   const { publications_information } = acf;
+
+  // Press/opinion columns aren't in WordPress (no CMS write access was
+  // available when these were added) — appended in front so the most
+  // recent press coverage leads the gallery.
+  publications_information.publications = [
+    ...getPressPublications(locale),
+    ...publications_information.publications,
+  ];
 
   return (
     <>
