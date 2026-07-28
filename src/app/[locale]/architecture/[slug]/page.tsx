@@ -6,6 +6,7 @@ import ProjectCard from "@/app/components/project-card";
 import { Link } from "@/navigation";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 // Registers known slugs so this route gets HTTP-level ISR caching instead of
@@ -38,7 +39,12 @@ export async function generateMetadata({
 }: {
   params: { locale: "es" | "en" | "de"; slug: string };
 }): Promise<Metadata> {
-  const page = await getProjectChildBySlug(slug, locale);
+  let page;
+  try {
+    page = await getProjectChildBySlug(slug, locale);
+  } catch {
+    page = null;
+  }
   const origin = "https://klarq.eu";
   console.log(page);
   if (page) {
@@ -120,7 +126,12 @@ async function ArchitectureSlugPage(nextParams: {
   unstable_setRequestLocale(locale);
   const t = await getTranslations();
 
-  const data = await getProjectChildBySlug(slug, locale);
+  let data;
+  try {
+    data = await getProjectChildBySlug(slug, locale);
+  } catch {
+    notFound();
+  }
   const page = "architecture";
   const parentSlug =
     locale === "es"

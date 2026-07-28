@@ -6,6 +6,7 @@ import ProjectCard from "@/app/components/project-card";
 import { Link } from "@/navigation";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 // See src/app/[locale]/architecture/[slug]/page.tsx for why this exists.
@@ -39,7 +40,12 @@ export async function generateMetadata({
       : locale === "de"
       ? "german-pages"
       : "english-pages";
-  const page = await getChildDevelopmentPage(slug, locale, parentSlug);
+  let page;
+  try {
+    page = await getChildDevelopmentPage(slug, locale, parentSlug);
+  } catch {
+    page = null;
+  }
   const origin = "https://klarq.eu";
   if (page) {
     const { yoast_seo } = page;
@@ -124,7 +130,12 @@ async function DevelopmentSlugPage(nextParams: {
       ? "german-pages"
       : "english-pages";
   const page = "development";
-  const data = await getChildDevelopmentPage(slug, locale, parentSlug);
+  let data;
+  try {
+    data = await getChildDevelopmentPage(slug, locale, parentSlug);
+  } catch {
+    notFound();
+  }
   const t = await getTranslations();
   const allProjects = await getChildPages(page, locale, parentSlug);
 

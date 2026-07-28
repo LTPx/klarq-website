@@ -8,6 +8,7 @@ import { DEFAULT_OG_IMAGE } from "@/app/constants";
 import { Link } from "@/navigation";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 // See src/app/[locale]/architecture/[slug]/page.tsx for why this exists.
 export async function generateStaticParams({
@@ -40,7 +41,12 @@ export async function generateMetadata({
       : locale === "de"
       ? "german-pages"
       : "english-pages";
-  const page = await getChildDecorPage(slug, locale, parentSlug);
+  let page;
+  try {
+    page = await getChildDecorPage(slug, locale, parentSlug);
+  } catch {
+    page = null;
+  }
   const origin = "https://klarq.eu";
   const ogImage = page?.acf?.decor_projects?.cover_project?.url || DEFAULT_OG_IMAGE;
 
@@ -120,7 +126,12 @@ async function DecorSlugPage(nextParams: {
       ? "german-pages"
       : "english-pages";
 
-  const data = await getChildDecorPage(slug, locale, parentSlug);
+  let data;
+  try {
+    data = await getChildDecorPage(slug, locale, parentSlug);
+  } catch {
+    notFound();
+  }
   const { acf } = data;
   const { decor_projects } = acf;
 

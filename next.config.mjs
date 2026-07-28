@@ -44,6 +44,36 @@ const nextConfig = {
         destination: "/es",
         permanent: true,
       },
+      // Bare (non-locale-prefixed) equivalents of real routes — until
+      // not-found.tsx was added, these all 500'd instead of 404ing (any
+      // unmatched single-path-segment URL was mis-routed as an invalid
+      // [locale] param). GSC still has them indexed from before the i18n
+      // migration, so redirect to the real page instead of just 404ing.
+      {
+        source: "/contact",
+        destination: "/es/contact",
+        permanent: true,
+      },
+      {
+        source: "/architecture",
+        destination: "/es/architecture",
+        permanent: true,
+      },
+      {
+        source: "/decor",
+        destination: "/es/decor",
+        permanent: true,
+      },
+      {
+        source: "/development",
+        destination: "/es/development",
+        permanent: true,
+      },
+      {
+        source: "/publications",
+        destination: "/es/publications",
+        permanent: true,
+      },
       {
         source: "/projects",
         destination: "/es",
