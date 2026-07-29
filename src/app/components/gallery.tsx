@@ -225,7 +225,13 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
                 key={index}
                 src={pub.image.url}
                 alt={pub.title}
-                onClick={() => setSelectedIndex(index)}
+                onClick={() => {
+                  if (isSelected && pub.url) {
+                    window.open(pub.url, "_blank", "noopener,noreferrer");
+                  } else {
+                    setSelectedIndex(index);
+                  }
+                }}
                 onLoad={() => setImagesLoaded((prev) => prev + 1)}
                 className={`cursor-pointer shrink-0 transition-[width,opacity,transform] duration-700 ease-[cubic-bezier(0.4, 0, 0.2, 1)] origin-top`}
                 style={{
