@@ -150,7 +150,7 @@ export function getPressPublications(locale: "es" | "en" | "de"): PublicationsWp
     title: locale === "en" ? article.titleEn : article.titleEs,
     sub_title:
       locale === "en"
-        ? `${article.date} — ${article.summaryEn} As published by Diario de Ibiza.`
+        ? `${article.date} — Published in Diario de Ibiza.`
         : `${article.date} — Publicado en Diario de Ibiza.`,
     url: article.url,
   }));
