@@ -63,7 +63,7 @@ interface PressArticleEntry {
 
 const PRESS_ARTICLES_ES: PressArticleEntry[] = [
   {
-    titleEn: "Another patch for a planning system crying out for change (III)",
+    titleEn: "Another patch on a broken planning system (III)",
     titleEs: "Otro parche para un planeamiento que pide el cambio (III)",
     date: "19.07.2026",
     summaryEn:
@@ -71,7 +71,7 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     url: "https://www.diariodeibiza.es/opinion/2026/07/19/parche-planeamiento-pide-cambio-iii-132587588.html",
   },
   {
-    titleEn: "Another patch for a planning system crying out for change (Part II)",
+    titleEn: "Another patch on a broken planning system (Part II)",
     titleEs: "Otro parche para un planeamiento que pide el cambio (Parte II)",
     date: "12.07.2026",
     summaryEn:
@@ -79,7 +79,7 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     url: "https://www.diariodeibiza.es/opinion/2026/07/12/parche-planeamiento-pideel-cambio-parte-132367026.html",
   },
   {
-    titleEn: "Another patch for a planning system crying out for change (Part I)",
+    titleEn: "Another patch on a broken planning system (Part I)",
     titleEs: "Otro parche para un planeamiento que pide el cambio (Parte I)",
     date: "27.06.2026",
     summaryEn:
@@ -87,7 +87,7 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     url: "https://www.diariodeibiza.es/opinion/2026/06/27/parche-planeamiento-pide-cambio-parte-131855908.html",
   },
   {
-    titleEn: "The island that opens nightclubs and closes camps",
+    titleEn: "The island that opens nightclubs, closes camps",
     titleEs: "La isla que abre discotecas y cierra campamentos",
     date: "29.05.2026",
     summaryEn:
@@ -95,7 +95,7 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     url: "https://www.diariodeibiza.es/opinion/2026/05/29/isla-abre-discotecas-cierra-campamentos-130771700.html",
   },
   {
-    titleEn: "The expansion nobody asked for, the homes that never arrive",
+    titleEn: "The expansion nobody asked for, the homes that don't come",
     titleEs: "La ampliación que no pedimos, las viviendas que no llegan",
     date: "28.05.2026",
     summaryEn:
@@ -111,7 +111,7 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     url: "https://www.diariodeibiza.es/opinion/2026/03/27/vivienda-ibiza-formentera-hoja-ruta-128459702.html",
   },
   {
-    titleEn: "Ibiza and Formentera face the test of their own territory",
+    titleEn: "Ibiza and Formentera face their territorial test",
     titleEs: "Ibiza y Formentera ante el examen de su territorio",
     date: "13.03.2026",
     summaryEn:
@@ -135,7 +135,7 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     url: "https://www.diariodeibiza.es/opinion/2026/02/07/vivienda-ibiza-monstruo-126537855.html",
   },
   {
-    titleEn: "Ibiza, a luxury stage set emptied of citizenship",
+    titleEn: "Ibiza, a luxury backdrop emptied of citizens",
     titleEs: "Ibiza, un decorado de lujo vacío de ciudadanía",
     date: "22.01.2026",
     summaryEn:
