@@ -7,51 +7,62 @@ import { PublicationsWp } from "../_interfaces/wordpress-components";
 // that it doesn't need to be editor-managed. English copy is an original
 // summary of each article's thesis, not a translation of the Spanish text
 // (avoids reproducing copyrighted material beyond the short quoted title).
-const PRESS_THUMBNAIL: ImageAcf = {
-  ID: 0,
-  id: 0,
-  title: "Diario de Ibiza",
-  filename: "press-diario-ibiza.svg",
-  filesize: 0,
-  url: "/images/press-diario-ibiza.svg",
-  link: "",
-  alt: "Diario de Ibiza — Opinión",
-  author: "",
-  description: "",
-  caption: "",
-  name: "press-diario-ibiza",
-  status: "inherit",
-  uploaded_to: 0,
-  date: new Date("2026-01-01"),
-  modified: new Date("2026-01-01"),
-  menu_order: 0,
-  mime_type: "image/svg+xml",
-  type: "image",
-  subtype: "svg+xml",
-  icon: "",
-  width: 800,
-  height: 1000,
-  sizes: {
-    thumbnail: "/images/press-diario-ibiza.svg",
-    "thumbnail-width": 150,
-    "thumbnail-height": 188,
-    medium: "/images/press-diario-ibiza.svg",
-    "medium-width": 300,
-    "medium-height": 375,
-    medium_large: "/images/press-diario-ibiza.svg",
-    "medium_large-width": 768,
-    "medium_large-height": 960,
-    large: "/images/press-diario-ibiza.svg",
-    "large-width": 800,
-    "large-height": 1000,
-    "1536x1536": "/images/press-diario-ibiza.svg",
-    "1536x1536-width": 800,
-    "1536x1536-height": 1000,
-    "2048x2048": "/images/press-diario-ibiza.svg",
-    "2048x2048-width": 800,
-    "2048x2048-height": 1000,
-  },
-};
+function makePressThumbnail(svgPath: string, alt: string): ImageAcf {
+  return {
+    ID: 0,
+    id: 0,
+    title: alt,
+    filename: svgPath.split("/").pop() || svgPath,
+    filesize: 0,
+    url: svgPath,
+    link: "",
+    alt,
+    author: "",
+    description: "",
+    caption: "",
+    name: svgPath.split("/").pop()?.replace(".svg", "") || svgPath,
+    status: "inherit",
+    uploaded_to: 0,
+    date: new Date("2026-01-01"),
+    modified: new Date("2026-01-01"),
+    menu_order: 0,
+    mime_type: "image/svg+xml",
+    type: "image",
+    subtype: "svg+xml",
+    icon: "",
+    width: 800,
+    height: 1000,
+    sizes: {
+      thumbnail: svgPath,
+      "thumbnail-width": 150,
+      "thumbnail-height": 188,
+      medium: svgPath,
+      "medium-width": 300,
+      "medium-height": 375,
+      medium_large: svgPath,
+      "medium_large-width": 768,
+      "medium_large-height": 960,
+      large: svgPath,
+      "large-width": 800,
+      "large-height": 1000,
+      "1536x1536": svgPath,
+      "1536x1536-width": 800,
+      "1536x1536-height": 1000,
+      "2048x2048": svgPath,
+      "2048x2048-width": 800,
+      "2048x2048-height": 1000,
+    },
+  };
+}
+
+const PRESS_THUMBNAIL = makePressThumbnail(
+  "/images/press-diario-ibiza.svg",
+  "Diario de Ibiza — Opinión"
+);
+const KIM_PRESS_THUMBNAIL = makePressThumbnail(
+  "/images/press-la-vanguardia-kim.svg",
+  "La Vanguardia — Entrevista"
+);
 
 interface PressArticleEntry {
   titleEn: string;
@@ -59,6 +70,8 @@ interface PressArticleEntry {
   date: string;
   summaryEn: string;
   url: string;
+  image?: ImageAcf;
+  source?: string;
 }
 
 const PRESS_ARTICLES_ES: PressArticleEntry[] = [
@@ -142,16 +155,28 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
       "Opening a four-session COAIB conference cycle on Ibiza's housing crisis, the author cites new data: three in ten residents are considering leaving the island, and seven in ten spend over 30% of their income on housing. Rather than dwelling on the diagnosis, the piece looks to Vancouver's tax on empty homes, Navarra and Ireland's rehabilitation-for-rent-control schemes, and Barcelona's housing cooperatives as working models Ibiza has yet to try.",
     url: "https://www.diariodeibiza.es/opinion/2026/01/22/ibiza-decorado-lujo-vacio-ciudadania-125937570.html",
   },
+  {
+    titleEn: "Being an architect, living in a passive house",
+    titleEs: "Ser arquitecta y vivir en una casa pasiva",
+    date: "05.03.2026",
+    summaryEn: "",
+    url: "https://www.lavanguardia.com/magazine/casa/20260305/11480905/arquitecta-casa-pasiva-conservarse-mejor-temperatura-necesita-menos-energia-calentarla-gvm.html",
+    image: KIM_PRESS_THUMBNAIL,
+    source: "La Vanguardia",
+  },
 ];
 
 export function getPressPublications(locale: "es" | "en" | "de"): PublicationsWp[] {
-  return PRESS_ARTICLES_ES.map((article) => ({
-    image: PRESS_THUMBNAIL,
-    title: locale === "en" ? article.titleEn : article.titleEs,
-    sub_title:
-      locale === "en"
-        ? `${article.date} — Published in Diario de Ibiza.`
-        : `${article.date} — Publicado en Diario de Ibiza.`,
-    url: article.url,
-  }));
+  return PRESS_ARTICLES_ES.map((article) => {
+    const source = article.source || "Diario de Ibiza";
+    return {
+      image: article.image || PRESS_THUMBNAIL,
+      title: locale === "en" ? article.titleEn : article.titleEs,
+      sub_title:
+        locale === "en"
+          ? `${article.date} — Published in ${source}.`
+          : `${article.date} — Publicado en ${source}.`,
+      url: article.url,
+    };
+  });
 }
