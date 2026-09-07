@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 import Script from "next/script";
 import App from "./app";
+import { AnalyticsPageTracker } from "@/app/components/analytics-page-tracker";
 import { DEFAULT_OG_IMAGE } from "@/app/constants";
 import "tailwindcss/tailwind.css";
 import "../global.css";
@@ -201,6 +203,9 @@ export default async function LocaleLayout({
             gtag('config', 'G-0XX8458MEZ');
           `}
         </Script>
+        <Suspense fallback={null}>
+          <AnalyticsPageTracker />
+        </Suspense>
         <NextIntlClientProvider messages={messages}>
           <App locale={locale}>{children}</App>
         </NextIntlClientProvider>
