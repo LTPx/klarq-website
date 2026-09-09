@@ -59,6 +59,10 @@ const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      // Primary entity now carries Ibiza's own address (previously only an
+      // areaServed list with no fixed address) — the strongest signal for
+      // "based in Ibiza" without dropping Mallorca, which stays truthful as
+      // its own branch below and in areaServed (still real, still served).
       "@type": "ProfessionalService",
       "@id": "https://klarq.eu/#organization",
       name: "KLARQ",
@@ -67,6 +71,13 @@ const ORGANIZATION_SCHEMA = {
       image: DEFAULT_OG_IMAGE,
       email: "info@klarq.eu",
       telephone: "+34656362863",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "C/ Vicent Serra i Orvay, 49",
+        postalCode: "07800",
+        addressLocality: "Ibiza",
+        addressCountry: "ES",
+      },
       areaServed: [
         { "@type": "AdministrativeArea", name: "Ibiza" },
         { "@type": "AdministrativeArea", name: "Mallorca" },
