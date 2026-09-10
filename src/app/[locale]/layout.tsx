@@ -107,21 +107,6 @@ const ORGANIZATION_SCHEMA = {
       },
     },
     {
-      "@type": "LocalBusiness",
-      "@id": "https://klarq.eu/#mallorca",
-      name: "KLARQ Mallorca",
-      branchOf: { "@id": "https://klarq.eu/#organization" },
-      telephone: "+34656362863",
-      email: "info@klarq.eu",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Camino viejo de Pina",
-        postalCode: "07210",
-        addressLocality: "Mallorca",
-        addressCountry: "ES",
-      },
-    },
-    {
       "@type": "WebSite",
       "@id": "https://klarq.eu/#website",
       url: "https://klarq.eu",
