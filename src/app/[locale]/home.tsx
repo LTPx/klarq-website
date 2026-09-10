@@ -11,8 +11,8 @@ interface Props {
 function Home(props: Props) {
   const { homeInformation, locale } = props;
   const titles = {
-    en: "ARCHITECTURE AND INTERIOR DESIGN STUDIO IN IBIZA AND MALLORCA",
-    es: "ESTUDIO DE ARQUITECTURA E INTERIORISMO EN IBIZA Y MALLORCA",
+    en: "ARCHITECTURE AND INTERIOR DESIGN STUDIO IN IBIZA",
+    es: "ESTUDIO DE ARQUITECTURA E INTERIORISMO EN IBIZA",
   };
 
   return (

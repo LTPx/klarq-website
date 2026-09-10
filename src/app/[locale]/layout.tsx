@@ -9,8 +9,10 @@ import { DEFAULT_OG_IMAGE } from "@/app/constants";
 import "tailwindcss/tailwind.css";
 import "../global.css";
 
-const DEFAULT_DESCRIPTION =
-  "Estudio de Arquitectura e Interiorismo en Ibiza y Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible.";
+const getDefaultDescription = (locale: string) =>
+  locale === "es"
+    ? "Estudio de Arquitectura e Interiorismo en Ibiza, con proyectos también en Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible."
+    : "Architecture and interior design studio in Ibiza, with projects also in Mallorca, specializing in creating homes that breathe elegance and wellbeing with sustainable Mediterranean essence.";
 
 // Route-level ISR config: the revalidate export alone only caches the
 // underlying fetch() calls (Next's Data Cache) — it does NOT make the HTTP
@@ -34,11 +36,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   return {
     title: "KLARQ",
-    description: DEFAULT_DESCRIPTION,
+    description: getDefaultDescription(locale),
     // robots: seoData.robots,
     openGraph: {
       title: "KLARQ",
-      description: DEFAULT_DESCRIPTION,
+      description: getDefaultDescription(locale),
       siteName: "KLARQ",
       locale: locale,
       images: [DEFAULT_OG_IMAGE],
@@ -46,7 +48,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: "KLARQ",
-      description: DEFAULT_DESCRIPTION,
+      description: getDefaultDescription(locale),
       images: [DEFAULT_OG_IMAGE],
     },
     icons: {

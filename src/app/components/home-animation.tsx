@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { useLocale } from "next-intl";
 import { useState, useEffect } from "react";
 import CategoryCard from "./category-card";
 import { servicesHome } from "../_interfaces/wordpress-components";
@@ -29,6 +30,8 @@ function HomeAnimation(props: Props) {
   );
 
   const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
+  const hasScrolled = useScrollStore((state) => state.hasScrolled);
+  const locale = useLocale();
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
@@ -195,6 +198,31 @@ function HomeAnimation(props: Props) {
           );
         })}
       </motion.div>
+
+      {/* Scroll hint: the tiles used to read as the end of the page (a
+          Round 3 audit finding — "scroll-jacking blank-space bug"). Fades
+          out on first scroll via the same hasScrolled store the tiles
+          already subscribe to, so it never lingers over real content. */}
+      <AnimatePresence>
+        {!hasScrolled && (
+          <motion.div
+            className="fixed bottom-[18px] left-1/2 -translate-x-1/2 z-[900] flex flex-col items-center gap-1 pointer-events-none mix-blend-difference"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="text-white text-[10px] tracking-[0.15em] uppercase">
+              {locale === "es" ? "Descubre más" : "Discover more"}
+            </span>
+            <motion.span
+              className="block w-px h-[16px] bg-white"
+              animate={{ scaleY: [1, 0.4, 1] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <CustomCursor isVisible={isCursorVisible} rotation={rotationDegree} />
     </div>

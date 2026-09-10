@@ -56,11 +56,11 @@ export async function generateMetadata({
     return {
       title: "KLARQ",
       description:
-        "Estudio de Arquitectura en Ibiza y Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible.",
+        (locale === "es" ? "Estudio de Arquitectura en Ibiza, con proyectos también en Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible." : "Architecture studio in Ibiza, with projects also in Mallorca, specializing in creating homes that breathe elegance and wellbeing with sustainable Mediterranean essence."),
       openGraph: {
         title: "KLARQ",
         description:
-          "Estudio de Arquitectura en Ibiza y Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible.",
+          (locale === "es" ? "Estudio de Arquitectura en Ibiza, con proyectos también en Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible." : "Architecture studio in Ibiza, with projects also in Mallorca, specializing in creating homes that breathe elegance and wellbeing with sustainable Mediterranean essence."),
         type: "website",
         siteName: "KLARQ",
         locale: locale,
@@ -70,7 +70,7 @@ export async function generateMetadata({
         card: "summary_large_image",
         title: "KLARQ",
         description:
-          "Estudio de Arquitectura en Ibiza y Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible.",
+          (locale === "es" ? "Estudio de Arquitectura en Ibiza, con proyectos también en Mallorca, especializado en crear hogares que respiran elegancia y bienestar con esencia Mediterránea y sostenible." : "Architecture studio in Ibiza, with projects also in Mallorca, specializing in creating homes that breathe elegance and wellbeing with sustainable Mediterranean essence."),
         images: [DEFAULT_OG_IMAGE],
       },
     };
@@ -94,8 +94,8 @@ async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
       </div>
       <h1 className="sr-only">
         {locale === "es"
-          ? "Contáctanos: Arquitectos en Ibiza y Mallorca"
-          : "Contact us: Architects in Ibiza and Mallorca"}
+          ? "Contáctanos: Arquitectos en Ibiza"
+          : "Contact us: Architects in Ibiza"}
       </h1>
       <div className="hidden lg:flex lg:h-[calc(100dvh-50px)]">
         <Link className="cursor-pointer" href={"/"}>
