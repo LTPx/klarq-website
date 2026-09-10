@@ -212,11 +212,11 @@ function HomeAnimation(props: Props) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <span className="text-white text-[10px] tracking-[0.15em] uppercase">
+            <span className="font-zoom uppercase text-white text-[13px] lg:text-[14px] tracking-[0.02em]">
               {locale === "es" ? "Descubre más" : "Discover more"}
             </span>
             <motion.span
-              className="block w-px h-[16px] bg-white"
+              className="block w-px h-[20px] bg-white"
               animate={{ scaleY: [1, 0.4, 1] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             />
