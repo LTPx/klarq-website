@@ -29,14 +29,15 @@ export function Header({
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hasMounted, setHasMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  // null = "don't know yet". Rendering the wrong branch even for one frame
+  // while this defaults to a guess (e.g. false = desktop) was enough for
+  // AnimatePresence to commit to showing the "always visible" header on
+  // mobile before the real width was known — a later correct re-render
+  // doesn't undo that, since as far as AnimatePresence is concerned that
+  // element already mounted. Not rendering anything until we're sure
+  // avoids the wrong branch ever being seen at all.
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
-  // useLayoutEffect (not useEffect) so isMobile is corrected before the
-  // browser paints anything — with useEffect there was a one-frame window,
-  // right after mount, where isMobile was still its default false and this
-  // component briefly took the "always visible" branch below instead of
-  // the "hidden until scrolled" one meant for mobile architecture/decor/
-  // development, which read as the bar showing immediately.
   useLayoutEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth < 1024);
     checkIsMobile();
@@ -176,25 +177,28 @@ export function Header({
   return (
     <>
       <AnimatePresence>
-        {(!isMobile && currentPath === "/") || (isMobile && isAllowedRoute) ? (
-          hasScrolled && !isHoveringCard ? (
-            <motion.header
-              className="bg-gray container fixed bottom-0 z-[1002]"
-              initial={hasMounted && !isMobile ? { y: 100, opacity: 0 } : false}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 1, transition: { duration: 0.5 } }}
-              transition={{ duration: 0.1 }}
-            >
-              {renderHeaderContent()}
-            </motion.header>
-          ) : null
-        ) : (
-          !isHoveringCard && (
-            <header className="bg-gray container fixed bottom-0 z-[1002]">
-              {renderHeaderContent()}
-            </header>
-          )
-        )}
+        {isMobile === null
+          ? null
+          : (!isMobile && currentPath === "/") ||
+            (isMobile && isAllowedRoute) ? (
+              hasScrolled && !isHoveringCard ? (
+                <motion.header
+                  className="bg-gray container fixed bottom-0 z-[1002]"
+                  initial={hasMounted && !isMobile ? { y: 100, opacity: 0 } : false}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 100, opacity: 1, transition: { duration: 0.5 } }}
+                  transition={{ duration: 0.1 }}
+                >
+                  {renderHeaderContent()}
+                </motion.header>
+              ) : null
+            ) : (
+              !isHoveringCard && (
+                <header className="bg-gray container fixed bottom-0 z-[1002]">
+                  {renderHeaderContent()}
+                </header>
+              )
+            )}
       </AnimatePresence>
     </>
   );
