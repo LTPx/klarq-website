@@ -18,6 +18,8 @@ function AppHeader(nextParams: { params: { locale: "en" | "es" | "de" } }) {
     { title: `${t("header.decor")}`, url: "/decor" },
     { title: `${t("header.development")}`, url: `/development` },
     // { title: `${t("header.shop")}`, url: "/news" },
+    { title: `${t("menu.publications")}`, url: "/publications" },
+    { title: `${t("menu.contact")}`, url: "/contact" },
   ];
 
   const allLanguages = ["/es", "/en"];

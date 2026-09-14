@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import DesktopMenu from "./desktop-menu";
 import { useHoverStore } from "../store/hover-store";
 import { useScrollStore } from "../store/scroll-store";
+import { useLocale } from "next-intl";
 
 interface LinksHeader {
   title: string;
@@ -21,6 +22,7 @@ export function Header({
   params: { locale: "es" | "de" | "en" };
 }) {
   const locale = params.locale;
+  const activeLocale = useLocale();
   const currentPath = usePathname();
   const [showMenu, setShowMenu] = useState(false);
   const hasScrolled = useScrollStore((state) => state.hasScrolled);
@@ -69,12 +71,15 @@ export function Header({
 
   const renderHeaderContent = () => (
     <div
-      className={`h-[50px] px-[15px] lg:px-[40px] grid grid-cols-2 items-center transition-all duration-300 ${
+      className={`h-[50px] px-[15px] lg:px-[40px] grid grid-cols-2 lg:flex lg:justify-center lg:gap-[32px] items-center transition-all duration-300 ${
         showMenu ? "border-t-[0.8px] border-black" : ""
       }`}
     >
+      {/* Desktop now shows every link (including Publications/Contact/
+          language) inline instead of behind this hamburger — kept for
+          mobile only, where there isn't room for all of it in one row. */}
       <img
-        className="cursor-pointer"
+        className="cursor-pointer lg:hidden"
         onClick={handleContactClick}
         src={
           showMenu ? "/images/close-header-menu.svg" : "/images/logo-menu.svg"
@@ -84,7 +89,7 @@ export function Header({
         height={showMenu ? 17 : 11}
       />
 
-      <div className="hidden lg:flex pl-[30px] justify-between">
+      <div className="hidden lg:flex lg:gap-[32px] items-center">
         {links.map((link, index) => {
           const isActive = currentPath === link.url;
           const isHovered = hoveredIndex === index;
@@ -111,6 +116,27 @@ export function Header({
             </Link>
           );
         })}
+        <div className="flex items-center gap-[6px] text-[18px] leading-[18px]">
+          <Link
+            href={currentPath}
+            locale="en"
+            className={`transition-opacity ${
+              activeLocale === "en" ? "opacity-100" : "opacity-40"
+            }`}
+          >
+            EN
+          </Link>
+          <span className="opacity-40">/</span>
+          <Link
+            href={currentPath}
+            locale="es"
+            className={`transition-opacity ${
+              activeLocale === "es" ? "opacity-100" : "opacity-40"
+            }`}
+          >
+            ES
+          </Link>
+        </div>
       </div>
     </div>
   );
