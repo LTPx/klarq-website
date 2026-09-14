@@ -2,7 +2,7 @@
 
 import { Link } from "@/navigation";
 import { usePathname } from "@/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useHoverStore } from "../store/hover-store";
 import { useScrollStore } from "../store/scroll-store";
@@ -31,7 +31,13 @@ export function Header({
   const [hasMounted, setHasMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
+  // useLayoutEffect (not useEffect) so isMobile is corrected before the
+  // browser paints anything — with useEffect there was a one-frame window,
+  // right after mount, where isMobile was still its default false and this
+  // component briefly took the "always visible" branch below instead of
+  // the "hidden until scrolled" one meant for mobile architecture/decor/
+  // development, which read as the bar showing immediately.
+  useLayoutEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth < 1024);
     checkIsMobile();
     window.addEventListener("resize", checkIsMobile);
@@ -66,7 +72,14 @@ export function Header({
   // (this component mounts on every page) makes "hidden until you scroll"
   // actually work everywhere instead of only on home.
   useEffect(() => {
-    const handleScroll = () => setHasScrolled(true);
+    // A small threshold, not window.scrollY > 0 — on real phones, the
+    // address bar collapsing and content reflowing during hydration can
+    // fire a genuine native scroll event for a few px with no user gesture
+    // at all, which made the bar appear immediately instead of after an
+    // actual scroll.
+    const handleScroll = () => {
+      if (window.scrollY > 24) setHasScrolled(true);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [setHasScrolled]);
@@ -136,10 +149,13 @@ export function Header({
           same reason: no dead-end tap needed to see Publications/Contact/
           language). */}
       <div className="lg:hidden py-[8px] flex flex-col gap-[6px]">
-        <div className="flex items-center justify-between">
+        {/* Both rows use the same 3-column grid so items line up between
+            rows regardless of how long each label is (justify-between only
+            evens out the gaps, not the columns). */}
+        <div className="grid grid-cols-3 items-center">
           {links.slice(0, 3).map((link, index) => renderNavLink(link, index, "text-[14px]"))}
         </div>
-        <div className="flex items-center justify-between opacity-70">
+        <div className="grid grid-cols-3 items-center opacity-70">
           {links.slice(3).map((link, index) => renderNavLink(link, index + 3, "text-[12px]"))}
           {renderLangSwitch("text-[12px]")}
         </div>
