@@ -31,41 +31,75 @@ function GalleryImagesScroll({
     AOS.init({ duration: aosDuration, once: true, easing: "ease-out-cubic" });
   }, [aosDuration]);
 
+  // Click-and-drag to scroll the gallery horizontally — page scroll (wheel)
+  // is left untouched entirely so hovering this gallery never blocks
+  // scrolling past it, which is what a previous wheel-hijack effect used to
+  // do here (converted vertical wheel input into horizontal scroll).
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
-    const isDesktop = window.innerWidth >= 1024;
-    if (!isDesktop) return;
+    let isDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
 
-    const onWheel = (e: WheelEvent) => {
-      const isScrollable = el.scrollWidth > el.clientWidth;
-      const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
-
-      if (!isScrollable || !isVerticalScroll) return;
-
-      const atStart = el.scrollLeft === 0;
-      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
-      const scrollingUp = e.deltaY < 0;
-      const scrollingDown = e.deltaY > 0;
-
-      if ((atStart && scrollingUp) || (atEnd && scrollingDown)) return;
-
-      e.preventDefault();
-      el.scrollLeft += e.deltaY;
+    const handleMouseDown = (e: MouseEvent) => {
+      isDown = true;
+      startX = e.clientX;
+      startScrollLeft = el.scrollLeft;
     };
 
-    el.addEventListener("wheel", onWheel, { passive: false });
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDown) return;
+      e.preventDefault();
+      el.scrollLeft = startScrollLeft - (e.clientX - startX);
+    };
+
+    const stopDragging = () => {
+      isDown = false;
+    };
+
+    el.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", stopDragging);
+    el.addEventListener("mouseleave", stopDragging);
 
     return () => {
-      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", stopDragging);
+      el.removeEventListener("mouseleave", stopDragging);
     };
   }, []);
+
+  const scrollByAmount = (direction: "left" | "right") => {
+    const el = containerRef.current;
+    if (!el) return;
+    const amount = el.clientWidth * 0.8;
+    el.scrollBy({
+      left: direction === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  };
 
   if (!images.length) return <p>No images found</p>;
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
+      <button
+        onClick={() => scrollByAmount("left")}
+        aria-label="Previous"
+        className="hidden lg:flex absolute left-[15px] top-1/2 -translate-y-1/2 z-10"
+      >
+        <img src="/images/left.svg" alt="Prev" />
+      </button>
+      <button
+        onClick={() => scrollByAmount("right")}
+        aria-label="Next"
+        className="hidden lg:flex absolute right-[15px] top-1/2 -translate-y-1/2 z-10"
+      >
+        <img src="/images/right.svg" alt="Next" />
+      </button>
       <div
         ref={containerRef}
         className="flex overflow-y-hidden overflow-x-auto gap-[3px] lg:gap-[5px] no-scrollbar"

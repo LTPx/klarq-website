@@ -113,36 +113,49 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
     setSelectedIndex((prev) => prev - 1);
   }, []);
 
+  // Mouse drag to navigate — page scroll (wheel) is left alone entirely so
+  // hovering the gallery never blocks scrolling past it. Click-drag past a
+  // 50px threshold advances/goes back one slide, mirroring the existing
+  // touch swipe behavior below.
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    let lastScrollTime = 0;
-    const scrollCooldown = 900;
+    let dragStartX: number | null = null;
+    let isDragging = false;
 
-    const handleWheel = (e: WheelEvent) => {
-      const now = Date.now();
-      const delta = e.deltaY;
+    const handleMouseDown = (e: MouseEvent) => {
+      dragStartX = e.clientX;
+      isDragging = true;
+    };
 
-      if (now - lastScrollTime < scrollCooldown) {
-        e.preventDefault();
-        return;
-      }
-
-      if (Math.abs(delta) > 20) {
-        lastScrollTime = now;
-        if (delta > 0) {
+    const handleMouseUp = (e: MouseEvent) => {
+      if (!isDragging || dragStartX === null) return;
+      const deltaX = dragStartX - e.clientX;
+      if (Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
           handleNext();
         } else {
           handlePrev();
         }
       }
-
-      e.preventDefault();
+      isDragging = false;
+      dragStartX = null;
     };
 
-    container.addEventListener("wheel", handleWheel, { passive: false });
-    return () => container.removeEventListener("wheel", handleWheel);
+    const handleMouseLeave = () => {
+      isDragging = false;
+      dragStartX = null;
+    };
+
+    container.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    container.addEventListener("mouseleave", handleMouseLeave);
+    return () => {
+      container.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+    };
   }, [handleNext, handlePrev]);
 
   useEffect(() => {
@@ -216,6 +229,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
             overflowX: "hidden",
             scrollBehavior: "smooth",
             touchAction: "pan-y",
+            cursor: "grab",
           }}
         >
           {extendedPublications.map((pub, index) => {
