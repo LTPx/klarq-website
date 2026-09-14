@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import MobileCover from "./mobile-cover";
 import { InformationWp } from "../_interfaces/wordpress-components";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
-import { useScrollStore } from "../store/scroll-store";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
 import { Link, usePathname } from "@/navigation";
 
@@ -18,7 +17,6 @@ interface Props {
 }
 
 function DevelopmentMobile({ projects, information }: Props) {
-  const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
   const [firstProject, restProjects] = useMemo(() => {
     return [projects[0], projects.slice(1)];
   }, [projects]);
@@ -26,44 +24,26 @@ function DevelopmentMobile({ projects, information }: Props) {
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const pathname = usePathname();
 
+  // header.tsx now owns hasScrolled globally (one listener, one 24px
+  // threshold, reset on route change) for every page including this one.
+  // This component used to run its own competing scroll→hasScrolled logic
+  // (a halfScreen-based threshold, plus a scrollY===0 reset) — two
+  // listeners fighting over the same store is what caused the bottom bar
+  // to misbehave on development even after that global fix.
   useEffect(() => {
-    const forceScrollTop = () => {
-      window.scrollTo(0, 0);
-      setTimeout(() => window.scrollTo(0, 0), 50);
-      setTimeout(() => window.scrollTo(0, 0), 150);
+    window.scrollTo(0, 0);
+    const t1 = setTimeout(() => window.scrollTo(0, 0), 50);
+    const t2 = setTimeout(() => window.scrollTo(0, 0), 150);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
-
-    forceScrollTop();
-
-    setHasScrolled(false);
   }, [pathname]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setHasScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const halfScreen = window.innerHeight / 2;
-      const scrolled = window.scrollY > halfScreen;
-      setHasScrolled(scrolled);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {

@@ -5,7 +5,6 @@ import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
-import { useScrollStore } from "../store/scroll-store";
 import { usePathname } from "next/navigation";
 
 interface Props {
@@ -13,19 +12,7 @@ interface Props {
 }
 
 function DecorPageMobile({ decor_information }: Props) {
-  const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setHasScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -33,28 +20,21 @@ function DecorPageMobile({ decor_information }: Props) {
     }
   }, []);
 
+  // header.tsx now owns hasScrolled globally (one listener, one 24px
+  // threshold, reset on route change) for every page including this one.
+  // This component used to run its own competing scroll→hasScrolled logic
+  // (a halfScreen-based threshold, plus a scrollY===0 reset) — two
+  // listeners fighting over the same store is what caused the bottom bar
+  // to misbehave on decor even after that global fix.
   useEffect(() => {
-    const forceScrollTop = () => {
-      window.scrollTo(0, 0);
-      setTimeout(() => window.scrollTo(0, 0), 50);
-      setTimeout(() => window.scrollTo(0, 0), 150);
+    window.scrollTo(0, 0);
+    const t1 = setTimeout(() => window.scrollTo(0, 0), 50);
+    const t2 = setTimeout(() => window.scrollTo(0, 0), 150);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
-
-    forceScrollTop();
-
-    setHasScrolled(false);
   }, [pathname]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const halfScreen = window.innerHeight / 2;
-      const scrolled = window.scrollY > halfScreen;
-      setHasScrolled(scrolled);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const projectKeys = [
     "kitchen_projects",

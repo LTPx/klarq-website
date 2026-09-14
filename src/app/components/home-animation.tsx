@@ -48,12 +48,18 @@ function HomeAnimation(props: Props) {
     return () => window.removeEventListener("resize", updateWindowDimensions);
   }, []);
 
+  // hasScrolled itself is now set globally by header.tsx (one listener, a
+  // 24px threshold that ignores the tiny automatic scroll adjustments real
+  // phones fire on load, reset on route change) — this used to also flip
+  // it to true on literally the first pixel of scroll, with no threshold,
+  // which raced header.tsx's own logic and was part of why the bottom bar
+  // kept showing immediately on home. isScrolling (used below to hide the
+  // hover cursor while scrolling) still needs its own listener.
   useEffect(() => {
     let scrollTimeout: ReturnType<typeof setTimeout>;
 
     const handleScroll = () => {
       setIsScrolling(true);
-      setHasScrolled(true);
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
         setIsScrolling(false);

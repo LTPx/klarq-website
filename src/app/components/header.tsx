@@ -2,8 +2,8 @@
 
 import { Link } from "@/navigation";
 import { usePathname } from "@/navigation";
-import { useState, useEffect, useLayoutEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { useHoverStore } from "../store/hover-store";
 import { useScrollStore } from "../store/scroll-store";
 import { useLocale } from "next-intl";
@@ -24,6 +24,16 @@ export function Header({
   const activeLocale = useLocale();
   const currentPath = usePathname();
   const hasScrolled = useScrollStore((state) => state.hasScrolled);
+
+  const allowedSegments = ["decor", "architecture", "development"];
+  const pathSegments = currentPath.split("/").filter(Boolean);
+  const isAllowedRoute =
+    pathSegments.length === 1 && allowedSegments.includes(pathSegments[0]);
+  // Home is scroll-gated on mobile too (not just architecture/decor/
+  // development) — isAllowedRoute alone excludes it (pathSegments is empty
+  // there), which was leaving the mobile home bar always visible instead
+  // of waiting for a scroll like every other mobile route.
+  const isMobileGatedRoute = currentPath === "/" || isAllowedRoute;
 
   const isHoveringCard = useHoverStore((state) => state.isHoveringCard);
   const setIsHoveringCard = useHoverStore((state) => state.setIsHoveringCard);
@@ -51,20 +61,40 @@ export function Header({
 
   useEffect(() => {
     setIsHoveringCard(false);
+    // Touch devices fire a synthetic mouseenter on tap with no matching
+    // mouseleave (nothing to "leave" without a real pointer), so the
+    // hover-black-dot could otherwise stay stuck on whatever was last
+    // tapped. Clearing it on every navigation is the safety net for that.
+    setHoveredIndex(null);
   }, [currentPath, setIsHoveringCard]);
 
   const setHasScrolled = useScrollStore((state) => state.setHasScrolled);
 
+  // hasScrolled lives in a store that persists across client-side
+  // navigations. Without this, scrolling on one gated route (say,
+  // Architecture) left hasScrolled=true, so the NEXT gated route you
+  // clicked to (including Home) rendered its bar immediately instead of
+  // waiting for a fresh scroll on that page.
+  const isGatedRoute =
+    (!isMobile && currentPath === "/") || (isMobile && isMobileGatedRoute);
+  // A route change doesn't reset window.scrollY by itself (the page
+  // components force it back to 0 themselves, in up to 3 delayed steps).
+  // Until that settles, the OLD scroll position briefly overhangs the NEW
+  // (often shorter) page, and the browser clamping it to fit fires a real
+  // native scroll event above the 24px threshold — undoing the reset below
+  // a moment after it runs. Ignoring scroll events for a short window right
+  // after a gated navigation filters out that clamp-triggered event without
+  // touching a genuine scroll gesture, which never arrives this fast.
+  const justNavigatedRef = useRef(true);
   useEffect(() => {
-    if (
-      isMobile &&
-      ["decor", "architecture", "development"].some((segment) =>
-        currentPath.includes(segment)
-      )
-    ) {
-      setHasScrolled(false);
-    }
-  }, [currentPath, isMobile, setHasScrolled]);
+    if (!isGatedRoute) return;
+    setHasScrolled(false);
+    justNavigatedRef.current = true;
+    const settle = setTimeout(() => {
+      justNavigatedRef.current = false;
+    }, 400);
+    return () => clearTimeout(settle);
+  }, [currentPath, isGatedRoute, setHasScrolled]);
 
   // The reset above only ever gets undone by home-animation.tsx's own scroll
   // listener, which isn't mounted outside the homepage — meaning the bottom
@@ -79,6 +109,7 @@ export function Header({
     // at all, which made the bar appear immediately instead of after an
     // actual scroll.
     const handleScroll = () => {
+      if (justNavigatedRef.current) return;
       if (window.scrollY > 24) setHasScrolled(true);
     };
     window.addEventListener("scroll", handleScroll);
@@ -102,8 +133,16 @@ export function Header({
         key={index}
         href={link.url}
         className="flex items-center gap-[6px]"
-        onMouseEnter={() => setHoveredIndex(index)}
+        onMouseEnter={() => {
+          // (hover: hover) excludes touch — a tap fires a synthetic
+          // mouseenter with no real mouseleave to follow, which is what
+          // left the dot stuck black after selecting a link on mobile.
+          if (window.matchMedia?.("(hover: hover)").matches) {
+            setHoveredIndex(index);
+          }
+        }}
         onMouseLeave={() => setHoveredIndex(null)}
+        onClick={() => setHoveredIndex(null)}
       >
         <img
           src={
@@ -169,37 +208,36 @@ export function Header({
     </div>
   );
 
-  const allowedSegments = ["decor", "architecture", "development"];
-  const pathSegments = currentPath.split("/").filter(Boolean);
-  const isAllowedRoute =
-    pathSegments.length === 1 && allowedSegments.includes(pathSegments[0]);
-
   return (
     <>
-      <AnimatePresence>
-        {isMobile === null
-          ? null
-          : (!isMobile && currentPath === "/") ||
-            (isMobile && isAllowedRoute) ? (
-              hasScrolled && !isHoveringCard ? (
-                <motion.header
-                  className="bg-gray container fixed bottom-0 z-[1002]"
-                  initial={hasMounted && !isMobile ? { y: 100, opacity: 0 } : false}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 100, opacity: 1, transition: { duration: 0.5 } }}
-                  transition={{ duration: 0.1 }}
-                >
-                  {renderHeaderContent()}
-                </motion.header>
-              ) : null
-            ) : (
-              !isHoveringCard && (
-                <header className="bg-gray container fixed bottom-0 z-[1002]">
-                  {renderHeaderContent()}
-                </header>
-              )
-            )}
-      </AnimatePresence>
+      {isMobile === null
+        ? null
+        : isGatedRoute ? (
+            hasScrolled &&
+            !isHoveringCard && (
+              // Plain conditional, no AnimatePresence: its exit animation was
+              // getting stuck mid-transition on a route change (two stale
+              // bar instances lingering at rest, neither ever finishing its
+              // exit and unmounting) whenever hasScrolled flipped back to
+              // false right after navigating between gated routes. An
+              // instant hide is correct here anyway — the whole point is
+              // that the bar shouldn't be visible until you scroll again.
+              <motion.header
+                className="bg-gray container fixed bottom-0 z-[1002]"
+                initial={hasMounted && !isMobile ? { y: 100, opacity: 0 } : false}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.1 }}
+              >
+                {renderHeaderContent()}
+              </motion.header>
+            )
+          ) : (
+            !isHoveringCard && (
+              <header className="bg-gray container fixed bottom-0 z-[1002]">
+                {renderHeaderContent()}
+              </header>
+            )
+          )}
     </>
   );
 }
