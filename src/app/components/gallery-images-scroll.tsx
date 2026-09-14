@@ -27,9 +27,50 @@ function GalleryImagesScroll({
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Three copies laid out back-to-back, starting scrolled to the middle one.
+  // Combined with the wrap-around scroll listener below, this makes the
+  // gallery loop endlessly in either direction (arrows or drag) instead of
+  // stopping dead at the first/last photo.
+  const copies = 3;
+  const baseLength = images.length;
+  const extendedImages = Array(copies).fill(images).flat();
+
   useEffect(() => {
     AOS.init({ duration: aosDuration, once: true, easing: "ease-out-cubic" });
   }, [aosDuration]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || baseLength === 0) return;
+    el.scrollLeft = el.scrollWidth / copies;
+  }, [baseLength]);
+
+  // Silently snaps back to the equivalent position in the middle copy once
+  // scroll drifts into the first or third copy — since all three copies are
+  // identical, the jump is invisible and the loop feels infinite.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || baseLength === 0) return;
+
+    let settleTimeout: ReturnType<typeof setTimeout>;
+    const handleScroll = () => {
+      clearTimeout(settleTimeout);
+      settleTimeout = setTimeout(() => {
+        const setWidth = el.scrollWidth / copies;
+        if (el.scrollLeft < setWidth * 0.5) {
+          el.scrollLeft += setWidth;
+        } else if (el.scrollLeft > setWidth * 1.5) {
+          el.scrollLeft -= setWidth;
+        }
+      }, 120);
+    };
+
+    el.addEventListener("scroll", handleScroll);
+    return () => {
+      clearTimeout(settleTimeout);
+      el.removeEventListener("scroll", handleScroll);
+    };
+  }, [baseLength]);
 
   // Click-and-drag to scroll the gallery horizontally — page scroll (wheel)
   // is left untouched entirely so hovering this gallery never blocks
@@ -47,6 +88,8 @@ function GalleryImagesScroll({
       isDown = true;
       startX = e.clientX;
       startScrollLeft = el.scrollLeft;
+      el.style.cursor = "grabbing";
+      el.style.userSelect = "none";
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -57,6 +100,8 @@ function GalleryImagesScroll({
 
     const stopDragging = () => {
       isDown = false;
+      el.style.cursor = "grab";
+      el.style.userSelect = "";
     };
 
     el.addEventListener("mousedown", handleMouseDown);
@@ -105,28 +150,31 @@ function GalleryImagesScroll({
         className="flex overflow-y-hidden overflow-x-auto gap-[3px] lg:gap-[5px] no-scrollbar"
         style={{ cursor: "grab" }}
       >
-        {images.map((src, index) => (
-          <Image
-            key={index}
-            src={src.url}
-            alt={src.alt ?? `image-${index}`}
-            width={src.width}
-            height={src.height}
-            quality={90}
-            loading="lazy"
-            // WP's width/height metadata on these items doesn't reliably
-            // match the served file's real aspect ratio (measured render
-            // widths up to 1905px at 1920px viewport didn't line up with a
-            // per-image aspect-ratio calc off that metadata — off by ~4x).
-            // Height is fixed (imageClassName) and width is auto/aspect-
-            // driven and can get near-panoramic, so sizes=100vw is the only
-            // reliably safe bound: never smaller than any image can render.
-            sizes="100vw"
-            className={`object-cover shrink-0 ${imageClassName}`}
-            data-aos={animationType}
-            data-aos-delay={stagger ? index * baseDelay : 0}
-          />
-        ))}
+        {extendedImages.map((src, index) => {
+          const originalIndex = index % baseLength;
+          return (
+            <Image
+              key={index}
+              src={src.url}
+              alt={src.alt ?? `image-${originalIndex}`}
+              width={src.width}
+              height={src.height}
+              quality={90}
+              loading="lazy"
+              // WP's width/height metadata on these items doesn't reliably
+              // match the served file's real aspect ratio (measured render
+              // widths up to 1905px at 1920px viewport didn't line up with a
+              // per-image aspect-ratio calc off that metadata — off by ~4x).
+              // Height is fixed (imageClassName) and width is auto/aspect-
+              // driven and can get near-panoramic, so sizes=100vw is the only
+              // reliably safe bound: never smaller than any image can render.
+              sizes="100vw"
+              className={`object-cover shrink-0 ${imageClassName}`}
+              data-aos={animationType}
+              data-aos-delay={stagger ? originalIndex * baseDelay : 0}
+            />
+          );
+        })}
       </div>
     </div>
   );

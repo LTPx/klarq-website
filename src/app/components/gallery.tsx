@@ -127,10 +127,29 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
     const handleMouseDown = (e: MouseEvent) => {
       dragStartX = e.clientX;
       isDragging = true;
+      container.style.cursor = "grabbing";
+      container.style.userSelect = "none";
+    };
+
+    const endDrag = () => {
+      isDragging = false;
+      dragStartX = null;
+      container.style.cursor = "grab";
+      container.style.userSelect = "";
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      // No live tracking of the images themselves (they're index-driven,
+      // not scrollLeft-driven) — this just stops the browser from starting
+      // a text-selection drag once the gesture is underway.
+      if (isDragging) e.preventDefault();
     };
 
     const handleMouseUp = (e: MouseEvent) => {
-      if (!isDragging || dragStartX === null) return;
+      if (!isDragging || dragStartX === null) {
+        endDrag();
+        return;
+      }
       const deltaX = dragStartX - e.clientX;
       if (Math.abs(deltaX) > 50) {
         if (deltaX > 0) {
@@ -139,22 +158,18 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
           handlePrev();
         }
       }
-      isDragging = false;
-      dragStartX = null;
-    };
-
-    const handleMouseLeave = () => {
-      isDragging = false;
-      dragStartX = null;
+      endDrag();
     };
 
     container.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
-    container.addEventListener("mouseleave", handleMouseLeave);
+    container.addEventListener("mouseleave", endDrag);
     return () => {
       container.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
-      container.removeEventListener("mouseleave", handleMouseLeave);
+      container.removeEventListener("mouseleave", endDrag);
     };
   }, [handleNext, handlePrev]);
 
