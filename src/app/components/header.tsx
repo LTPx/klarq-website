@@ -4,7 +4,6 @@ import { Link } from "@/navigation";
 import { usePathname } from "@/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import DesktopMenu from "./desktop-menu";
 import { useHoverStore } from "../store/hover-store";
 import { useScrollStore } from "../store/scroll-store";
 import { useLocale } from "next-intl";
@@ -24,7 +23,6 @@ export function Header({
   const locale = params.locale;
   const activeLocale = useLocale();
   const currentPath = usePathname();
-  const [showMenu, setShowMenu] = useState(false);
   const hasScrolled = useScrollStore((state) => state.hasScrolled);
 
   const isHoveringCard = useHoverStore((state) => state.isHoveringCard);
@@ -61,82 +59,95 @@ export function Header({
     }
   }, [currentPath, isMobile, setHasScrolled]);
 
+  // The reset above only ever gets undone by home-animation.tsx's own scroll
+  // listener, which isn't mounted outside the homepage — meaning the bottom
+  // bar (and, until it went inline, the hamburger) could never reappear on
+  // architecture/decor/development after that reset. A global listener here
+  // (this component mounts on every page) makes "hidden until you scroll"
+  // actually work everywhere instead of only on home.
+  useEffect(() => {
+    const handleScroll = () => setHasScrolled(true);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [setHasScrolled]);
+
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
-  const handleContactClick = () => {
-    setShowMenu((prev) => !prev);
+  const renderNavLink = (
+    link: LinksHeader,
+    index: number,
+    textSize: string
+  ) => {
+    const isActive = currentPath === link.url;
+    const isHovered = hoveredIndex === index;
+
+    return (
+      <Link
+        key={index}
+        href={link.url}
+        className="flex items-center gap-[6px]"
+        onMouseEnter={() => setHoveredIndex(index)}
+        onMouseLeave={() => setHoveredIndex(null)}
+      >
+        <img
+          src={
+            isActive || isHovered
+              ? "/images/circle-black.svg"
+              : "/images/circle.svg"
+          }
+          className="h-[8px] w-[8px] lg:h-[10px] lg:w-[10px]"
+          alt=""
+        />
+        <span className={`${textSize} leading-[1]`}>{link.title}</span>
+      </Link>
+    );
   };
 
+  const renderLangSwitch = (textSize: string) => (
+    <div className={`flex items-center gap-[6px] ${textSize} leading-[1]`}>
+      <Link
+        href={currentPath}
+        locale="en"
+        className={`transition-opacity ${
+          activeLocale === "en" ? "opacity-100" : "opacity-40"
+        }`}
+      >
+        EN
+      </Link>
+      <span className="opacity-40">/</span>
+      <Link
+        href={currentPath}
+        locale="es"
+        className={`transition-opacity ${
+          activeLocale === "es" ? "opacity-100" : "opacity-40"
+        }`}
+      >
+        ES
+      </Link>
+    </div>
+  );
+
   const renderHeaderContent = () => (
-    <div
-      className={`h-[50px] px-[15px] lg:px-[40px] grid grid-cols-2 lg:flex lg:justify-center lg:gap-[32px] items-center transition-all duration-300 ${
-        showMenu ? "border-t-[0.8px] border-black" : ""
-      }`}
-    >
-      {/* Desktop now shows every link (including Publications/Contact/
-          language) inline instead of behind this hamburger — kept for
-          mobile only, where there isn't room for all of it in one row. */}
-      <img
-        className="cursor-pointer lg:hidden"
-        onClick={handleContactClick}
-        src={
-          showMenu ? "/images/close-header-menu.svg" : "/images/logo-menu.svg"
-        }
-        alt={showMenu ? "Cerrar menú" : "Abrir menú"}
-        width={showMenu ? 18 : 20}
-        height={showMenu ? 17 : 11}
-      />
-
-      <div className="hidden lg:flex lg:gap-[32px] items-center">
-        {links.map((link, index) => {
-          const isActive = currentPath === link.url;
-          const isHovered = hoveredIndex === index;
-
-          return (
-            <Link
-              key={index}
-              href={link.url}
-              className="flex items-center gap-[6px]"
-              onClick={() => setShowMenu(false)}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <img
-                src={
-                  isActive || isHovered
-                    ? "/images/circle-black.svg"
-                    : "/images/circle.svg"
-                }
-                className="h-[10px] w-[10px]"
-                alt=""
-              />
-              <span className="text-[18px] leading-[18px]">{link.title}</span>
-            </Link>
-          );
-        })}
-        <div className="flex items-center gap-[6px] text-[18px] leading-[18px]">
-          <Link
-            href={currentPath}
-            locale="en"
-            className={`transition-opacity ${
-              activeLocale === "en" ? "opacity-100" : "opacity-40"
-            }`}
-          >
-            EN
-          </Link>
-          <span className="opacity-40">/</span>
-          <Link
-            href={currentPath}
-            locale="es"
-            className={`transition-opacity ${
-              activeLocale === "es" ? "opacity-100" : "opacity-40"
-            }`}
-          >
-            ES
-          </Link>
+    <div className="px-[15px] lg:px-[40px] transition-all duration-300">
+      {/* Mobile: two rows, everything always visible — replaces the old
+          hamburger -> full-screen menu (desktop already dropped it for the
+          same reason: no dead-end tap needed to see Publications/Contact/
+          language). */}
+      <div className="lg:hidden py-[8px] flex flex-col gap-[6px]">
+        <div className="flex items-center justify-between">
+          {links.slice(0, 3).map((link, index) => renderNavLink(link, index, "text-[14px]"))}
         </div>
+        <div className="flex items-center justify-between opacity-70">
+          {links.slice(3).map((link, index) => renderNavLink(link, index + 3, "text-[12px]"))}
+          {renderLangSwitch("text-[12px]")}
+        </div>
+      </div>
+
+      <div className="hidden lg:flex h-[50px] lg:gap-[32px] items-center justify-center">
+        {links.map((link, index) => renderNavLink(link, index, "text-[18px]"))}
+        {renderLangSwitch("text-[18px]")}
       </div>
     </div>
   );
@@ -169,8 +180,6 @@ export function Header({
           )
         )}
       </AnimatePresence>
-
-      <DesktopMenu showContact={showMenu} setShowContact={setShowMenu} />
     </>
   );
 }
