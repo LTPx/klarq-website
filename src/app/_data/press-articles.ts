@@ -63,11 +63,15 @@ const KIM_PRESS_THUMBNAIL = makePressThumbnail(
   "/images/press-la-vanguardia-kim.svg",
   "La Vanguardia — Entrevista"
 );
+const KIM_AYD_THUMBNAIL = makePressThumbnail(
+  "/images/press-arquitectura-diseno-kim.svg",
+  "Arquitectura y Diseño — Entrevista"
+);
 
 interface PressArticleEntry {
   titleEn: string;
   titleEs: string;
-  date: string;
+  date?: string;
   summaryEn: string;
   url: string;
   image?: ImageAcf;
@@ -164,18 +168,27 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     image: KIM_PRESS_THUMBNAIL,
     source: "La Vanguardia",
   },
+  {
+    titleEn: "Since living in a passive house, I sleep better",
+    titleEs: "Desde que vivo en una casa pasiva descanso mejor",
+    summaryEn: "",
+    url: "https://www.arquitecturaydiseno.es/arquitectura/kimberley-diaz-arquitecta-desde-que-vivo-casa-pasiva-descanso-mejor-cuerpo-se-relaja-otra-manera_12167",
+    image: KIM_AYD_THUMBNAIL,
+    source: "Arquitectura y Diseño",
+  },
 ];
 
 export function getPressPublications(locale: "es" | "en" | "de"): PublicationsWp[] {
   return PRESS_ARTICLES_ES.map((article) => {
     const source = article.source || "Diario de Ibiza";
+    const datePrefix = article.date ? `${article.date} — ` : "";
     return {
       image: article.image || PRESS_THUMBNAIL,
       title: locale === "en" ? article.titleEn : article.titleEs,
       sub_title:
         locale === "en"
-          ? `${article.date} — Published in ${source}.`
-          : `${article.date} — Publicado en ${source}.`,
+          ? `${datePrefix}Published in ${source}.`
+          : `${datePrefix}Publicado en ${source}.`,
       url: article.url,
     };
   });
