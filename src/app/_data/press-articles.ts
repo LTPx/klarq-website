@@ -80,6 +80,14 @@ interface PressArticleEntry {
 
 const PRESS_ARTICLES_ES: PressArticleEntry[] = [
   {
+    titleEn: "More building permits, less housing",
+    titleEs: "Más obra, menos vivienda",
+    date: "12.09.2026",
+    summaryEn:
+      "When Ibiza's architects' association reported building permits up 42.67% this half-year, the headline hid the substance: over half of the new single-family permits are legalizations of buildings that already existed, not new construction. Stripped of that effect, total activity is essentially flat, and multifamily building — the kind that could house workers — has fallen nearly 27% to the lowest level of the period. The author traces this back to housing costs driving off the skilled and unskilled labor construction itself depends on, and calls for a territorial pact that splits the market in two: one free, one price-regulated for the people who keep the island running.",
+    url: "https://www.diariodeibiza.es/opinion/2026/09/12/obra-vivienda-134199047.html",
+  },
+  {
     titleEn: "Another patch on a broken planning system (III)",
     titleEs: "Otro parche para un planeamiento que pide el cambio (III)",
     date: "19.07.2026",
