@@ -11,20 +11,45 @@ import { PublicationsWp } from "../_interfaces/wordpress-components";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import Link from "next/link";
 
+function shuffleArray<T>(array: T[]): T[] {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 interface GalleryProps {
   publication: PublicationsWp[];
   autoPlay?: boolean;
   autoPlayInterval?: number;
+  shuffle?: boolean;
 }
 
 const GalleryProjects: React.FC<GalleryProps> = ({
   publication,
   autoPlay = false,
   autoPlayInterval = 3200,
+  shuffle = false,
 }) => {
   const copies = 3;
   const baseLength = publication.length;
   const middleIndexStart = baseLength;
+
+  // Display order — starts as the given order (so server and first client
+  // render match, avoiding a hydration mismatch) and gets shuffled once on
+  // mount when `shuffle` is on. Keyed lookups below use the original index
+  // of each item (stable across the shuffle) instead of its position, so
+  // React moves the already-loaded <img> nodes to their new spot instead of
+  // swapping their src and reloading them.
+  const [items, setItems] = useState<PublicationsWp[]>(publication);
+  const originalIndexRef = useRef(new Map(publication.map((pub, i) => [pub, i])));
+
+  useEffect(() => {
+    if (shuffle) setItems(shuffleArray(publication));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shuffle]);
 
   const [selectedIndex, setSelectedIndex] = useState(middleIndexStart);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,7 +68,7 @@ const GalleryProjects: React.FC<GalleryProps> = ({
   const touchStartXRef = useRef<number | null>(null);
   const touchEndXRef = useRef<number | null>(null);
 
-  const extendedPublications = Array(copies).fill(publication).flat();
+  const extendedPublications = Array(copies).fill(items).flat();
 
   const scrollToIndex = useCallback(
     (index: number, behavior: ScrollBehavior = "smooth") => {
@@ -292,9 +317,12 @@ const GalleryProjects: React.FC<GalleryProps> = ({
         >
           {extendedPublications.map((pub, index) => {
             const isSelected = index === selectedIndex;
+            const originalIndex =
+              originalIndexRef.current.get(pub) ?? index % baseLength;
+            const copyIndex = Math.floor(index / baseLength);
             return (
               <img
-                key={index}
+                key={`${originalIndex}-${copyIndex}`}
                 src={pub.image.url}
                 alt={pub.title}
                 onClick={() => {
@@ -339,22 +367,22 @@ const GalleryProjects: React.FC<GalleryProps> = ({
         style={{ minHeight: "54px" }}
       >
         <div className="w-[250px] lg:w-auto">
-          {publication[selectedIndex % baseLength]?.url ? (
+          {items[selectedIndex % baseLength]?.url ? (
             <Link
               target="_blank"
-              href={publication[selectedIndex % baseLength]?.url}
+              href={items[selectedIndex % baseLength]?.url}
             >
               <span className=" uppercase text-[16px] leading-[22px]">
-                {publication[selectedIndex % baseLength]?.title}
+                {items[selectedIndex % baseLength]?.title}
               </span>
             </Link>
           ) : (
             <h2 className=" uppercase text-[16px] leading-[22px]">
-              {publication[selectedIndex % baseLength]?.title}
+              {items[selectedIndex % baseLength]?.title}
             </h2>
           )}
           <p className="uppercase text-[16px] leading-[22px]">
-            {publication[selectedIndex % baseLength]?.sub_title}
+            {items[selectedIndex % baseLength]?.sub_title}
           </p>
         </div>
       </div>

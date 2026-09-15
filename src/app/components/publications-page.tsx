@@ -48,6 +48,7 @@ function PublicationsPage({ publications_information }: Props) {
         <GalleryProjects
           publication={publications_information.publications}
           autoPlay
+          shuffle
         />
       </section>
     </div>
