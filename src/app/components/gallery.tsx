@@ -13,9 +13,15 @@ import Link from "next/link";
 
 interface GalleryProps {
   publication: PublicationsWp[];
+  autoPlay?: boolean;
+  autoPlayInterval?: number;
 }
 
-const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
+const GalleryProjects: React.FC<GalleryProps> = ({
+  publication,
+  autoPlay = false,
+  autoPlayInterval = 3200,
+}) => {
   const copies = 3;
   const baseLength = publication.length;
   const middleIndexStart = baseLength;
@@ -113,6 +119,23 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
     setSelectedIndex((prev) => prev - 1);
   }, []);
 
+  // Paused while the visitor's mouse is over the gallery or a touch drag is
+  // in progress, so autoplay never fights a manual swipe/drag.
+  const isPausedRef = useRef(false);
+  const resumeTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    if (!autoPlay || baseLength <= 1) return;
+    const timer = setInterval(() => {
+      if (!isPausedRef.current) handleNext();
+    }, autoPlayInterval);
+    return () => clearInterval(timer);
+  }, [autoPlay, autoPlayInterval, baseLength, handleNext]);
+
+  useEffect(() => {
+    return () => clearTimeout(resumeTimeoutRef.current);
+  }, []);
+
   // Mouse drag to navigate — page scroll (wheel) is left alone entirely so
   // hovering the gallery never blocks scrolling past it. Click-drag past a
   // 50px threshold advances/goes back one slide, mirroring the existing
@@ -179,6 +202,8 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
 
     const handleTouchStart = (e: TouchEvent) => {
       touchStartXRef.current = e.touches[0].clientX;
+      isPausedRef.current = true;
+      clearTimeout(resumeTimeoutRef.current);
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
@@ -199,6 +224,11 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
 
       touchStartXRef.current = null;
       touchEndXRef.current = null;
+      // No hover concept on touch — resume autoplay after a short grace
+      // period instead of leaving it paused forever after the first swipe.
+      resumeTimeoutRef.current = setTimeout(() => {
+        isPausedRef.current = false;
+      }, 2500);
     };
 
     container.addEventListener("touchstart", handleTouchStart, {
@@ -245,6 +275,19 @@ const GalleryProjects: React.FC<GalleryProps> = ({ publication }) => {
             scrollBehavior: "smooth",
             touchAction: "pan-y",
             cursor: "grab",
+          }}
+          onMouseEnter={() => {
+            // (hover: hover) excludes touch — a tap fires a synthetic
+            // mouseenter with no real mouseleave to follow, which would
+            // otherwise leave autoplay stuck paused after the first tap.
+            // Touch already gets its own pause/resume via touchstart/end.
+            if (window.matchMedia?.("(hover: hover)").matches) {
+              clearTimeout(resumeTimeoutRef.current);
+              isPausedRef.current = true;
+            }
+          }}
+          onMouseLeave={() => {
+            isPausedRef.current = false;
           }}
         >
           {extendedPublications.map((pub, index) => {

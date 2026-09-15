@@ -45,7 +45,10 @@ function PublicationsPage({ publications_information }: Props) {
         </label>
       </div>
       <section className="pt-[80px]">
-        <GalleryProjects publication={publications_information.publications} />
+        <GalleryProjects
+          publication={publications_information.publications}
+          autoPlay
+        />
       </section>
     </div>
   );
