@@ -1,13 +1,14 @@
 "use client";
 
 import React, { ReactNode } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "@/navigation";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface Props {
   information: {
-    image?: { url: string };
+    image?: { url: string; width?: number; height?: number };
     description: string;
   };
   labelTitle: string;
@@ -49,10 +50,14 @@ export default function MobileCover({
       >
         <div className="w-full" style={{ minHeight: 87 }} />
         {information.image?.url && (
-          <img
+          <Image
             src={information.image.url}
             alt="team"
-            className="mobile-cover-image w-auto max-w-full"
+            width={information.image.width || 800}
+            height={information.image.height || 1000}
+            quality={90}
+            priority
+            className="mobile-cover-image w-auto max-w-full h-auto"
           />
         )}
         <div

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 import MobileCover from "./mobile-cover";
 import { DecorPageWp } from "../_interfaces/wordpress-components";
 import CallToAction, { CategoryWithProjects } from "./call-to-action";
@@ -81,13 +82,20 @@ function DecorPageMobile({ decor_information }: Props) {
           labelTitle="Decor"
         >
           <div className="bg-white">
-            <img 
-              src={decor_information.cover.url}
-              style={{
-                height: "calc(var(--vh, 1vh) * 50)",
-              }}
-              className="w-full object-cover"
-            />
+            <div
+              className="relative w-full"
+              style={{ height: "calc(var(--vh, 1vh) * 50)" }}
+            >
+              <Image
+                src={decor_information.cover.url}
+                alt="KLARQ decor"
+                fill
+                sizes="100vw"
+                quality={90}
+                priority
+                className="object-cover"
+              />
+            </div>
             <div className="pt-[60px] pb-[100px] mb-[-45vh]">
               <CallToAction
                 categories={categories}

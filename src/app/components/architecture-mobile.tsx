@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import MobileCover from "./mobile-cover";
 import { InformationWp } from "../_interfaces/wordpress-components";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
@@ -69,15 +70,20 @@ function ArchitecturePageMobile({ projects, information }: Props) {
                   className={`block relative transition-opacity duration-500`}
                   style={{ height: "calc(var(--vh, 1vh) * 50)" }}
                 >
-                  <img
+                  <Image
                     src={
                       firstProject.project.acf.architecture_projects
                         .cover_project.url
                     }
-                    style={{
-                      height: "calc(var(--vh, 1vh) * 50)",
-                    }}
-                    className="bg-[#00000026] object-cover w-full h-full"
+                    alt={
+                      firstProject.project.acf.architecture_projects
+                        .title_project
+                    }
+                    fill
+                    sizes="100vw"
+                    quality={90}
+                    priority
+                    className="bg-[#00000026] object-cover"
                   />
                   <div className="absolute inset-0 bg-black/20 z-10" />
                   <div className="absolute inset-0 flex justify-center items-center z-20 px-4">
@@ -108,13 +114,17 @@ function ArchitecturePageMobile({ projects, information }: Props) {
                       data-index={index + 1}
                       className="h-full w-full relative"
                     >
-                      <img
-                        className="bg-[#00000026] object-cover w-full h-full"
+                      <Image
+                        className="bg-[#00000026] object-cover"
                         src={
                           item.project.acf.architecture_projects.cover_project
                             .url
                         }
                         alt={item.title}
+                        fill
+                        sizes="100vw"
+                        quality={90}
+                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-black/20 z-10" />
                       <div className="absolute inset-0 flex justify-center items-center z-20 px-4">
