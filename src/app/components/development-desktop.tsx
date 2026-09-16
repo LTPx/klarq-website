@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useRef, useMemo } from "react";
+import Image from "next/image";
 import DesktopCover from "./cover-desktop";
 import { InformationWp } from "../_interfaces/wordpress-components";
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
@@ -185,10 +186,14 @@ function DevelopmentUnified({ projects, information }: Props) {
               data-index={index + 1}
               className="h-full w-full relative"
             >
-              <img
-                className="bg-[#00000026] object-cover w-full h-full"
+              <Image
+                className="bg-[#00000026] object-cover"
                 src={item.project.acf.development_projects.cover_project.url}
                 alt={item.title}
+                fill
+                sizes="100vw"
+                quality={90}
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-black/20 z-10" />
             </div>

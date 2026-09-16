@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Link } from "@/navigation";
 // import { getProxyImageUrl, getProxyVideoUrl } from "@/utils/image_proxy";
@@ -104,23 +105,31 @@ export default function DesktopCover({
             className="relative h-full overflow-hidden"
           >
             {linkSlug ? (
-              <Link href={linkSlug}>
-                <img
+              <Link href={linkSlug} className="relative block w-full h-[426px] lg:h-full">
+                <Image
                   src={img}
                   alt="architecture-cover"
-                  className="cursor-pointer w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
+                  fill
+                  sizes="100vw"
+                  quality={90}
+                  priority
+                  className="cursor-pointer object-cover transition-all duration-[1500ms] ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/20 z-10" />
               </Link>
             ) : (
-              <>
-                <img
+              <div className="relative w-full h-[426px] lg:h-full">
+                <Image
                   src={img}
                   alt="architecture-cover"
-                  className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
+                  fill
+                  sizes="100vw"
+                  quality={90}
+                  priority
+                  className="cursor-default object-cover transition-all duration-[1500ms] ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/20 z-10" />
-              </>
+              </div>
             )}
           </motion.div>
         )}
@@ -130,23 +139,31 @@ export default function DesktopCover({
             className="relative h-full overflow-hidden"
           >
             {linkSlug ? (
-              <Link href={linkSlug}>
-                <img
+              <Link href={linkSlug} className="relative block w-full h-[426px] lg:h-full">
+                <Image
                   src={media.url}
                   alt="architecture-cover"
-                  className="cursor-pointer w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
+                  fill
+                  sizes="100vw"
+                  quality={90}
+                  priority
+                  className="cursor-pointer object-cover transition-all duration-[1500ms] ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/20 z-10" />
               </Link>
             ) : (
-              <>
-                <img
+              <div className="relative w-full h-[426px] lg:h-full">
+                <Image
                   src={media.url}
                   alt="architecture-cover"
-                  className="cursor-default w-full h-[426px] lg:h-full object-cover transition-all duration-[1500ms] ease-in-out"
+                  fill
+                  sizes="100vw"
+                  quality={90}
+                  priority
+                  className="cursor-default object-cover transition-all duration-[1500ms] ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/20 z-10" />
-              </>
+              </div>
             )}
           </motion.div>
         )}
@@ -191,14 +208,25 @@ export default function DesktopCover({
         >
           <div style={{ minHeight: labelHeight, width: labelWidth }} />
           {information.image?.url && (
-            <motion.img
+            <motion.div
               initial={{ opacity: 0, y: 0 }}
               animate={{ opacity: 1 - progress }}
               transition={{ duration: 0.3 }}
-              className="laptop-13:h-[300px] laptop-13:w-[210px] lg:h-[330px] lg:w-[240px] xl:h-[372px] xl:w-[260px]"
-              src={information.image.url}
-              alt="team-image"
-            />
+              className="relative laptop-13:h-[300px] laptop-13:w-[210px] lg:h-[330px] lg:w-[240px] xl:h-[372px] xl:w-[260px]"
+            >
+              <Image
+                src={information.image.url}
+                alt="team-image"
+                fill
+                sizes="260px"
+                quality={90}
+                // object-fill (stretch), not object-cover — matches the
+                // plain <img> this replaced, which had explicit
+                // width/height and no object-fit, i.e. the browser default
+                // of stretching rather than cropping.
+                className="object-fill"
+              />
+            </motion.div>
           )}
           <motion.div
             style={{ opacity: 1 - progress }}
