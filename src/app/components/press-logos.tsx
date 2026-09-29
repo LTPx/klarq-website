@@ -9,38 +9,28 @@ import { useTranslations } from "next-intl";
 // (newspaper navy, a patterned illustration, etc.) — a plain grayscale
 // filter alone would keep each logo's original lightness and the row
 // would read as inconsistent.
+// height/width here are each asset's native size — only used for Next/Image's
+// aspect-ratio math, not the rendered size (that's the `h-*` classes below).
+// `stacked` marks a two-line wordmark (a small title over a subtitle): at the
+// same box height as a one-line logo, half its height is a second line of much
+// smaller text, so it reads visually lighter — it needs a taller box than the
+// one-line logos to land at the same visual weight.
 const LOGOS: {
   name: string;
   src: string;
   width: number;
   height: number;
+  stacked?: boolean;
 }[] = [
   { name: "Diario de Ibiza", src: "/images/press-logos/diario-de-ibiza.png", width: 863, height: 89 },
   { name: "Sabato", src: "/images/press-logos/sabato.png", width: 1392, height: 471 },
-  { name: "NAN Arquitectura", src: "/images/press-logos/nan-arquitectura.png", width: 150, height: 83 },
+  { name: "NAN Arquitectura", src: "/images/press-logos/nan-arquitectura.png", width: 150, height: 83, stacked: true },
   { name: "White Ibiza", src: "/images/press-logos/white-ibiza.svg", width: 1745, height: 142 },
   { name: "Domus Nova", src: "/images/press-logos/domus-nova.svg", width: 542, height: 50 },
   { name: "Ibiza Live Report", src: "/images/press-logos/ibiza-live-report.png", width: 600, height: 107 },
   { name: "Periódico de Ibiza", src: "/images/press-logos/periodico-ibiza.svg", width: 337, height: 50 },
+  { name: "Arquitectura y Diseño", src: "/images/press-logos/arquitectura-y-diseno.svg", width: 139, height: 41, stacked: true },
 ];
-
-// Arquitectura y Diseño's own site blocks automated fetches entirely (WAF),
-// and every third-party logo mirror served only a low-res copy — recreated
-// as text instead, matching the real masthead's stacked bold condensed
-// treatment (ARQUITECTURA over DISEÑO) closely enough for a small mono
-// trust badge, rather than using a blurry raster.
-function ArquitecturaYDisenoMark() {
-  return (
-    <div
-      className="flex flex-col items-center leading-[0.85] font-sans font-black uppercase tracking-tight"
-      style={{ filter: "grayscale(1) brightness(0)", opacity: 0.6 }}
-      aria-label="Arquitectura y Diseño"
-    >
-      <span className="text-[13px] lg:text-[15px]">Arquitectura</span>
-      <span className="text-[13px] lg:text-[15px]">Diseño</span>
-    </div>
-  );
-}
 
 // Every downloadable La Vanguardia mark (Wikimedia included) turns out to
 // bake its navy masthead panel into the artwork itself — the lettering is
@@ -90,10 +80,13 @@ export function PressLogos() {
             alt={logo.name}
             width={logo.width}
             height={logo.height}
-            className="h-[16px] lg:h-[20px] w-auto grayscale brightness-0 opacity-60"
+            className={`w-auto grayscale brightness-0 opacity-60 ${
+              logo.stacked
+                ? "h-[22px] lg:h-[28px]"
+                : "h-[16px] lg:h-[20px]"
+            }`}
           />
         ))}
-        <ArquitecturaYDisenoMark />
       </div>
     </div>
   );
