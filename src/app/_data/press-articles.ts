@@ -1,12 +1,14 @@
 import { ImageAcf } from "../_interfaces/wordpress-page";
 import { PublicationsWp } from "../_interfaces/wordpress-components";
 
-// Opinion columns by Lluís Oliva Munar (KLARQ / COAIB Ibiza-Formentera) in
-// Diario de Ibiza. Hardcoded here instead of going through WordPress/ACF —
-// no CMS write access was available, and this content changes rarely enough
-// that it doesn't need to be editor-managed. English copy is an original
-// summary of each article's thesis, not a translation of the Spanish text
-// (avoids reproducing copyrighted material beyond the short quoted title).
+// Opinion columns and press interviews featuring Lluís Oliva Munar and
+// Kimberley Díaz (KLARQ / COAIB Ibiza-Formentera) in Diario de Ibiza,
+// Periódico de Ibiza, La Vanguardia and Arquitectura y Diseño. Hardcoded
+// here instead of going through WordPress/ACF — no CMS write access was
+// available, and this content changes rarely enough that it doesn't need
+// to be editor-managed. English copy is an original summary of each
+// article's thesis, not a translation of the Spanish text (avoids
+// reproducing copyrighted material beyond the short quoted title).
 function makePressThumbnail(svgPath: string, alt: string): ImageAcf {
   return {
     ID: 0,
@@ -67,6 +69,10 @@ const KIM_AYD_THUMBNAIL = makePressThumbnail(
   "/images/press-arquitectura-diseno-kim.svg",
   "Arquitectura y Diseño — Entrevista"
 );
+const PERIODICO_THUMBNAIL = makePressThumbnail(
+  "/images/press-periodico-ibiza.svg",
+  "Periódico de Ibiza — Entrevista"
+);
 
 interface PressArticleEntry {
   titleEn: string;
@@ -79,6 +85,16 @@ interface PressArticleEntry {
 }
 
 const PRESS_ARTICLES_ES: PressArticleEntry[] = [
+  {
+    titleEn: "'Trimming 10,000 square metres off the Ca n'Escandell park could mean 80 more homes'",
+    titleEs: "'Quitando 10.000 metros al parque de Ca n'Escandell podrían hacerse hasta 80 viviendas más'",
+    date: "27.09.2026",
+    summaryEn:
+      "Oliva pushes back on the regional government's claim that reclassifying rural \"transition zones\" into strategic residential plans will deliver thousands of new Ibiza homes, arguing the rule was written for Palma's context and only patched for the Pitiusas, with headline figures that don't say where those homes would actually go. He walks through the mechanics — a transition zone converts to 100% price-capped housing, versus a 50/50 split on land that's already urban — and notes Ibiza's three transition zones are still waiting on economic and planning reports before anything can be built. His own proposal: shrink the Ca n'Escandell park by 10,000 m² to make room for up to 80 additional homes.",
+    url: "https://www.periodicodeibiza.es/pitiusas/ibiza/2026/09/27/2717079/quitando-10000-metros-parque-escandell-podrian-hacerse-hasta-viviendas-mas.html",
+    image: PERIODICO_THUMBNAIL,
+    source: "Periódico de Ibiza",
+  },
   {
     titleEn: "More building permits, less housing",
     titleEs: "Más obra, menos vivienda",
@@ -136,6 +152,16 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     url: "https://www.diariodeibiza.es/opinion/2026/03/27/vivienda-ibiza-formentera-hoja-ruta-128459702.html",
   },
   {
+    titleEn: "'Maybe what Ibiza needs isn't a big park at Ca n'Escandell, but more housing'",
+    titleEs: "'Quizás no necesitemos un gran parque en Ca n'Escandell sino hacer más vivienda en Ibiza'",
+    date: "15.03.2026",
+    summaryEn:
+      "Reacting to newly released 2025 permit figures — villa permits falling as multifamily permits inch up, still short of demand — Oliva argues the real concern isn't luxury construction but the stall in affordable multifamily housing for residents. He's critical of Balearic government housing measures for being designed around Mallorca's reality and only loosely adapted for Ibiza and Formentera, and argues the deciding factor is simple economics: construction costs and capped sale prices have to actually leave room for a developer's margin, or nothing gets built.",
+    url: "https://www.periodicodeibiza.es/pitiusas/ibiza/2026/03/15/2589295/tal-vez-necesitamos-gran-parque-escandell-sino-hacer-mas-vivienda.html",
+    image: PERIODICO_THUMBNAIL,
+    source: "Periódico de Ibiza",
+  },
+  {
     titleEn: "Ibiza and Formentera face their territorial test",
     titleEs: "Ibiza y Formentera ante el examen de su territorio",
     date: "13.03.2026",
@@ -166,6 +192,32 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     summaryEn:
       "Opening a four-session COAIB conference cycle on Ibiza's housing crisis, the author cites new data: three in ten residents are considering leaving the island, and seven in ten spend over 30% of their income on housing. Rather than dwelling on the diagnosis, the piece looks to Vancouver's tax on empty homes, Navarra and Ireland's rehabilitation-for-rent-control schemes, and Barcelona's housing cooperatives as working models Ibiza has yet to try.",
     url: "https://www.diariodeibiza.es/opinion/2026/01/22/ibiza-decorado-lujo-vacio-ciudadania-125937570.html",
+  },
+  {
+    titleEn: "Lluís Oliva: 'Housing needs an answer now, but there's no solving it overnight'",
+    titleEs: "Lluís Oliva: 'El problema de la vivienda pide una respuesta inmediata, pero no se puede solucionar de hoy para mañana'",
+    date: "01.12.2025",
+    summaryEn:
+      "Oliva warns against policies that only address today's housing shortfall without planning for the gap that will remain once developments already underway are finished in five to ten years. He argues subsidized housing (VPO/VPL) isn't a short-term fix, calls for legal safeguards that would give landlords the confidence to offer homes on the long-term rental market, and proposes incentives to slow the dominance of luxury construction. He closes by announcing a COAIB conference series on the islands' housing situation.",
+    url: "https://www.diariodeibiza.es/ibiza/2025/12/01/arquitectos-ibiza-problema-vivienda-pide-respuesta-inmediata-hoy-para-manana-124292634.html",
+  },
+  {
+    titleEn: "'Building taller would make far better use of resources without eating up more land'",
+    titleEs: "'Crecer en alturas optimizaría mucho más los recursos sin tener que consumir más terreno'",
+    date: "20.07.2025",
+    summaryEn:
+      "One month into his term as COAIB Ibiza-Formentera president, Oliva describes building permits that take up to 14 years to clear — a figure cited that same week by Formentera's council president — and regulations that overlap across the regional government, island councils and town halls into what he calls a tangled mess. He points to archaeological remains delaying development at Ca n'Escandell as a concrete case where procedural delay is compounding the housing shortage.",
+    url: "https://www.periodicodeibiza.es/pitiusas/ibiza/2025/07/20/2433583/crecer-alturas-optimizaria-mucho-mas-recursos-tener-consumir-mas-terreno.html",
+    image: PERIODICO_THUMBNAIL,
+    source: "Periódico de Ibiza",
+  },
+  {
+    titleEn: "Lluís Oliva, new COAIB president: 'Permits need to move faster so people get livable spaces'",
+    titleEs: "Lluís Oliva, presidente del Colegio de Arquitectos: 'Hay que facilitar licencias para dar espacios habitables a la gente'",
+    date: "15.06.2025",
+    summaryEn:
+      "In his first interview as newly elected president of the Ibiza-Formentera chapter of the Balearic Architects' Association, Lluís Oliva describes a regulatory landscape made unusually complex by the islands' limited land, with overlapping approval levels across town councils, the island council and the regional government. He names easing licensing for housing renovation and new builds as the chapter's top priority, discusses the ambivalence of legalizing informal rural buildings after the fact, and acknowledges the tension between architects' own interest in more construction and the risk of overdevelopment.",
+    url: "https://www.diariodeibiza.es/ibiza/2025/06/15/lluis-oliva-presidente-colegio-arquitectos-118626986.html",
   },
   {
     titleEn: "Being an architect, living in a passive house",

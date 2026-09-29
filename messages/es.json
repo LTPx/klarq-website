@@ -37,7 +37,9 @@
     "development": "Desarrollo",
     "cookies-policy": "Política de cookies",
     "privacy-policy": "Política de privacidad",
-    "legal-notice": "Aviso legal"
+    "legal-notice": "Aviso legal",
+    "press_eyebrow": "Prensa",
+    "press_title": "Publicado en"
   },
   "faq": {
     "title": "Preguntas frecuentes",

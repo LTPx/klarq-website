@@ -37,7 +37,9 @@
     "development": "Development",
     "cookies-policy": "Cookies policy",
     "privacy-policy": "Privacy policy",
-    "legal-notice": "Legal notice"
+    "legal-notice": "Legal notice",
+    "press_eyebrow": "Press",
+    "press_title": "As featured in"
   },
   "faq": {
     "title": "Frequently asked questions",
