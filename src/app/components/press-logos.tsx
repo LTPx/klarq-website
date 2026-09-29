@@ -10,26 +10,28 @@ import { useTranslations } from "next-intl";
 // filter alone would keep each logo's original lightness and the row
 // would read as inconsistent.
 // height/width here are each asset's native size — only used for Next/Image's
-// aspect-ratio math, not the rendered size (that's the `h-*` classes below).
-// `stacked` marks a two-line wordmark (a small title over a subtitle): at the
-// same box height as a one-line logo, half its height is a second line of much
-// smaller text, so it reads visually lighter — it needs a taller box than the
-// one-line logos to land at the same visual weight.
+// aspect-ratio math, not the rendered size (that's `heightClass` below).
+const DEFAULT_HEIGHT_CLASS = "h-[16px] lg:h-[20px]";
+
+// Deliberately not uniform: the specialised architecture/design trade press
+// (NAN, Arquitectura y Diseño) is sized up to stand out over the generalist
+// local newspapers (Diario de Ibiza sized down), rather than every logo
+// reading at the same visual weight.
 const LOGOS: {
   name: string;
   src: string;
   width: number;
   height: number;
-  stacked?: boolean;
+  heightClass?: string;
 }[] = [
-  { name: "Diario de Ibiza", src: "/images/press-logos/diario-de-ibiza.png", width: 863, height: 89 },
+  { name: "Diario de Ibiza", src: "/images/press-logos/diario-de-ibiza.png", width: 863, height: 89, heightClass: "h-[13px] lg:h-[16px]" },
   { name: "Sabato", src: "/images/press-logos/sabato.png", width: 1392, height: 471 },
-  { name: "NAN Arquitectura", src: "/images/press-logos/nan-arquitectura.png", width: 150, height: 83, stacked: true },
+  { name: "NAN Arquitectura", src: "/images/press-logos/nan-arquitectura.png", width: 150, height: 83, heightClass: "h-[22px] lg:h-[28px]" },
   { name: "White Ibiza", src: "/images/press-logos/white-ibiza.svg", width: 1745, height: 142 },
   { name: "Domus Nova", src: "/images/press-logos/domus-nova.svg", width: 542, height: 50 },
   { name: "Ibiza Live Report", src: "/images/press-logos/ibiza-live-report.png", width: 600, height: 107 },
   { name: "Periódico de Ibiza", src: "/images/press-logos/periodico-ibiza.svg", width: 337, height: 50 },
-  { name: "Arquitectura y Diseño", src: "/images/press-logos/arquitectura-y-diseno.svg", width: 139, height: 41, stacked: true },
+  { name: "Arquitectura y Diseño", src: "/images/press-logos/arquitectura-y-diseno.svg", width: 139, height: 41, heightClass: "h-[28px] lg:h-[36px]" },
 ];
 
 // Every downloadable La Vanguardia mark (Wikimedia included) turns out to
@@ -70,7 +72,7 @@ export function PressLogos() {
           alt={LOGOS[0].name}
           width={LOGOS[0].width}
           height={LOGOS[0].height}
-          className="h-[16px] lg:h-[20px] w-auto grayscale brightness-0 opacity-60"
+          className={`w-auto grayscale brightness-0 opacity-60 ${LOGOS[0].heightClass ?? DEFAULT_HEIGHT_CLASS}`}
         />
         <LaVanguardiaMark />
         {LOGOS.slice(1).map((logo) => (
@@ -80,11 +82,7 @@ export function PressLogos() {
             alt={logo.name}
             width={logo.width}
             height={logo.height}
-            className={`w-auto grayscale brightness-0 opacity-60 ${
-              logo.stacked
-                ? "h-[22px] lg:h-[28px]"
-                : "h-[16px] lg:h-[20px]"
-            }`}
+            className={`w-auto grayscale brightness-0 opacity-60 ${logo.heightClass ?? DEFAULT_HEIGHT_CLASS}`}
           />
         ))}
       </div>
