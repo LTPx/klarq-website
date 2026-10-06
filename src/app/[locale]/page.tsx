@@ -22,6 +22,7 @@ export async function generateMetadata({
         canonical: seo_canonical || `${origin}/${locale}`,
         languages: {
           en: `${origin}/en`,
+          'x-default': `${origin}/en`,
           es: `${origin}/es`,
         },
       },

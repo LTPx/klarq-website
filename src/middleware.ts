@@ -4,6 +4,9 @@ import { locales } from "./config";
 export default createMiddleware({
   locales: ['en', 'es'],
   defaultLocale: 'es',
+  // next-intl's auto Link header points x-default at "/" (a 307 to /es);
+  // each page's metadata declares x-default -> /en instead.
+  alternateLinks: false,
 });
 
 export const config = {

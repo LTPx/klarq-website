@@ -25,6 +25,7 @@ export async function generateMetadata({
         canonical: seo_canonical || `${origin}/${locale}/publications`,
         languages: {
           en: `${origin}/en/publications`,
+          'x-default': `${origin}/en/publications`,
           es: `${origin}/es/publications`,
         },
       },

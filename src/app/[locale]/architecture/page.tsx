@@ -23,6 +23,7 @@ export async function generateMetadata({
         canonical: seo_canonical || `${origin}/${locale}/architecture`,
         languages: {
           en: `${origin}/en/architecture`,
+          'x-default': `${origin}/en/architecture`,
           es: `${origin}/es/architecture`,
         },
       },

@@ -59,6 +59,7 @@ export async function generateMetadata({
         canonical: seo_canonical || `${origin}/${locale}/decor/${slug}`,
         languages: {
           en: `${origin}/en/decor/${slug}`,
+          'x-default': `${origin}/en/decor/${slug}`,
           es: `${origin}/es/decor/${slug}`,
         },
       },

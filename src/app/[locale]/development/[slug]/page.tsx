@@ -59,6 +59,7 @@ export async function generateMetadata({
           : `${origin}/${locale}/development/${slug}`,
         languages: {
           en: `${origin}/en/development/${slug}`,
+          'x-default': `${origin}/en/development/${slug}`,
           es: `${origin}/es/development/${slug}`,
         },
       },
