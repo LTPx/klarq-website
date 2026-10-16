@@ -31,7 +31,9 @@ const LOGOS: {
   { name: "Domus Nova", src: "/images/press-logos/domus-nova.svg", width: 542, height: 50 },
   { name: "Ibiza Live Report", src: "/images/press-logos/ibiza-live-report.png", width: 600, height: 107 },
   { name: "Periódico de Ibiza", src: "/images/press-logos/periodico-ibiza.svg", width: 337, height: 50 },
+  { name: "The Ibiza Magazine", src: "/images/press-logos/the-ibiza-magazine.png", width: 1089, height: 282, heightClass: "h-[28px] lg:h-[36px]" },
   { name: "Arquitectura y Diseño", src: "/images/press-logos/arquitectura-y-diseno.svg", width: 139, height: 41, heightClass: "h-[28px] lg:h-[36px]" },
+  { name: "Archello", src: "/images/press-logos/archello.svg", width: 133, height: 24, heightClass: "h-[15px] lg:h-[19px]" },
 ];
 
 // Every downloadable La Vanguardia mark (Wikimedia included) turns out to
