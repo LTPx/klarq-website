@@ -103,12 +103,12 @@ export function DesignersSection({ team }: Props) {
           sizes="(min-width: 768px) 535px, 100vw"
           quality={90}
           className={`object-cover transition-opacity duration-500 ease-in-out ${
-            selectedMember ? "opacity-0" : "opacity-100"
+            selectedMember ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
         />
 
         <div
-          className={`lg:absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out flex flex-col gap-[50px] md:gap-[100px] pt-[13px] py-[0px] ${
+          className={`relative z-10 lg:absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out flex flex-col gap-[50px] md:gap-[100px] pt-[13px] py-[0px] ${
             selectedMember ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
