@@ -73,6 +73,14 @@ const PERIODICO_THUMBNAIL = makePressThumbnail(
   "/images/press-periodico-ibiza.svg",
   "Periódico de Ibiza — Entrevista"
 );
+const IBIZA_MAGAZINE_THUMBNAIL = makePressThumbnail(
+  "/images/press-ibiza-magazine.svg",
+  "The Ibiza Magazine — Entrevista"
+);
+const ARCHELLO_THUMBNAIL = makePressThumbnail(
+  "/images/press-archello-can-duarte.svg",
+  "Archello — Can Duarte"
+);
 
 interface PressArticleEntry {
   titleEn: string;
@@ -186,6 +194,16 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     url: "https://www.diariodeibiza.es/opinion/2026/02/07/vivienda-ibiza-monstruo-126537855.html",
   },
   {
+    titleEn: "\"Less 'look at me,' more 'feel good here.'\"",
+    titleEs: "\"Menos 'mírame', más 'siéntete bien aquí'\"",
+    date: "27.01.2026",
+    summaryEn:
+      "An interview with the founders of KLARQ on how the studio works: raw, natural materials, calm spaces rooted in Mediterranean tradition, and one team handling everything from the first sketch to the final piece of furniture.",
+    url: "https://theibizamagazine.com/klarq-ibiza-architecture-interior-design/",
+    image: IBIZA_MAGAZINE_THUMBNAIL,
+    source: "The Ibiza Magazine",
+  },
+  {
     titleEn: "Ibiza, a luxury backdrop emptied of citizens",
     titleEs: "Ibiza, un decorado de lujo vacío de ciudadanía",
     date: "22.01.2026",
@@ -235,6 +253,15 @@ const PRESS_ARTICLES_ES: PressArticleEntry[] = [
     url: "https://www.arquitecturaydiseno.es/arquitectura/kimberley-diaz-arquitecta-desde-que-vivo-casa-pasiva-descanso-mejor-cuerpo-se-relaja-otra-manera_12167",
     image: KIM_AYD_THUMBNAIL,
     source: "Arquitectura y Diseño",
+  },
+  {
+    titleEn: "Can Duarte",
+    titleEs: "Can Duarte",
+    summaryEn:
+      "Project page for Can Duarte, the renovation of a traditional Ibicenco farmhouse of about 500 m² overlooking the Morna valley, with a main building and two annexes.",
+    url: "https://archello.com/es/project/can-duarte",
+    image: ARCHELLO_THUMBNAIL,
+    source: "Archello",
   },
 ];
 

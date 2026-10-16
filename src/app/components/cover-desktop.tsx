@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Link } from "@/navigation";
+import { getFounderImageUrl } from "@/utils/founder-image";
 // import { getProxyImageUrl, getProxyVideoUrl } from "@/utils/image_proxy";
 import {
   InformationWp,
@@ -215,7 +216,7 @@ export default function DesktopCover({
               className="relative laptop-13:h-[300px] laptop-13:w-[210px] lg:h-[330px] lg:w-[240px] xl:h-[372px] xl:w-[260px]"
             >
               <Image
-                src={information.image.url}
+                src={getFounderImageUrl(information.image.url)}
                 alt="team-image"
                 fill
                 sizes="260px"

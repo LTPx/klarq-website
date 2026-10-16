@@ -4,6 +4,7 @@ import React, { ReactNode } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "@/navigation";
+import { getFounderImageUrl } from "@/utils/founder-image";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 
 interface Props {
@@ -51,7 +52,7 @@ export default function MobileCover({
         <div className="w-full" style={{ minHeight: 87 }} />
         {information.image?.url && (
           <Image
-            src={information.image.url}
+            src={getFounderImageUrl(information.image.url)}
             alt="team"
             width={information.image.width || 800}
             height={information.image.height || 1000}
