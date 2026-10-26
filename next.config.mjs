@@ -399,6 +399,98 @@ const nextConfig = {
         destination: "/en",
         permanent: true,
       },
+      // Pre-i18n project URLs (/{locale}/{slug}) that used to live outside
+      // the section folders; they currently 404 and show up in GSC coverage.
+      {
+        source: "/es/ca-na-lola",
+        destination: "/es/architecture/ca-na-lola",
+        permanent: true,
+      },
+      {
+        source: "/es/can-miguel-cosmi",
+        destination: "/es/architecture/can-miguel-cosmi",
+        permanent: true,
+      },
+      {
+        source: "/es/gathering-ibiza",
+        destination: "/es/architecture/gathering-ibiza",
+        permanent: true,
+      },
+      {
+        source: "/es/na-xamena",
+        destination: "/es/architecture/na-xamena",
+        permanent: true,
+      },
+      {
+        source: "/es/tres-cantos",
+        destination: "/es/architecture/tres-cantos",
+        permanent: true,
+      },
+      {
+        source: "/es/isola-bella",
+        destination: "/es/development/isola-bella",
+        permanent: true,
+      },
+      {
+        source: "/es/son-maig",
+        destination: "/es/development/son-maig",
+        permanent: true,
+      },
+      {
+        source: "/es/our-book-on-loft-publications",
+        destination: "/es/publications",
+        permanent: true,
+      },
+      {
+        source: "/en/ca-na-lola",
+        destination: "/en/architecture/ca-na-lola",
+        permanent: true,
+      },
+      {
+        source: "/en/can-miguel-cosmi",
+        destination: "/en/architecture/can-miguel-cosmi",
+        permanent: true,
+      },
+      {
+        source: "/en/gathering-ibiza",
+        destination: "/en/architecture/gathering-ibiza",
+        permanent: true,
+      },
+      {
+        source: "/en/na-xamena",
+        destination: "/en/architecture/na-xamena",
+        permanent: true,
+      },
+      {
+        source: "/en/tres-cantos",
+        destination: "/en/architecture/tres-cantos",
+        permanent: true,
+      },
+      {
+        source: "/en/isola-bella",
+        destination: "/en/development/isola-bella",
+        permanent: true,
+      },
+      {
+        source: "/en/son-maig",
+        destination: "/en/development/son-maig",
+        permanent: true,
+      },
+      {
+        source: "/en/our-book-on-loft-publications",
+        destination: "/en/publications",
+        permanent: true,
+      },
+      {
+        source: "/es/home",
+        destination: "/es",
+        permanent: true,
+      },
+      {
+        source: "/es/son-maig-a-passive-house-in-mallorca",
+        destination: "/es/development/son-maig",
+        permanent: true,
+      },
     ];
   },
 };
