@@ -166,6 +166,11 @@ async function DevelopmentSlugPage(nextParams: {
     ...(img.width ? { width: img.width } : {}),
     ...(img.height ? { height: img.height } : {}),
     ...(img.alt ? { caption: img.alt } : {}),
+    copyrightNotice: photographerName
+      ? `© KLARQ. Photography: ${photographerName}`
+      : "© KLARQ",
+    license: `https://klarq.eu/${locale}/contact`,
+    acquireLicensePage: `https://klarq.eu/${locale}/contact`,
     ...(photographerName
       ? { creditText: photographerName, creator: { "@type": "Person", name: photographerName } }
       : {}),
