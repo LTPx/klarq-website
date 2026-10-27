@@ -52,12 +52,17 @@ export function Footer() {
               <label className="hidden lg:block pb-[35px] text-[26px] leading-[24px] lg:leading-[45px]">
                 {`${t("footer.title")}`}
               </label>
-              <p className="text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px]">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=KLARQ%20C%2F%20Vicent%20Serra%20i%20Orvay%2049%2007800%20Ibiza"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-start text-[12px] leading-[16px] lg:text-[16px] lg:leading-[22px] hover:underline"
+              >
                 C/ Vicent Serra i Orvay, 49
                 <span className="inline lg:hidden"> </span>
                 <br className="hidden lg:block" />
                 07800 Ibiza
-              </p>
+              </a>
 
               <Link
                 href={`mailto:info@klarq.eu`}

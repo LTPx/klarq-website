@@ -96,6 +96,8 @@ const ORGANIZATION_SCHEMA = {
       "@id": "https://klarq.eu/#ibiza",
       name: "KLARQ Ibiza",
       branchOf: { "@id": "https://klarq.eu/#organization" },
+      hasMap:
+        "https://www.google.com/maps/search/?api=1&query=KLARQ%20C%2F%20Vicent%20Serra%20i%20Orvay%2049%2007800%20Ibiza",
       telephone: "+34656362863",
       email: "info@klarq.eu",
       address: {
