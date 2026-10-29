@@ -81,6 +81,10 @@ const ARCHELLO_THUMBNAIL = makePressThumbnail(
   "/images/press-archello-can-duarte.svg",
   "Archello — Can Duarte"
 );
+const WHITE_IBIZA_THUMBNAIL = makePressThumbnail(
+  "/images/press-white-ibiza.svg",
+  "White Ibiza — KLARQ"
+);
 
 interface PressArticleEntry {
   titleEn: string;
@@ -93,6 +97,16 @@ interface PressArticleEntry {
 }
 
 const PRESS_ARTICLES_ES: PressArticleEntry[] = [
+  {
+    titleEn: "KLARQ",
+    titleEs: "KLARQ",
+    date: "29.10.2026",
+    summaryEn:
+      "Profile of KLARQ in White Ibiza's Living directory, under Architecture & Design: an Ibiza studio founded by architects Lluís Oliva and Kimberley Díaz, focused on bespoke residential projects, sustainable construction and property development.",
+    url: "https://white-ibiza.com/living/klarq/",
+    image: WHITE_IBIZA_THUMBNAIL,
+    source: "White Ibiza",
+  },
   {
     titleEn: "'Trimming 10,000 square metres off the Ca n'Escandell park could mean 80 more homes'",
     titleEs: "'Quitando 10.000 metros al parque de Ca n'Escandell podrían hacerse hasta 80 viviendas más'",
