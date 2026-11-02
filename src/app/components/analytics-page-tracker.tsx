@@ -33,6 +33,39 @@ export function AnalyticsPageTracker() {
     });
   }, [pathname, searchParams]);
 
+  useEffect(() => {
+    // Contact intent: email, phone and WhatsApp clicks are reported as GA4's
+    // recommended "generate_lead" event (mark it as a key event in GA4).
+    // Instagram, map and press clicks get their own events.
+    const onClick = (e: MouseEvent) => {
+      if (typeof window.gtag !== "function") return;
+      const a = (e.target as Element | null)?.closest?.("a");
+      const href = a?.getAttribute("href");
+      if (!a || !href) return;
+      const base = {
+        link_url: href,
+        link_text: (a.textContent || "").trim().slice(0, 80),
+        page_path: window.location.pathname,
+      };
+      if (href.startsWith("mailto:")) {
+        window.gtag("event", "generate_lead", { ...base, method: "email" });
+      } else if (href.startsWith("tel:")) {
+        window.gtag("event", "generate_lead", { ...base, method: "phone" });
+      } else if (/^https?:\/\/(wa\.me|api\.whatsapp\.com|(www\.)?whatsapp\.com)\//.test(href)) {
+        window.gtag("event", "generate_lead", { ...base, method: "whatsapp" });
+      } else if (/^https?:\/\/(www\.)?instagram\.com\//.test(href)) {
+        const account = href.split("instagram.com/")[1]?.split(/[/?]/)[0] || "";
+        window.gtag("event", "social_click", { ...base, network: "instagram", account });
+      } else if (/google\.[a-z.]+\/maps/.test(href)) {
+        window.gtag("event", "maps_click", base);
+      } else if (a.getAttribute("data-press")) {
+        window.gtag("event", "press_click", { ...base, outlet: a.getAttribute("data-press") });
+      }
+    };
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
+  }, []);
+
   return null;
 }
 

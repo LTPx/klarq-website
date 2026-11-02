@@ -7,6 +7,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import CoverDynamicMobile from "./cover-mobile";
 import HoverButton from "./hover-fill-btn";
+import WhatsappCta from "./whatsapp-cta";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 
@@ -96,6 +97,7 @@ function ContactPage({ contact_information }: Props) {
               __html: contact_information.description,
             }}
           />
+          <WhatsappCta />
           <div className="flex flex-col">
             <br />
             <p className="text-center text-[16px] leading-[22px] ">

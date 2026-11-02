@@ -3,6 +3,7 @@ import ArchitectureInformation from "@/app/components/architecture-information";
 import CarouselProjects from "@/app/components/carosuel-projects";
 import Cover from "@/app/components/cover-pages";
 import ProjectCard from "@/app/components/project-card";
+import WhatsappCta from "@/app/components/whatsapp-cta";
 import { Link } from "@/navigation";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import { Metadata } from "next";
@@ -258,6 +259,12 @@ async function DevelopmentSlugPage(nextParams: {
           images_project={development_projects.images_project}
           description={development_projects.description_project}
         />
+      </section>
+      <section className="flex flex-col gap-[16px] pt-[120px] px-[15px] lg:px-[40px]">
+        <span className="text-[18px] leading-[28px]">{t("whatsapp.intro")}</span>
+        <div>
+          <WhatsappCta projectTitle={development_projects.title_project} />
+        </div>
       </section>
       <section className="flex flex-col gap-[40px] pt-[150px] px-[15px] lg:px-[40px] pb-[40px]">
         <div className="flex flex-col gap-[8px]">

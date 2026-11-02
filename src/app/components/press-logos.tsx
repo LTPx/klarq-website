@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
 
 // Real logos, transparent background, cropped to their own content —
 // sized by height only (w-auto) so very different native aspect ratios
@@ -23,17 +24,20 @@ const LOGOS: {
   width: number;
   height: number;
   heightClass?: string;
+  // Latest article we have for the outlet; outlets without one link to the
+  // internal press page instead.
+  href?: string;
 }[] = [
-  { name: "Diario de Ibiza", src: "/images/press-logos/diario-de-ibiza.png", width: 863, height: 89, heightClass: "h-[13px] lg:h-[16px]" },
+  { name: "Diario de Ibiza", href: "https://www.diariodeibiza.es/opinion/2026/09/12/obra-vivienda-134199047.html", src: "/images/press-logos/diario-de-ibiza.png", width: 863, height: 89, heightClass: "h-[13px] lg:h-[16px]" },
   { name: "Sabato", src: "/images/press-logos/sabato.png", width: 1392, height: 471 },
   { name: "NAN Arquitectura", src: "/images/press-logos/nan-arquitectura.png", width: 150, height: 83, heightClass: "h-[22px] lg:h-[28px]" },
-  { name: "White Ibiza", src: "/images/press-logos/white-ibiza.svg", width: 1745, height: 142 },
+  { name: "White Ibiza", href: "https://white-ibiza.com/living/klarq/", src: "/images/press-logos/white-ibiza.svg", width: 1745, height: 142 },
   { name: "Domus Nova", src: "/images/press-logos/domus-nova.svg", width: 542, height: 50 },
   { name: "Ibiza Live Report", src: "/images/press-logos/ibiza-live-report.png", width: 600, height: 107 },
-  { name: "Periódico de Ibiza", src: "/images/press-logos/periodico-ibiza.svg", width: 337, height: 50 },
-  { name: "The Ibiza Magazine", src: "/images/press-logos/the-ibiza-magazine.png", width: 1089, height: 282, heightClass: "h-[28px] lg:h-[36px]" },
-  { name: "Arquitectura y Diseño", src: "/images/press-logos/arquitectura-y-diseno.svg", width: 139, height: 41, heightClass: "h-[28px] lg:h-[36px]" },
-  { name: "Archello", src: "/images/press-logos/archello.svg", width: 133, height: 24, heightClass: "h-[15px] lg:h-[19px]" },
+  { name: "Periódico de Ibiza", href: "https://www.periodicodeibiza.es/pitiusas/ibiza/2026/09/27/2717079/quitando-10000-metros-parque-escandell-podrian-hacerse-hasta-viviendas-mas.html", src: "/images/press-logos/periodico-ibiza.svg", width: 337, height: 50 },
+  { name: "The Ibiza Magazine", href: "https://theibizamagazine.com/klarq-ibiza-architecture-interior-design/", src: "/images/press-logos/the-ibiza-magazine.png", width: 1089, height: 282, heightClass: "h-[28px] lg:h-[36px]" },
+  { name: "Arquitectura y Diseño", href: "https://www.arquitecturaydiseno.es/arquitectura/kimberley-diaz-arquitecta-desde-que-vivo-casa-pasiva-descanso-mejor-cuerpo-se-relaja-otra-manera_12167", src: "/images/press-logos/arquitectura-y-diseno.svg", width: 139, height: 41, heightClass: "h-[28px] lg:h-[36px]" },
+  { name: "Archello", href: "https://archello.com/es/project/can-duarte", src: "/images/press-logos/archello.svg", width: 133, height: 24, heightClass: "h-[15px] lg:h-[19px]" },
 ];
 
 // Every downloadable La Vanguardia mark (Wikimedia included) turns out to
@@ -55,6 +59,40 @@ function LaVanguardiaMark() {
   );
 }
 
+const LA_VANGUARDIA_URL =
+  "https://www.lavanguardia.com/magazine/casa/20260305/11480905/arquitecta-casa-pasiva-conservarse-mejor-temperatura-necesita-menos-energia-calentarla-gvm.html";
+
+function PressLink({
+  name,
+  href,
+  children,
+}: {
+  name: string;
+  href?: string;
+  children: React.ReactNode;
+}) {
+  const cls = "opacity-100 hover:opacity-70 transition-opacity";
+  if (!href) {
+    return (
+      <Link href="/publications" data-press={name} className={cls}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-press={name}
+      aria-label={name}
+      className={cls}
+    >
+      {children}
+    </a>
+  );
+}
+
 export function PressLogos() {
   const t = useTranslations();
 
@@ -69,23 +107,28 @@ export function PressLogos() {
         </span>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-x-[36px] gap-y-[24px] lg:gap-x-[56px] w-full max-w-[1100px] px-[15px]">
-        <Image
-          src={LOGOS[0].src}
-          alt={LOGOS[0].name}
-          width={LOGOS[0].width}
-          height={LOGOS[0].height}
-          className={`w-auto grayscale brightness-0 opacity-60 ${LOGOS[0].heightClass ?? DEFAULT_HEIGHT_CLASS}`}
-        />
-        <LaVanguardiaMark />
-        {LOGOS.slice(1).map((logo) => (
+        <PressLink name={LOGOS[0].name} href={LOGOS[0].href}>
           <Image
-            key={logo.name}
-            src={logo.src}
-            alt={logo.name}
-            width={logo.width}
-            height={logo.height}
-            className={`w-auto grayscale brightness-0 opacity-60 ${logo.heightClass ?? DEFAULT_HEIGHT_CLASS}`}
+            src={LOGOS[0].src}
+            alt={LOGOS[0].name}
+            width={LOGOS[0].width}
+            height={LOGOS[0].height}
+            className={`w-auto grayscale brightness-0 opacity-60 ${LOGOS[0].heightClass ?? DEFAULT_HEIGHT_CLASS}`}
           />
+        </PressLink>
+        <PressLink name="La Vanguardia" href={LA_VANGUARDIA_URL}>
+          <LaVanguardiaMark />
+        </PressLink>
+        {LOGOS.slice(1).map((logo) => (
+          <PressLink key={logo.name} name={logo.name} href={logo.href}>
+            <Image
+              src={logo.src}
+              alt={logo.name}
+              width={logo.width}
+              height={logo.height}
+              className={`w-auto grayscale brightness-0 opacity-60 ${logo.heightClass ?? DEFAULT_HEIGHT_CLASS}`}
+            />
+          </PressLink>
         ))}
       </div>
     </div>

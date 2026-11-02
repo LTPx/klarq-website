@@ -61,5 +61,11 @@
     "q8_answer": "KLARQ combina tres áreas bajo un mismo equipo: KLARQ architecture (obra nueva, reformas y rehabilitaciones), KLARQ decor (interiorismo, cocinas y mobiliario) y KLARQ development (promociones inmobiliarias).",
     "q9_question": "¿Cómo empiezo un proyecto con vosotros?",
     "q9_answer": "Escríbenos a info@klarq.eu o llámanos al +34 656 362 863. Concertaremos una primera reunión para conocer tu proyecto y definir los siguientes pasos."
+  },
+  "whatsapp": {
+    "cta": "Escríbenos por WhatsApp",
+    "intro": "¿Quieres un proyecto como este?",
+    "message_contact": "Hola, os escribo desde la web de KLARQ.",
+    "message_project": "Hola, os escribo desde la web de KLARQ. Me interesa el proyecto {project}."
   }
 }
