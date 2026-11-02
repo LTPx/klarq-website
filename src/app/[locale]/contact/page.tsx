@@ -1,6 +1,7 @@
 import { getWordPressCustomPage } from "@/app/_services/api";
 import ContactPage from "@/app/components/contact-page";
 import HoverButton from "@/app/components/hover-fill-btn";
+import WhatsappCta from "@/app/components/whatsapp-cta";
 import { Link } from "@/navigation";
 // import { getProxyImageUrl } from "@/utils/image_proxy";
 import { DEFAULT_OG_IMAGE } from "@/app/constants";
@@ -118,6 +119,7 @@ async function Contact(nextParams: { params: { locale: "en" | "es" | "de" } }) {
               __html: contact_information.description,
             }}
           />
+          <WhatsappCta />
           <div className="flex flex-col">
             <br />
             <p className="text-center text-[16px] leading-[22px] ">
