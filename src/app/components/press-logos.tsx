@@ -33,6 +33,7 @@ const LOGOS: {
   { name: "NAN Arquitectura", src: "/images/press-logos/nan-arquitectura.png", width: 150, height: 83, heightClass: "h-[22px] lg:h-[28px]" },
   { name: "White Ibiza", href: "https://white-ibiza.com/living/klarq/", src: "/images/press-logos/white-ibiza.svg", width: 1745, height: 142 },
   { name: "Domus Nova", src: "/images/press-logos/domus-nova.svg", width: 542, height: 50 },
+  { name: "Elle Decoration", src: "/images/press-logos/elle-decoration.svg", width: 128, height: 57, heightClass: "h-[34px] lg:h-[42px]" },
   { name: "Ibiza Live Report", src: "/images/press-logos/ibiza-live-report.png", width: 600, height: 107 },
   { name: "Periódico de Ibiza", href: "https://www.periodicodeibiza.es/pitiusas/ibiza/2026/09/27/2717079/quitando-10000-metros-parque-escandell-podrian-hacerse-hasta-viviendas-mas.html", src: "/images/press-logos/periodico-ibiza.svg", width: 337, height: 50 },
   { name: "The Ibiza Magazine", href: "https://theibizamagazine.com/klarq-ibiza-architecture-interior-design/", src: "/images/press-logos/the-ibiza-magazine.png", width: 1089, height: 282, heightClass: "h-[28px] lg:h-[36px]" },
