@@ -81,6 +81,10 @@ const ARCHELLO_THUMBNAIL = makePressThumbnail(
   "/images/press-archello-can-duarte.svg",
   "Archello — Can Duarte"
 );
+const IDSYSTEMS_THUMBNAIL = makePressThumbnail(
+  "/images/press-idsystems.svg",
+  "IDSystems — Architects' own homes"
+);
 const WHITE_IBIZA_THUMBNAIL = makePressThumbnail(
   "/images/press-white-ibiza.svg",
   "White Ibiza — KLARQ"
@@ -97,6 +101,16 @@ interface PressArticleEntry {
 }
 
 const PRESS_ARTICLES_ES: PressArticleEntry[] = [
+  {
+    titleEn: "An inside look into architects' own homes",
+    titleEs: "Una mirada a las casas de los propios arquitectos",
+    date: "02.11.2026",
+    summaryEn:
+      "IDSystems blog feature on the homes architects design for themselves. Lluís Oliva explains why his own Passivhaus Plus house in Mallorca prioritised energy efficiency, alongside architects from London and Nashville.",
+    url: "https://idsystems.co.uk/blog/an-inside-look-into-architects-own-homes/",
+    image: IDSYSTEMS_THUMBNAIL,
+    source: "IDSystems",
+  },
   {
     titleEn: "KLARQ",
     titleEs: "KLARQ",
