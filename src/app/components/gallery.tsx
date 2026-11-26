@@ -335,6 +335,9 @@ const GalleryProjects: React.FC<GalleryProps> = ({
                 onLoad={() => setImagesLoaded((prev) => prev + 1)}
                 className={`cursor-pointer shrink-0 transition-[width,opacity,transform] duration-700 ease-[cubic-bezier(0.4, 0, 0.2, 1)] origin-top`}
                 style={{
+                  // Same 4:5 box for every thumbnail (selected and not), so
+                  // covers of any native ratio show at one consistent size;
+                  // object-fit crops instead of stretching them.
                   height: isMobile
                     ? isSelected
                       ? 310
@@ -345,10 +348,11 @@ const GalleryProjects: React.FC<GalleryProps> = ({
                   width: isMobile
                     ? isSelected
                       ? 250
-                      : 250
+                      : 226
                     : isSelected
                     ? 280
-                    : "auto",
+                    : 238,
+                  objectFit: "cover",
                   opacity: isSelected ? 1 : 0.3,
                 }}
               />
